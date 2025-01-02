@@ -1,14 +1,12 @@
 # imports
 import numpy as np
-import matplotlib
 import matplotlib.pyplot as plt
 import random
 import pandas as pd
-import librosa
-import array
+import time
 from matplotlib.backends.backend_pdf import PdfPages
 plt.ioff()
-import sys
+#import sys
 
 from quart import Quart, render_template, request, jsonify
      
@@ -481,7 +479,12 @@ app = Quart(__name__)
 
 @app.route("/simulation/state", methods=['GET'])
 def get_state():
+    start_time = time.perf_counter()
     simulation.simulate_step()
+    end_time = time.perf_counter()
+
+    elapsed = end_time - start_time
+    print(f'Simulation step took {elapsed} seconds')
     # Return the current state of the simulation
     return {
         "rpm":int(simulation.current_rpm),
