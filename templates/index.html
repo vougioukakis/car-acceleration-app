@@ -22,7 +22,8 @@
 
     <script>
         // Interval in milliseconds for throttling (40 FPS -> 1000ms / 40 = 25ms)
-        const updateInterval = 30;
+        const updateInterval = 29;
+        //every 29 ms call one simulation step. the simulation is made to run 30 times a second!
         let started = false;
 
         // Function to fetch simulation state
