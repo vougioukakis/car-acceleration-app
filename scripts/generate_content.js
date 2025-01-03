@@ -5,7 +5,7 @@ function generateCarCard(carObj) {
     card.classList.add('car-card');
 
     const image = document.createElement('img');
-    image.src = `../images/${carObj.make}/${carObj.name}.jpg`;
+    image.src = `images/${carObj.make}/${carObj.name}.jpg`;
     image.alt = `${carObj.make} ${carObj.model}`;
     image.style.width = '200px';
     image.style.height = '160px';
@@ -65,7 +65,7 @@ function generateSelectionScreen() {
         makeCard.classList.add('make-card');
 
         const makeImage = document.createElement('img');
-        makeImage.src = `../images/${make}/logo.jpg`;
+        makeImage.src = `images/${make}/logo.jpg`;
         makeImage.alt = `${make} logo`;
         makeImage.style.width = '200px';
         makeImage.style.height = '160px';
