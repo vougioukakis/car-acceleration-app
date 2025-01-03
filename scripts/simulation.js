@@ -265,7 +265,7 @@ class Run {
 	}
 
 	wheel_aero_drag(speed) {
-		return 2 * 0.000275 * (speed ** 2);
+		return 2 * 0.000278 * (speed ** 2);
 		// approximately the aero drag of 2 16 inch tires
 	}
 

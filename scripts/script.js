@@ -8,7 +8,6 @@ let deltaTime = 0;
 
 function startSimulation() {
     started = true;
-    initializeNeedle();
     startTime = performance.now();  // store the current time when simulation starts
     lastTime = startTime;  // initialize last time for delta calculation
 }
@@ -30,7 +29,6 @@ function updateSimulation() {
         document.getElementById("rpm").innerText = `RPM: ${run.current_rpm.toFixed()}`;
         document.getElementById("speed").innerText = `Speed: ${(run.current_speed * 3.6).toFixed()} km/h`;
         document.getElementById("time").innerText = `Time: ${run.current_seconds.toFixed(2)} s`;
-        updateNeedle(run.current_rpm);  // Update the needle based on current RPM
     }
 
     // update the real time clock
