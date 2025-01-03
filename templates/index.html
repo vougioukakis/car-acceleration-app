@@ -13,76 +13,15 @@
         <div id="speed">Speed: Loading...</div>
         <div id="time">Time: Loading...</div>
 
-        <!-- Shift button -->
         <button id="shiftButton">Shift</button>
-
-        <!-- Start button -->
         <button id="startButton">Start Simulation</button>
     </div>
 
-    <script>
-        // Interval in milliseconds for throttling (40 FPS -> 1000ms / 40 = 25ms)
-        const updateInterval = 29;
-        //every 29 ms call one simulation step. the simulation is made to run 30 times a second!
-        let started = false;
+    <script src="../scripts/util.js" defer></script>
+    <script src="../scripts/cars.js" defer></script>
+    <script src="../scripts/simulation.js" defer></script>
+    <script src="../scripts/script.js" defer></script>
 
-        // Function to fetch simulation state
-        async function updateSimulation() {
-            if (!started) return;
-
-            try {
-                // Fetch data from the API
-                const response = await fetch(`/simulation/state`, { method: 'GET' });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const data = await response.json();
-
-                // Update the RPM and Speed display
-                document.getElementById("rpm").innerHTML = "RPM: " + data.rpm;
-                document.getElementById("speed").innerHTML = "Speed: " + data.speed;
-                document.getElementById("time").innerHTML = "Time: " + data.time;
-            } catch (error) {
-                console.error("Error fetching simulation state:", error);
-            }
-        }
-
-        // Function to trigger the shift action
-        async function shiftSimulation() {
-            try {
-                // Send a request to the /simulation/shift route
-                const response = await fetch(`/simulation/shift`, { method: 'POST' });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                console.log("Shift action triggered.");
-            } catch (error) {
-                console.error("Error triggering shift action:", error);
-            }
-        }
-
-        // Function to start the simulation
-        async function startSimulation() {
-            try {
-                // Send a request to the /simulation/start route
-                const response = await fetch(`/simulation/start`, { method: 'POST' });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                console.log("Simulation started.");
-                started = true;
-            } catch (error) {
-                console.error("Error starting the simulation:", error);
-            }
-        }
-
-        // Add event listeners for buttons
-        document.getElementById("shiftButton").addEventListener("click", shiftSimulation);
-        document.getElementById("startButton").addEventListener("click", startSimulation);
-
-        // Start the simulation update loop
-        setInterval(updateSimulation, updateInterval);
-    </script>
 </body>
 
 </html>
