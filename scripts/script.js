@@ -6,11 +6,6 @@ const targetFps = 40;
 const timePerTick = 1000 / targetFps; // = 25 ms when target FPS is 40
 let deltaTime = 0;
 
-console.log(run.time);
-console.log(run.max_steps);
-console.log(run.speed);
-console.log(run.speed);
-
 function startSimulation() {
     started = true;
     startTime = performance.now();  // store the current time when simulation starts
@@ -18,9 +13,8 @@ function startSimulation() {
 }
 
 function updateSimulation() {
-    if (!started) {
-        return;
-    }
+
+    if (!started) return;
 
     const currentTime = performance.now();
 
@@ -32,8 +26,8 @@ function updateSimulation() {
         run.simulate_step();
         timeAccumulator -= timePerTick;
 
-        document.getElementById("rpm").innerText = `RPM: ${run.current_rpm}`;
-        document.getElementById("speed").innerText = `Speed: ${run.current_speed * 3.6} km/h`;
+        document.getElementById("rpm").innerText = `RPM: ${run.current_rpm.toFixed()}`;
+        document.getElementById("speed").innerText = `Speed: ${(run.current_speed * 3.6).toFixed()} km/h`;
         document.getElementById("time").innerText = `Time: ${run.current_seconds.toFixed(2)} s`;
     }
 

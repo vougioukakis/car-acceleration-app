@@ -1,6 +1,6 @@
 let fps = 40;
 let manual = 1;
-console.log = function () { } //disables logs
+//console.log = function () { } //disables logs
 
 class Engine {
 	constructor(data) {
@@ -524,6 +524,9 @@ class Run {
 }
 
 // Example usage:
-let car = new Car("2013_Peugeot_208_GTI");
-let run = new Run(car, true);
+//let car = new Car("2013_Peugeot_208_GTI");
+//let car = new Car("Citroen_Saxo_VTS_Custom");
+//let run = new Run(car, true);
 // you begin by running simulate_step in a loop
+let car;
+let run;

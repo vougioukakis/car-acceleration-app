@@ -1,0 +1,31 @@
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+.selectionScreen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.car-card,
+.make-card {
+    width: 200px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+}
+
+.car-card img,
+.make-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
