@@ -6,3 +6,4 @@ main.py
 .DS_Store
 krita/
 *.log
+cars.csv

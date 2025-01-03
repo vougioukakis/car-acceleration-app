@@ -3,6 +3,11 @@ const updateInterval = 25;
 //every 29 ms call one simulation step. the simulation is made to run 30 times a second!
 let started = false;
 
+console.log(run.time);
+console.log(run.max_steps);
+console.log(run.speed);
+console.log(run.speed);
+
 function startSimulation() {
     started = true;
 }
@@ -14,7 +19,7 @@ function updateSimulation() {
     run.simulate_step();
     //update the html elements with rpm speed and time
     document.getElementById("rpm").innerText = `RPM: ${run.current_rpm}`;
-    document.getElementById("speed").innerText = `Speed: ${run.current_speed * 3.2} km/h`;
+    document.getElementById("speed").innerText = `Speed: ${run.current_speed * 3.6} km/h`;
     document.getElementById("time").innerText = `Time: ${run.current_seconds} s`;
 }
 

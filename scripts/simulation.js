@@ -59,7 +59,7 @@ class Chassis {
 	constructor(data) {
 		this.weight = data["weight"];
 		this.rear_weight = data["rear_weight"];
-		this.c_d = data["cd"];
+		this.c_d = data["c_d"];
 		this.frontal = data["frontal"];
 		this.df_coeff = data["df_coeff"];
 		this.wheel_radius = data["wheel_radius"];
@@ -111,7 +111,7 @@ class Car {
 			console.warn("Torque is negative. Clamping...");
 			return Math.max(1, Math.min(N, this.engine.max_torque));
 		}
-
+		//console.log("Torque at engine rpm " + N + " is " + poly);
 		return poly;
 	}
 }
@@ -130,7 +130,7 @@ class Run {
 
 	accel = 0; //current acceleration in m/s^2
 	current_speed = 0;
-	speed = new Array(this.max_steps);
+	speed = new Array(this.max_steps).fill(0);
 	current_distance = 0;
 
 	shift_call = false; // becomes True when PLAYER shifts, gets used to change gear and becomes false again
@@ -164,7 +164,7 @@ class Run {
 	 */
 	downforce(speed) {
 		let df_coeff = this.car.chassis.df_coeff;
-		return df_coeff * speed ** 2;
+		return df_coeff * (speed ** 2);
 	}
 
 	/**
@@ -223,8 +223,7 @@ class Run {
 		let final_drive = this.car.transmission.final_drive;
 
 		let crank_torque = engine_torque * this.spool_loss;
-		let result =
-			drive_efficiency * crank_torque * gear[gear_index] * final_drive;
+		let result = drive_efficiency * crank_torque * gear[gear_index] * final_drive;
 
 		if (result < 0) {
 			console.warn("Torque at wheel axis is negative.");
@@ -246,7 +245,7 @@ class Run {
 		let wheel_radius = this.car.chassis.wheel_radius;
 
 		let Fz = weight_transfer * weight * 9.81; // load on driving tyres
-		let max_force = tyre_coeff * Fz ** 0.995;
+		let max_force = tyre_coeff * (Fz ** 0.995);
 		let result = Math.min(torque_at_wheels / wheel_radius, max_force);
 
 		if (torque_at_wheels / wheel_radius > max_force) {
@@ -265,26 +264,20 @@ class Run {
 	}
 
 	wheel_aero_drag(speed) {
-		return 2 * 0.000275 * speed ** 2;
+		return 2 * 0.000275 * (speed ** 2);
 		// approximately the aero drag of 2 16 inch tires
 	}
 
 	drag(speed) {
 		let c_d = this.car.chassis.c_d;
-		let frontal_Area = this.car.chassis.frontal;
+		let frontal_area = this.car.chassis.frontal;
 		let wheel_aero_drag = this.wheel_aero_drag(speed);
-		return 0.5 * c_d * frontal_Area * 1.2 * speed ** 2 * wheel_aero_drag;
+		return 0.5 * c_d * frontal_area * 1.2 * (speed ** 2) + wheel_aero_drag;
 	}
 
 	roll_resistance(speed) {
 		if (speed > 0.1) {
-			return (
-				(0.02 +
-					1.111 * 1e-7 * speed +
-					0.24 * 1e-7 * (speed / 3.6) ** 2) *
-				9.81 *
-				this.vertical_load(speed)
-			);
+			return (0.02 + 1.111 * 1e-7 * speed + 0.24 * 1e-7 * ((speed / 3.6) ** 2)) * 9.81 * this.vertical_load(speed);
 		} else {
 			return 0;
 		}
@@ -305,6 +298,11 @@ class Run {
 		let result = Fnet / this.car.chassis.weight;
 
 		if (result > 0) {
+			console.log("speed = " + speed);
+			console.log("N = " + N);
+			console.log("Fground = " + Fg);
+			console.log("Fdrag = " + Fdrag);
+			console.log("Froll = " + Froll);
 			return result;
 		} else {
 			console.warn("Net force not positive. Value = " + result);
@@ -330,7 +328,7 @@ class Run {
 			(Math.PI * wheel_radius);
 
 		if (rpm < this.car.engine.idle_RPM || rpm > this.car.engine.redline) {
-			console.warn("RPM out of range.");
+			console.warn("RPM " + rpm + " out of range for car with redline " + this.car.engine.redline);
 			console.log("speed = " + speed);
 		}
 
@@ -381,11 +379,12 @@ class Run {
 	}
 
 	vroom(i) {
+		console.log("vroom: " + i);
 		// find the next speed for the simulation
 		let Euler_solution =
 			this.speed[i - 1] +
 			this.step *
-				this.f(this.time[i - 1], this.speed[i - 1], this.current_rpm);
+			this.f(this.time[i - 1], this.speed[i - 1], this.current_rpm);
 		let max_speed_at_current_gear = this.get_max_speed_at_gear();
 		this.speed[i] = Math.max(
 			0.01,
@@ -393,6 +392,7 @@ class Run {
 		);
 		this.current_speed = this.speed[i];
 		this.compute_acceleration(i);
+		console.log("euler: ", this.speed[i]);
 
 		// find the rpm for the next time step
 		let N_new = Math.min(
@@ -402,19 +402,22 @@ class Run {
 		this.clutch_extra_revs = Math.max(
 			0,
 			this.clutch_extra_revs -
-				1000 / this.car.transmission.shift_delay_coefficient
+			1000 / this.car.transmission.shift_delay_coefficient
 		);
 
-		if (this.gear_index == 0) {
+		if (this.gear_index === 0) {
 			// in 1st gear, use launch rpm until wheel speed asks for more rpm
 
 			let rng = Math.floor(Math.random() * 251); // random between 0 and 250
 			this.current_rpm = Math.max(N_new, this.launch_RPM - rng);
+			console.log("updating rpm to " + this.current_rpm);
 			//TODO: add a countdown to slowly transition to N_new
 			//this.current_rpm = max(N_new, 5000 + (-1)**random.randint(0,1) * random.randint(50,150))
 		} else {
 			// If not in 1st gear just update rpm
 			this.current_rpm = N_new;
+			console.log("not in 1st gear. updating rpm to " + this.current_rpm);
+
 		}
 	}
 
@@ -433,9 +436,9 @@ class Run {
 		let bot_satisfied_conditions =
 			!this.is_player &&
 			this.current_rpm >=
-				this.car.engine.redline -
-					50 -
-					this.car.transmission.shift_earlier;
+			this.car.engine.redline -
+			50 -
+			this.car.transmission.shift_earlier;
 
 		if (
 			(player_pressed_to_shift || bot_satisfied_conditions) &&
@@ -513,12 +516,13 @@ class Run {
 	}
 
 	load_launch_rpm() {
+		console.log('loading launch rpm');
 		this.launch_RPM = this.current_rpm;
 		if (!this.is_player) this.launch_RPM = 4500;
 	}
 }
 
 // Example usage:
-let car = new Car("Citroen_Saxo_VTS_Custom");
+let car = new Car("2013_Peugeot_208_GTI");
 let run = new Run(car, true);
 // you begin by running simulate_step in a loop
