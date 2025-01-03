@@ -58,7 +58,7 @@ class Transmission {
 
 class Chassis {
 	constructor(data) {
-		this.weight = data["weight"];
+		this.weight = data["weight"] + 90; // adding driver and fuel
 		this.rear_weight = data["rear_weight"];
 		this.c_d = data["c_d"];
 		this.frontal = data["frontal"];
@@ -299,11 +299,12 @@ class Run {
 		let result = Fnet / this.car.chassis.weight;
 
 		if (result > 0) {
+			/*
 			console.log("speed = " + speed);
 			console.log("N = " + N);
 			console.log("Fground = " + Fg);
 			console.log("Fdrag = " + Fdrag);
-			console.log("Froll = " + Froll);
+			console.log("Froll = " + Froll);*/
 			return result;
 		} else {
 			console.warn("Net force not positive. Value = " + result);
@@ -380,7 +381,7 @@ class Run {
 	}
 
 	vroom(i) {
-		console.log("vroom: " + i);
+		//console.log("vroom: " + i);
 		// find the next speed for the simulation
 		let Euler_solution =
 			this.speed[i - 1] +
@@ -393,7 +394,7 @@ class Run {
 		);
 		this.current_speed = this.speed[i];
 		this.compute_acceleration(i);
-		console.log("euler: ", this.speed[i]);
+		//console.log("euler: ", this.speed[i]);
 
 		// find the rpm for the next time step
 		let N_new = Math.min(
@@ -411,13 +412,13 @@ class Run {
 
 			let rng = Math.floor(Math.random() * 251); // random between 0 and 250
 			this.current_rpm = Math.max(N_new, this.launch_RPM - rng);
-			console.log("updating rpm to " + this.current_rpm);
+			//console.log("updating rpm to " + this.current_rpm);
 			//TODO: add a countdown to slowly transition to N_new
 			//this.current_rpm = max(N_new, 5000 + (-1)**random.randint(0,1) * random.randint(50,150))
 		} else {
 			// If not in 1st gear just update rpm
 			this.current_rpm = N_new;
-			console.log("not in 1st gear. updating rpm to " + this.current_rpm);
+			//console.log("not in 1st gear. updating rpm to " + this.current_rpm);
 
 		}
 	}
