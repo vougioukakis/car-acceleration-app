@@ -8,6 +8,7 @@ let deltaTime = 0;
 
 function startSimulation() {
     started = true;
+    initializeRevMeter();
     startTime = performance.now();  // store the current time when simulation starts
     lastTime = startTime;  // initialize last time for delta calculation
 }
@@ -25,6 +26,7 @@ function updateSimulation() {
     while (timeAccumulator >= timePerTick) {
         run.simulate_step();
         timeAccumulator -= timePerTick;
+        updateRevDisplay(run.current_rpm);
 
         document.getElementById("rpm").innerText = `RPM: ${run.current_rpm.toFixed()}`;
         document.getElementById("speed").innerText = `Speed: ${(run.current_speed * 3.6).toFixed()} km/h`;
@@ -43,6 +45,7 @@ function updateSimulation() {
 
 function shiftSimulation() {
     run.shift_call = true;
+    //
 }
 
 document.getElementById("shiftButton").addEventListener("click", shiftSimulation);
