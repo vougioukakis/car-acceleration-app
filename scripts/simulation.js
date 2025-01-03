@@ -2,6 +2,9 @@ let fps = 40;
 let manual = 1;
 //console.log = function () { } //disables logs
 
+//TODO: implement throttle control before launch
+//BUG: fix simulation breaking when time ends
+
 class Engine {
 	constructor(data) {
 		this.idle_RPM = data["idle_RPM"];

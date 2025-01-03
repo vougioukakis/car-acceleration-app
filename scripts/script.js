@@ -6,6 +6,7 @@ const targetFps = 40;
 const timePerTick = 1000 / targetFps; // = 25 ms when target FPS is 40
 let deltaTime = 0;
 
+//BUG: simulation starts automatically; go to simulation -> car screen -> simulation again
 function startSimulation() {
     started = true;
     initializeRevMeter();
