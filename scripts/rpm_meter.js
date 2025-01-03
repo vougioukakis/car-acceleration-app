@@ -1,45 +1,45 @@
-const needle = document.querySelector('.needle');
-const dialMarks = document.querySelector('.dial-marks');
-let maxRPM;
 const minRPM = 1000;
+let maxRPM;
+let extendedMaxRPM;
+let totalMarks;
+const revFill = document.getElementById('revFill');
+const rpmLabelsContainer = document.querySelector('.rpm-labels');
 
-function initializeNeedle() {
-    maxRPM = run.car.engine.redline; // Replace with actual maxRPM value
 
-    const totalMarks = 10; // Adjust for finer granularity
-    const step = (maxRPM - minRPM + 1000) / totalMarks;
+function initializeRevMeter() {
+    maxRPM = run.car.engine.redline;
+    extendedMaxRPM = maxRPM + 1000;
+    totalMarks = extendedMaxRPM / 1000;
+    rpmLabelsContainer.style.gap = `${500 / (totalMarks)}px`; // Space labels evenly
+    // 500 is the container width.
 
-    for (let i = 0; i <= totalMarks; i++) {
-        const mark = document.createElement('div');
-        mark.className = 'mark';
-
-        // Calculate rotation for each mark
-        const rotation = 135 + (i / totalMarks) * 270; // Adjusted to start at 135°
-
-        // Set the rotation and position of the mark
-        mark.style.transform = `rotate(${rotation}deg) translate(0, -70px)`;
-        mark.style.left = '50%';
-        mark.style.top = '50%';
-        mark.style.transformOrigin = 'center 70px';
-
-        // Optionally, add labels
+    for (let i = 1; i <= totalMarks; i++) {
         const label = document.createElement('div');
-        label.textContent = Math.round(minRPM + i * step);
-        label.style.position = 'absolute';
-        label.style.transform = 'translate(-50%, -50%)';
-        label.style.fontSize = '12px';
-        label.style.color = '#333';
-        mark.appendChild(label);
-
-        dialMarks.appendChild(mark);
+        label.classList.add('rpm-label');
+        label.textContent = i;
+        rpmLabelsContainer.appendChild(label);
     }
 }
 
-function updateNeedle(rpm) {
-    if (rpm < minRPM || rpm > maxRPM + 1000) return;
-    const angle = ((rpm - minRPM) / (maxRPM + 1000 - minRPM)) * 270; // Map to 270-degree range
-    needle.style.transform = `translate(-50%, -100%) rotate(${angle + 200}deg)`;
+function resetRevMeter() {
+    revFill.style.width = '0%';
+    revFill.style.backgroundColor = 'rgb(255, 255, 255)';
+    rpmLabelsContainer.innerHTML = '';
 }
 
-// Call initializeNeedle during page load or after `run.car.engine.redline` is set.
-initializeNeedle();
+/**
+ * Updates the rev meter.
+ * @param {number} currentRPM - The current RPM value.
+ */
+function updateRevDisplay(currentRPM) {
+    if (currentRPM < minRPM) currentRPM = minRPM;
+    if (currentRPM > extendedMaxRPM) currentRPM = extendedMaxRPM;
+
+    const percentage = ((currentRPM - minRPM) / (extendedMaxRPM - minRPM)) * 100;
+    revFill.style.width = `${percentage}%`;
+
+    // Adjust color to become more red as RPM approaches redline
+    const redIntensity = Math.min(255, Math.floor((currentRPM / maxRPM) * 255));
+    const greenIntensity = Math.max(0, 255 - redIntensity);
+    revFill.style.backgroundColor = `rgb(255, ${greenIntensity}, 0)`;
+}

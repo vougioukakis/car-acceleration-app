@@ -29,3 +29,38 @@
     height: auto;
     object-fit: cover;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    text-align: center;
+}
+
+.rev-meter {
+    position: relative;
+    width: 500px;
+    /* Fixed length for every car */
+    height: 40px;
+    border: 2px solid black;
+    margin: 20px auto;
+    background-color: #ddd;
+}
+
+.rev-fill {
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    background: yellow;
+    transition: width 0.1s ease;
+}
+
+.rpm-labels {
+    display: flex;
+    width: 500px;
+    justify-content: space-between;
+    margin: 20px auto;
+}
+
+.rpm-label {
+    font-size: 14px;
+}

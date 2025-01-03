@@ -103,6 +103,7 @@ function showSimulationScreen(carObj) {
             document.getElementById('simulationScreen').style.display = 'none';
             document.getElementById('carsScreen').style.display = 'block';
             resetSimulation();
+            resetRevMeter();
         });
     } catch (error) {
         console.error('Error in startSimulation:', error);
