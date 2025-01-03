@@ -1,4 +1,5 @@
-// Function to generate a car card
+/**
+ *  */
 function generateCarCard(carObj) {
     const card = document.createElement('div');
     card.classList.add('car-card');
@@ -7,7 +8,7 @@ function generateCarCard(carObj) {
     image.src = `../images/${carObj.make}/${carObj.name}.jpg`;
     image.alt = `${carObj.make} ${carObj.model}`;
     image.style.width = '200px';
-    image.style.height = 'auto';
+    image.style.height = '160px';
     image.style.objectFit = 'cover';
 
     const title = document.createElement('h3');
@@ -23,16 +24,6 @@ function generateCarCard(carObj) {
     });
 
     return card;
-}
-
-function startTheSimulation(carObj) {
-    console.log('Starting simulation for:', carObj);
-
-    document.getElementById('carsScreen').style.display = 'none';
-    document.getElementById('simulationScreen').style.display = 'block';
-
-    car = new Car(carObj.name);
-    run = new Run(carObj, true);
 }
 
 /**
@@ -77,7 +68,7 @@ function generateSelectionScreen() {
         makeImage.src = `../images/${make}/logo.jpg`;
         makeImage.alt = `${make} logo`;
         makeImage.style.width = '200px';
-        makeImage.style.height = 'auto';
+        makeImage.style.height = '160px';
         makeImage.style.objectFit = 'cover';
 
         const makeTitle = document.createElement('h3');
@@ -92,20 +83,21 @@ function generateSelectionScreen() {
     });
 }
 
-// Function to start a simulation
+/**
+ * 
+ *  */
 function showSimulationScreen(carObj) {
     console.log("START SIMULATION");
     try {
+
         document.getElementById('carsScreen').style.display = 'none';
         document.getElementById('simulationScreen').style.display = 'block';
 
         car = new Car(carObj.name);
         run = new Run(car, true);
         console.log(run.car.engine.redline);
-
-        const simulationDetails = document.getElementById('simulationDetails');
-        simulationDetails.innerHTML += `<h3>Simulation for ${carObj.name}</h3>`;
-        simulationDetails.innerHTML += `<p>Car Model: ${carObj.model}</p>`;
+        resetPlot();
+        plotTorque();
 
         document.getElementById('backToCars').addEventListener('click', () => {
             document.getElementById('simulationScreen').style.display = 'none';
