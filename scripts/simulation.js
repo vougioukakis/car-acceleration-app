@@ -1,6 +1,7 @@
 let fps = 40;
 let manual = 1;
-console.log = function () { }
+console.log = function () { } //disables logs
+
 class Engine {
 	constructor(data) {
 		this.idle_RPM = data["idle_RPM"];

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulation</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -12,15 +13,18 @@
         <div id="rpm">RPM: Loading...</div>
         <div id="speed">Speed: Loading...</div>
         <div id="time">Time: Loading...</div>
-        <div id="realTime">Real Time: Loading...</div> <!-- Real time clock -->
+        <div id="realTime">Real Time: Loading...</div>
 
         <button id="shiftButton">Shift</button>
         <button id="startButton">Start Simulation</button>
     </div>
 
+    <canvas id="torqueChart" width="800" height="600"></canvas>
+
     <script src="../scripts/util.js" defer></script>
     <script src="../scripts/cars.js" defer></script>
     <script src="../scripts/simulation.js" defer></script>
+    <script src="../scripts/plots.js" defer></script>
     <script src="../scripts/script.js" defer></script>
 </body>
 

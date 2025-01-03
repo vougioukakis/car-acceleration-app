@@ -1,9 +1,7 @@
 let started = false;
 let startTime = 0;
 let lastTime = 0;
-let simulationTime = 0;
 let timeAccumulator = 0;
-
 const targetFps = 40;
 const timePerTick = 1000 / targetFps; // = 25 ms when target FPS is 40
 let deltaTime = 0;
@@ -40,11 +38,9 @@ function updateSimulation() {
     }
 
     // update the real time clock
-    const elapsedTime = currentTime - startTime;  // Get elapsed time in ms
-    const seconds = Math.floor(elapsedTime / 1000);  // Get total seconds
-    const milliseconds = elapsedTime % 1000;  // Get the remaining milliseconds
-
-    // display real-time seconds and milliseconds
+    const elapsedTime = currentTime - startTime;
+    const seconds = Math.floor(elapsedTime / 1000);
+    const milliseconds = elapsedTime % 1000
     document.getElementById("realTime").innerText = `Real Time: ${seconds}s ${milliseconds}ms`;
 
     // save the current time as last time for next frame
