@@ -14,7 +14,7 @@ function generateCarCard(carObj) {
     image.style.objectFit = 'cover';
 
     const title = document.createElement('h3');
-    title.textContent = `${carObj.make} ${carObj.model}`;
+    title.textContent = `${carObj.model}`;
 
     card.appendChild(image);
     card.appendChild(title);
