@@ -145,6 +145,10 @@ class Run {
 	spool_loss = 1; //e.g. 0.7 means u can use 70% of the max torque
 	spinning = false;
 
+	//times
+	to_400m = '';
+	to_800m = '';
+
 	constructor(car, is_player) {
 		this.car = car;
 		this.is_player = is_player;
@@ -514,10 +518,14 @@ class Run {
 		this.current_distance +=
 			this.current_speed *
 			(this.current_seconds - this.time[this.iter_index - 1]);
-		if (Math.abs(this.current_distance - 400) < 1)
+		if (Math.abs(this.current_distance - 400) < 1) {
 			console.log("0-400m in " + this.current_seconds);
-		if (Math.abs(this.current_distance - 800) < 2)
+			this.to_400m = this.current_seconds;
+		}
+		if (Math.abs(this.current_distance - 800) < 2) {
 			console.log("0-800m in " + this.current_seconds);
+			this.to_800m = this.current_seconds;
+		}
 	}
 
 	load_launch_rpm() {

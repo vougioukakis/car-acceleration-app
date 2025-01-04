@@ -31,14 +31,15 @@ function updateSimulation() {
 
         document.getElementById("rpm").innerText = `RPM: ${run.current_rpm.toFixed()}`;
         document.getElementById("speed").innerText = `Speed: ${(run.current_speed * 3.6).toFixed()} km/h`;
-        document.getElementById("time").innerText = `Time: ${run.current_seconds.toFixed(2)} s`;
+        document.getElementById("time").innerText = `Time: ${run.current_seconds.toFixed(1)} s`;
+        document.getElementById("quarterMile").innerText = `Quarter Mile: ${run.to_400m}s`;
     }
 
     // update the real time clock
     const elapsedTime = currentTime - startTime;
     const seconds = Math.floor(elapsedTime / 1000);
     const milliseconds = elapsedTime % 1000
-    document.getElementById("realTime").innerText = `Real Time: ${seconds}s ${milliseconds}ms`;
+    //document.getElementById("realTime").innerText = `Real Time: ${seconds}s ${milliseconds}ms`;
 
     // save the current time as last time for next frame
     lastTime = currentTime;
