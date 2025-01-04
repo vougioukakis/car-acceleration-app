@@ -65,6 +65,9 @@ function updateSimulation() {
     // update the simulation based on delta time if enough time has passed
     while (timeAccumulator >= timePerTick) {
         run.simulate_step();
+        if (run.done) {
+            finish();
+        }
         timeAccumulator -= timePerTick;
         updateRevDisplay(run.current_rpm);
 
@@ -101,4 +104,10 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);  // this calls gameLoop recursively and adjusts to the frame rate
 }
 
+function finish() {
+    console.log('Simulation finished');
+    started = false;
+    launched = false;
+    document.getElementById('state').innerHTML = 'Finished';
+}
 //requestAnimationFrame(gameLoop);

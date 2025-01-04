@@ -2,9 +2,6 @@ let fps = 40;
 let manual = 1;
 //console.log = function () { } //disables logs
 
-//TODO: implement throttle control before launch
-//BUG: fix simulation breaking when time ends
-
 class Engine {
 	constructor(data) {
 		this.idle_RPM = data["idle_RPM"];
@@ -56,6 +53,7 @@ class Transmission {
 		this.shift_earlier = data["shift_earlier"];
 		this.flywheel_coefficient = data["flywheel_coefficient"];
 		this.drive_efficiency = data["drive_efficiency"];
+		this.lsd = data["lsd"];
 	}
 }
 
@@ -126,7 +124,7 @@ class Run {
 	current_rpm = 1000;
 
 	current_seconds = 0;
-	end = 70; //run duration in s
+	end = 80; //run duration in s
 	max_steps = this.end * fps;
 	step = this.end / this.max_steps;
 	iter_index = 0;
@@ -149,6 +147,9 @@ class Run {
 	to_100km = '';
 	to_400m = '';
 	to_800m = '';
+
+	//state
+	done = false;
 
 	constructor(car, is_player) {
 		this.car = car;
@@ -373,6 +374,11 @@ class Run {
 
 		this.iter_index++;
 		let i = this.iter_index;
+		if (i === this.max_steps) {
+			console.log("Max steps reached, finishing simulation...");
+			this.done = true;
+			return;
+		}
 		this.update_seconds(i);
 		this.distance_calculations();
 		this.update_times();

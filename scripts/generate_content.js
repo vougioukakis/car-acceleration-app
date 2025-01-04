@@ -63,28 +63,33 @@ function generateSelectionScreen() {
     selectionScreen.innerHTML = '';
 
     uniqueMakes.forEach(make => {
-        const makeCard = document.createElement('div');
-        makeCard.classList.add('make-card');
-
-        const makeImage = document.createElement('img');
-        makeImage.src = `images/${make}/logo.jpg`;
-        makeImage.alt = `${make} logo`;
-        makeImage.style.width = '200px';
-        makeImage.style.height = '160px';
-        makeImage.style.objectFit = 'cover';
-
-        const makeTitle = document.createElement('h3');
-        makeTitle.textContent = make;
-
-        makeCard.appendChild(makeImage);
-        makeCard.appendChild(makeTitle);
-
-        makeCard.addEventListener('click', () => showCarsScreen(make));
-
+        const makeCard = generateMakeCard(make);
         selectionScreen.appendChild(makeCard);
     });
 }
 
+/** generate a make card */
+function generateMakeCard(make) {
+    const makeCard = document.createElement('div');
+    makeCard.classList.add('make-card');
+
+    const makeImage = document.createElement('img');
+    makeImage.src = `images/${make}/logo.jpg`;
+    makeImage.alt = `${make} logo`;
+    makeImage.style.width = '200px';
+    makeImage.style.height = '160px';
+    makeImage.style.objectFit = 'cover';
+
+    const makeTitle = document.createElement('h3');
+    makeTitle.textContent = make;
+
+    makeCard.appendChild(makeImage);
+    makeCard.appendChild(makeTitle);
+
+    makeCard.addEventListener('click', () => showCarsScreen(make));
+
+    return makeCard;
+}
 /**
  * 
  *  */
@@ -123,12 +128,16 @@ function showSimulationScreen(carObj) {
 
 function resetSimulation() {
     started = false;
+    launched = false;
     run = null;
     car = null;
 
-    document.getElementById('rpm').innerHTML = '';
-    document.getElementById('speed').innerHTML = '';
-    document.getElementById('time').innerHTML = '';
+    document.getElementById('rpm').innerHTML = `&nbsp;`;
+    document.getElementById('speed').innerHTML = 'Use the throttle to rev the car and click launch when ready!';
+    document.getElementById('time').innerHTML = `&nbsp;`;
+    document.getElementById('quarterMile').innerHTML = `&nbsp;`;
+    document.getElementById('to_100km').innerHTML = `&nbsp;`;
+    document.getElementById('state').innerHTML = `&nbsp;`;
     //document.getElementById('realTime').innerHTML = '';
 }
 
