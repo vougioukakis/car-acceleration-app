@@ -121,9 +121,9 @@ class Car {
 }
 
 class Run {
-	launch_RPM = 5000;
+	launch_RPM = 4000;
 	gear_index = 0;
-	current_rpm = 5000;
+	current_rpm = 1000;
 
 	current_seconds = 0;
 	end = 70; //run duration in s
@@ -160,6 +160,17 @@ class Run {
 
 	shift() {
 		this.shift_call = true;
+	}
+
+	rev() {
+		let increment = 50 + 0.1 * this.car.torque(this.current_rpm);
+		this.current_rpm = Math.min(this.current_rpm + increment, this.car.engine.redline - 1);
+		this.jump_off_redline(); // only runs if at redline
+	}
+
+	off_throttle() {
+		let decrement = 50 + this.car.transmission.flywheel_coefficient;
+		this.current_rpm = Math.max(this.current_rpm - decrement, this.car.engine.idle_RPM);
 	}
 
 	update_seconds(iter_index) {

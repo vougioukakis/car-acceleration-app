@@ -1,5 +1,7 @@
 /**
  *  */
+let throttleButton = document.getElementById("throttle");
+
 function generateCarCard(carObj) {
     const card = document.createElement('div');
     card.classList.add('car-card');
@@ -93,17 +95,26 @@ function showSimulationScreen(carObj) {
         document.getElementById('carsScreen').style.display = 'none';
         document.getElementById('simulationScreen').style.display = 'block';
 
+        console.log('defining car...');
         car = new Car(carObj.name);
+        console.log('defined car');
+        console.log('defining run...');
         run = new Run(car, true);
-        console.log(run.car.engine.redline);
+        console.log('defined run');
         resetPlot();
+        console.log('resetted plot');
+        startSimulation();
+        requestAnimationFrame(gameLoop);
         plotTorque();
+        initializeRevMeter();
+        addEventListenerForThrottle();
 
         document.getElementById('backToCars').addEventListener('click', () => {
             document.getElementById('simulationScreen').style.display = 'none';
             document.getElementById('carsScreen').style.display = 'block';
             resetSimulation();
             resetRevMeter();
+            removeEventListenersForThrottle();
         });
     } catch (error) {
         console.error('Error in startSimulation:', error);
@@ -118,8 +129,25 @@ function resetSimulation() {
     document.getElementById('rpm').innerHTML = '';
     document.getElementById('speed').innerHTML = '';
     document.getElementById('time').innerHTML = '';
-    document.getElementById('realTime').innerHTML = '';
+    //document.getElementById('realTime').innerHTML = '';
 }
 
+function addEventListenerForThrottle() {
+    window.addEventListener("keydown", handleThrottlePress);
+    window.addEventListener("keyup", handleThrottleRelease);
+
+    throttleButton.addEventListener("mousedown", handleThrottlePressButton);
+    throttleButton.addEventListener("mouseup", handleThrottleReleaseButton);
+    throttleButton.addEventListener("mouseleave", handleThrottleReleaseButton);
+}
+
+function removeEventListenersForThrottle() {
+    window.removeEventListener("keydown", handleThrottlePress);
+    window.removeEventListener("keyup", handleThrottleRelease);
+
+    throttleButton.removeEventListener("mousedown", handleThrottlePressButton);
+    throttleButton.removeEventListener("mouseup", handleThrottleReleaseButton);
+    throttleButton.removeEventListener("mouseleave", handleThrottleReleaseButton);
+}
 // Initialize the manufacturers screen
 generateSelectionScreen();
