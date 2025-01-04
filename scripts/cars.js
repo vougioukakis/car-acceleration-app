@@ -1,6 +1,7 @@
 // tyre coeff: not friction coefficient
 // normal road tires: 1.1
 // high performance sports tires : 1.4
+// drag slicks : 1.7
 // lsd adds 0.1
 
 const cars = [
@@ -48,7 +49,8 @@ const cars = [
         max_torque: 1150,
         shift_earlier: 100,
         spool_speed: 0.2,
-        blow_off: 1
+        blow_off: 1,
+        lsd: 1
     },
     {
         name: "2013_Peugeot_208_GTI",
@@ -94,7 +96,8 @@ const cars = [
         max_torque: 275,
         shift_earlier: 100,
         spool_speed: 0.09,
-        blow_off: 3
+        blow_off: 3,
+        lsd: 0
     },
     {
         name: "Nismo_400R",
@@ -140,7 +143,8 @@ const cars = [
         max_torque: 469,
         shift_earlier: 500,
         spool_speed: 0.065,
-        blow_off: 2
+        blow_off: 2,
+        lsd: 1
     },
     {
         name: "Opel_Corsa_C_1.4",
@@ -186,7 +190,8 @@ const cars = [
         max_torque: 125,
         shift_earlier: 500,
         spool_speed: 0,
-        blow_off: 0
+        blow_off: 0,
+        lsd: 0
     },
     {
         name: "BMW_M3_E92_manual",
@@ -232,7 +237,8 @@ const cars = [
         max_torque: 400,
         shift_earlier: 300,
         spool_speed: 0,
-        blow_off: 0
+        blow_off: 0,
+        lsd: 1
     },
     {
         name: "Toyota_Supra_FF",
@@ -278,7 +284,8 @@ const cars = [
         max_torque: 590,
         shift_earlier: 300,
         spool_speed: 0.03,
-        blow_off: 1
+        blow_off: 1,
+        lsd: 1
     },
     {
         name: "Citroen_Saxo_VTS",
@@ -324,7 +331,8 @@ const cars = [
         max_torque: 145,
         shift_earlier: 100,
         spool_speed: 0,
-        blow_off: 0
+        blow_off: 0,
+        lsd: 0
     },
     {
         name: "Peugeot_106_GTI",
@@ -370,7 +378,8 @@ const cars = [
         max_torque: 145,
         shift_earlier: 100,
         spool_speed: 0,
-        blow_off: 0
+        blow_off: 0,
+        lsd: 0
     },
     {
         name: "Saxo_VTS_Custom",
@@ -416,7 +425,8 @@ const cars = [
         max_torque: 182,
         shift_earlier: 100,
         spool_speed: 0,
-        blow_off: 0
+        blow_off: 0,
+        lsd: 0
     },
     {
         name: "Peugeot_308_GTI",
@@ -462,7 +472,8 @@ const cars = [
         max_torque: 330,
         shift_earlier: 100,
         spool_speed: 0.09,
-        blow_off: 3
+        blow_off: 3,
+        lsd: 1
     },
 ];
 
