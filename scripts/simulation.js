@@ -146,6 +146,7 @@ class Run {
 	spinning = false;
 
 	//times
+	to_100km = '';
 	to_400m = '';
 	to_800m = '';
 
@@ -374,6 +375,7 @@ class Run {
 		let i = this.iter_index;
 		this.update_seconds(i);
 		this.distance_calculations();
+		this.update_times();
 
 		let has_spool =
 			this.car.engine.forced_induction === 1 ||
@@ -503,6 +505,11 @@ class Run {
 		this.shift_call = false;
 	}
 
+	update_times() {
+		if (this.to_100km === '' && this.current_speed >= 27.777) {
+			this.to_100km = this.current_seconds.toFixed(1);
+		}
+	}
 	compute_acceleration(i) {
 		// acceleration in G's
 		let delta_u = this.speed[i] - this.speed[i - 1];

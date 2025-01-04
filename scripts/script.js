@@ -72,6 +72,7 @@ function updateSimulation() {
         document.getElementById("speed").innerText = `Speed: ${(run.current_speed * 3.6).toFixed()} km/h`;
         document.getElementById("time").innerText = `Time: ${run.current_seconds.toFixed(1)} s`;
         document.getElementById("quarterMile").innerText = `Quarter Mile: ${run.to_400m}s`;
+        document.getElementById("to_100km").innerText = `0-100 kmh: ${run.to_100km}s`;
     }
 
     // save the current time as last time for next frame
