@@ -139,6 +139,10 @@ function addEventListenerForThrottle() {
     throttleButton.addEventListener("mousedown", handleThrottlePressButton);
     throttleButton.addEventListener("mouseup", handleThrottleReleaseButton);
     throttleButton.addEventListener("mouseleave", handleThrottleReleaseButton);
+    // add touchstart touchend and touchcancel
+    throttleButton.addEventListener("touchstart", handleThrottlePressButton);
+    throttleButton.addEventListener("touchend", handleThrottleReleaseButton);
+    throttleButton.addEventListener("touchcancel", handleThrottleReleaseButton);
 }
 
 function removeEventListenersForThrottle() {
@@ -148,6 +152,10 @@ function removeEventListenersForThrottle() {
     throttleButton.removeEventListener("mousedown", handleThrottlePressButton);
     throttleButton.removeEventListener("mouseup", handleThrottleReleaseButton);
     throttleButton.removeEventListener("mouseleave", handleThrottleReleaseButton);
+
+    throttleButton.removeEventListener("touchstart", handleThrottlePressButton);
+    throttleButton.removeEventListener("touchend", handleThrottleReleaseButton);
+    throttleButton.removeEventListener("touchcancel", handleThrottleReleaseButton);
 }
 // Initialize the manufacturers screen
 generateSelectionScreen();
