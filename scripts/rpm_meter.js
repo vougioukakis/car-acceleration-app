@@ -8,11 +8,15 @@ const rpmLabelsContainer = document.querySelector('.rpm-labels');
 
 function initializeRevMeter() {
     maxRPM = run.car.engine.redline;
-    extendedMaxRPM = maxRPM + 1000;
+    extendedMaxRPM = maxRPM + (1000 - maxRPM % 1000);
     totalMarks = extendedMaxRPM / 1000;
-    rpmLabelsContainer.style.gap = `${500 / (totalMarks)}px`; // Space labels evenly
-    // 500 is the container width.
+    console.log('marks', totalMarks);
+    console.log('extended', extendedMaxRPM);
 
+    const redline = document.createElement('div');
+    redline.classList.add('redline');
+    redline.style.left = `calc(${(((maxRPM - minRPM) / (extendedMaxRPM - minRPM) * 100))}% - 5px)`;
+    document.getElementById('revMeter').appendChild(redline);
     for (let i = 1; i <= totalMarks; i++) {
         const label = document.createElement('div');
         label.classList.add('rpm-label');

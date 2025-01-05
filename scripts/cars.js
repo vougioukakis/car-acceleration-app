@@ -60,7 +60,7 @@ const cars = [
         rear_weight: 0.38,
         c_d: 0.345,
         frontal: 2.1,
-        df_coeff: -0.07,
+        df_coeff: -0.08,
         wheel_radius: 0.3085,
         tyre_coeff: 1.1,
         cm_height: 0.58,

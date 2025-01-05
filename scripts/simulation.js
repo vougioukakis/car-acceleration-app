@@ -479,8 +479,8 @@ class Run {
 	}
 
 	jump_off_redline() {
-		if (this.car.engine.redline - this.current_rpm < 50) {
-			let rng = Math.floor(Math.random() * (60 - 10 + 1)) + 10;
+		if (this.car.engine.redline - this.current_rpm < 10) {
+			let rng = Math.floor(Math.random() * (51)) + 10;
 			this.current_rpm -= rng;
 		}
 	}

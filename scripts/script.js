@@ -31,9 +31,6 @@ function handleThrottleReleaseButton(event) {
     isRevving = false;
 }
 
-//BUG: simulation starts automatically; go to simulation -> car screen -> simulation again
-
-
 function startSimulation() {
     started = true;
 }
@@ -52,8 +49,9 @@ function updateSimulation() {
     }
 
     if (!launched) {
-        // control throttle?
         updateRevDisplay(run.current_rpm);
+        document.getElementById("rpm").innerText = `RPM: ${run.current_rpm.toFixed()}`;
+
         return;
     }
 
