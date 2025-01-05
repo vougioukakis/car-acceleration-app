@@ -7,6 +7,7 @@ const timePerTick = 1000 / targetFps; // = 25 ms when target FPS is 40
 let deltaTime = 0;
 let isRevving = false;
 let launched = false;
+let soundStarted = false;
 function handleThrottlePress(event) {
     if (event.code === "ArrowUp") {
         event.preventDefault();
@@ -68,6 +69,7 @@ function updateSimulation() {
         }
         timeAccumulator -= timePerTick;
         updateRevDisplay(run.current_rpm);
+        updateEnginePitch(run.current_rpm);
 
         document.getElementById("rpm").innerText = `RPM: ${run.current_rpm.toFixed()}`;
         document.getElementById("speed").innerText = `Speed: ${(run.current_speed * 3.6).toFixed()} km/h`;
@@ -90,7 +92,10 @@ document.getElementById("startButton").addEventListener("click", launchSimulatio
 
 function gameLoop() {
     if (!started) return;
-
+    if (started && !soundStarted) {
+        loadEngineSound('./engine_sounds/Citroen_Saxo_VTS_Custom.mp3');
+        soundStarted = true;
+    }
     if (started && isRevving && !launched) {
         run.rev(); // Call run.rev() when "Up" key is held down
     }
@@ -109,3 +114,43 @@ function finish() {
     document.getElementById('state').innerHTML = 'Finished';
 }
 //requestAnimationFrame(gameLoop);
+
+//...sounds
+// Web Audio API context
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+// Variables
+let sourceNode; // To hold the audio source
+const basePlaybackRate = 0.1; // The playback rate at the minimum RPM
+
+// Load and loop the audio
+async function loadEngineSound(audioUrl) {
+    const response = await fetch(audioUrl);
+    const data = await response.arrayBuffer();
+    const buffer = await audioContext.decodeAudioData(data);
+    sourceNode = audioContext.createBufferSource();
+    sourceNode.buffer = buffer;
+
+    const gainNode = audioContext.createGain();
+    gainNode.gain.value = 1.0;
+    sourceNode.connect(gainNode).connect(audioContext.destination);
+    sourceNode.start(0); // Start playing the sound
+
+    // Keep the sound looping manually in the game loop
+    sourceNode.onended = function () {
+        // If sound finishes, restart it to loop
+        loadEngineSound(audioUrl);
+    };
+}
+
+// Update pitch based on RPM
+function updateEnginePitch(rpm) {
+    if (!sourceNode) return;
+
+    // Normalize RPM to a 0-1 range and map it to playback rate
+    const normalizedRPM = (rpm - minRPM) / (maxRPM - minRPM);
+    const playbackRate = basePlaybackRate + normalizedRPM * (2.0 - basePlaybackRate); // Adjust range
+
+    // Update playback rate continuously without restarting the sound
+    sourceNode.playbackRate.value = playbackRate;
+}
