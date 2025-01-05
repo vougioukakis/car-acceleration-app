@@ -426,7 +426,9 @@ const cars = [
         shift_earlier: 100,
         spool_speed: 0,
         blow_off: 0,
-        lsd: 0
+        lsd: 0,
+        sound_pitch_0: 0.18,
+        sound_pitch_1: 1.03
     },
     {
         name: "Peugeot_308_GTI",

@@ -9,7 +9,6 @@ class Engine {
 		this.forced_induction = data["forced_induction"];
 		this.flat_turbo = data["flat_turbo"];
 		this.spool_speed = data["spool_speed"];
-		this.blow_off = data["blow_off"];
 		this.max_torque = data["max_torque"];
 		this.coefficients = [
 			data["coefficient_0"],
@@ -21,6 +20,8 @@ class Engine {
 			data["coefficient_6"],
 			data["coefficient_7"],
 		];
+		this.blow_off = data["blow_off"];
+
 	}
 }
 
@@ -80,6 +81,20 @@ class Car {
 		this.engine = new Engine(this.data);
 		this.chassis = new Chassis(this.data);
 		this.transmission = new Transmission(this.data);
+
+		//sounds
+		this.has_sound = true;
+		this.sound_url = `./engine_sounds/${this.name}.mp3`;
+
+		// TODO: remove the try catch once cars have sound pitch data
+		try {
+			this.sound_pitch_0 = this.data["sound_pitch_0"];
+			this.sound_pitch_1 = this.data["sound_pitch_1"];
+		} catch (error) {
+			console.error(`Error fetching sound pitch data for ${this.name}:`, error);
+			this.has_sound = false;
+		}
+
 	}
 
 	torque(N) {
@@ -150,6 +165,8 @@ class Run {
 
 	//state
 	done = false;
+
+	//sounds
 
 	constructor(car, is_player) {
 		this.car = car;

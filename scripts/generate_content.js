@@ -131,6 +131,11 @@ function resetSimulation() {
     launched = false;
     run = null;
     car = null;
+    if (sourceNode) {
+        sourceNode.stop();
+        sourceNode = null;
+        soundStarted = false;
+    }
 
     document.getElementById('rpm').innerHTML = `&nbsp;`;
     document.getElementById('speed').innerHTML = 'Use the throttle to rev the car and click launch when ready!';

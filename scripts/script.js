@@ -9,6 +9,11 @@ let isRevving = false;
 let launched = false;
 let soundStarted = false;
 let previous_rpm = 0;
+
+let sourceNode; // To hold the audio source
+let gainNode; // To control the volume of the audio
+let basePlaybackRate; // The playback rate at the minimum RPM
+
 function handleThrottlePress(event) {
     if (event.code === "ArrowUp") {
         event.preventDefault();
@@ -45,7 +50,7 @@ function launchSimulation() {
 
 
 function updateSimulation() {
-    console.log('started = ', started);
+    //console.log('started = ', started);
     if (!started) {
         return;
     }
@@ -93,12 +98,12 @@ document.getElementById("startButton").addEventListener("click", launchSimulatio
 
 function gameLoop() {
     if (!started) return;
-    if (started && !soundStarted) {
-        loadEngineSound('./engine_sounds/Citroen_Saxo_VTS_Custom_s.mp3');
+    if (started && !soundStarted && car.has_sound) {
+        loadEngineSound(car.sound_url);
         soundStarted = true;
     }
     if (started && isRevving && !launched) {
-        run.rev(); // Call run.rev() when "Up" key is held down
+        run.rev();
         updateEnginePitch(run.current_rpm);
     }
     else if (started && !isRevving && !launched) {
@@ -112,6 +117,11 @@ function gameLoop() {
 
 function finish() {
     console.log('Simulation finished');
+    if (sourceNode) {
+        sourceNode.stop();
+        sourceNode = null;
+        soundStarted = false;
+    }
     started = false;
     launched = false;
     document.getElementById('state').innerHTML = 'Finished';
@@ -123,19 +133,26 @@ function finish() {
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-// Variables
-let sourceNode; // To hold the audio source
-let gainNode; // To control the volume of the audio
-const basePlaybackRate = 0.18; // The playback rate at the minimum RPM
 
 // Load and loop the audio
 async function loadEngineSound(audioUrl) {
-    console.log('Loading engine sound');
-    const response = await fetch(audioUrl);
-    const data = await response.arrayBuffer();
-    const buffer = await audioContext.decodeAudioData(data);
+    console.log('Fetching engine sound for ' + car.name);
+    let buffer;
+    try {
+        const response = await fetch(audioUrl);
+        const data = await response.arrayBuffer();
+        buffer = await audioContext.decodeAudioData(data);
+    } catch (error) {
+        console.log('Error fetching or decoding audio data for' + car.name + ',' + error);
+        car.has_sound = false;
+        return;
+    }
+
+
+    basePlaybackRate = car.sound_pitch_0;
     sourceNode = audioContext.createBufferSource();
     sourceNode.buffer = buffer;
+    console.log('sourcenode = ', sourceNode);
     sourceNode.loop = true;
 
     gainNode = audioContext.createGain();
@@ -151,11 +168,11 @@ function updateEnginePitch(rpm) {
     if (!sourceNode) return;
 
     if (Math.abs(rpm - previous_rpm) > 10) {
-        console.log("updating sound");
+        //console.log("updating sound");
 
         // Normalize RPM to a 0-1 range and map it to playback rate
         const normalizedRPM = (rpm) / (maxRPM);
-        const playbackRate = basePlaybackRate + normalizedRPM * (1.03 - basePlaybackRate); // Adjust range
+        const playbackRate = basePlaybackRate + normalizedRPM * (car.sound_pitch_1 - basePlaybackRate); // Adjust range
 
         if (previous_rpm > rpm) {
             gainNode.gain.linearRampToValueAtTime(0.8, audioContext.currentTime + 0.1); // Smooth volume change
