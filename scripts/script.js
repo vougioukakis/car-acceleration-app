@@ -99,8 +99,10 @@ document.getElementById("startButton").addEventListener("click", launchSimulatio
 function gameLoop() {
     if (!started) return;
     if (started && !soundStarted && car.has_sound) {
-        loadEngineSound(car.sound_url);
-        soundStarted = true;
+        let isWorking = loadEngineSound(car.sound_url);
+        if (isWorking) {
+            soundStarted = true;
+        }
     }
     if (started && isRevving && !launched) {
         run.rev();
@@ -145,7 +147,8 @@ async function loadEngineSound(audioUrl) {
     } catch (error) {
         console.log('Error fetching or decoding audio data for' + car.name + ',' + error);
         car.has_sound = false;
-        return;
+        soundStarted = false;
+        return 0;
     }
 
 
@@ -159,6 +162,7 @@ async function loadEngineSound(audioUrl) {
     gainNode.gain.value = 1.0;
     sourceNode.connect(gainNode).connect(audioContext.destination);
     sourceNode.start(0); // Start playing the sound
+    return 1;
 
 }
 
@@ -175,11 +179,12 @@ function updateEnginePitch(rpm) {
         const playbackRate = basePlaybackRate + normalizedRPM * (car.sound_pitch_1 - basePlaybackRate); // Adjust range
 
         if (previous_rpm > rpm) {
-            gainNode.gain.linearRampToValueAtTime(0.8, audioContext.currentTime + 0.1); // Smooth volume change
+            gainNode.gain.linearRampToValueAtTime(0.7, audioContext.currentTime + 0.1); // Smooth volume change
         } else {
             gainNode.gain.linearRampToValueAtTime(1.0, audioContext.currentTime + 0.1); // Smooth volume change
         }
         // Update playback rate continuously without restarting the sound
+        console.log('playback rate = ' + playbackRate);
         sourceNode.playbackRate.value = playbackRate;
         previous_rpm = rpm;
 

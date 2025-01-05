@@ -77,7 +77,7 @@ const cars = [
         gear_8: 0,
         gear_9: 0,
         idle_RPM: 1000,
-        shift_delay_coefficient: 7,
+        shift_delay_coefficient: 10,
         flywheel_coefficient: 0.25,
         drive_efficiency: 0.88,
         redline: 6500,
@@ -97,7 +97,9 @@ const cars = [
         shift_earlier: 100,
         spool_speed: 0.09,
         blow_off: 3,
-        lsd: 0
+        lsd: 0,
+        sound_pitch_0: 0.3,
+        sound_pitch_1: 1.05
     },
     {
         name: "Nismo_400R",
@@ -124,7 +126,7 @@ const cars = [
         gear_8: 0,
         gear_9: 0,
         idle_RPM: 1000,
-        shift_delay_coefficient: 8,
+        shift_delay_coefficient: 11,
         flywheel_coefficient: 0.3,
         drive_efficiency: 0.83,
         redline: 8000,
@@ -144,7 +146,9 @@ const cars = [
         shift_earlier: 500,
         spool_speed: 0.065,
         blow_off: 2,
-        lsd: 1
+        lsd: 1,
+        sound_pitch_0: 0.3,
+        sound_pitch_1: 1.0
     },
     {
         name: "Opel_Corsa_C_1.4",
@@ -171,7 +175,7 @@ const cars = [
         gear_8: 0,
         gear_9: 0,
         idle_RPM: 1000,
-        shift_delay_coefficient: 9,
+        shift_delay_coefficient: 13,
         flywheel_coefficient: 0.3,
         drive_efficiency: 0.87,
         redline: 6200,
