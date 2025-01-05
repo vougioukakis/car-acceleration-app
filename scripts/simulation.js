@@ -165,7 +165,7 @@ class Run {
 	}
 
 	rev() {
-		let increment = 50 + 0.1 * this.car.torque(this.current_rpm);
+		let increment = 50 + this.car.torque(this.current_rpm) ** 0.8;
 		this.current_rpm = Math.min(this.current_rpm + increment, this.car.engine.redline - 1);
 		this.jump_off_redline(); // only runs if at redline
 	}
@@ -429,8 +429,7 @@ class Run {
 		);
 		this.clutch_extra_revs = Math.max(
 			0,
-			this.clutch_extra_revs -
-			1000 / this.car.transmission.shift_delay_coefficient
+			this.clutch_extra_revs - 120
 		);
 
 		if (this.gear_index === 0) {
@@ -504,6 +503,7 @@ class Run {
 			(60 * this.car.transmission.shift_delay_coefficient) /
 			((this.gear_index + 2) *
 				this.car.transmission.flywheel_coefficient);
+
 		if (this.car.engine.forced_induction == 1) {
 			this.spool_loss = 0.2;
 		}
