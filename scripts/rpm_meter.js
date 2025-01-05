@@ -29,6 +29,7 @@ function resetRevMeter() {
     revFill.style.width = '0%';
     revFill.style.backgroundColor = 'rgb(255, 255, 255)';
     rpmLabelsContainer.innerHTML = '';
+    document.getElementsByClassName('redline')[0].remove();
 }
 
 /**
