@@ -1,7 +1,3 @@
-let fps = 40;
-let manual = 1;
-//console.log = function () { } //disables logs
-
 class Engine {
 	constructor(data) {
 		this.idle_RPM = data["idle_RPM"];
@@ -140,7 +136,7 @@ class Run {
 
 	current_seconds = 0;
 	end = 80; //run duration in s
-	max_steps = this.end * fps;
+	max_steps = this.end * targetFps;
 	step = this.end / this.max_steps;
 	iter_index = 0;
 	time = linspace(0, this.end, this.max_steps); //s
@@ -581,5 +577,3 @@ class Run {
 //let car = new Car("Citroen_Saxo_VTS_Custom");
 //let run = new Run(car, true);
 // you begin by running simulate_step in a loop
-let car;
-let run;
