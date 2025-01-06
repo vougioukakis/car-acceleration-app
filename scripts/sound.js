@@ -50,7 +50,7 @@ async function loadEngineSound(audioUrl) {
 function updateEnginePitch(rpm) {
     if (!sourceNode) return;
 
-    if (Math.abs(rpm - previous_rpm) > 10) {
+    if (Math.abs(rpm - previous_rpm) > 40) {
 
         // normalize RPM to a 0-1 range and map it to playback rate
         const normalizedRPM = (rpm) / (maxRPM);
