@@ -4,7 +4,6 @@ let run;
 let started = false;
 let isRevving = false;
 let launched = false;
-let previous_rpm = 0;
 
 //sound
 let soundStarted = false;
@@ -12,6 +11,8 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 let sourceNode; // To hold the audio source
 let gainNode; // To control the volume of the audio
 let basePlaybackRate; // The playback rate at the minimum RPM
+let previous_rpm = 0;
+
 
 // timing
 const targetFps = 40;

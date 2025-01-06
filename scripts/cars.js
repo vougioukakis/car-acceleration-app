@@ -50,7 +50,10 @@ const cars = [
         shift_earlier: 100,
         spool_speed: 0.2,
         blow_off: 1,
-        lsd: 1
+        lsd: 1,
+        sound_pitch_0: 0.1,
+        sound_pitch_1: 1.05
+
     },
     {
         name: "2013_Peugeot_208_GTI",
@@ -147,7 +150,7 @@ const cars = [
         spool_speed: 0.065,
         blow_off: 2,
         lsd: 1,
-        sound_pitch_0: 0.3,
+        sound_pitch_0: 0.2,
         sound_pitch_1: 1.0
     },
     {
@@ -195,7 +198,9 @@ const cars = [
         shift_earlier: 500,
         spool_speed: 0,
         blow_off: 0,
-        lsd: 0
+        lsd: 0,
+        sound_pitch_0: 0.3,
+        sound_pitch_1: 1.05
     },
     {
         name: "BMW_M3_E92_manual",
@@ -222,8 +227,8 @@ const cars = [
         gear_8: 0,
         gear_9: 0,
         idle_RPM: 1000,
-        shift_delay_coefficient: 7,
-        flywheel_coefficient: 0.3,
+        shift_delay_coefficient: 15,
+        flywheel_coefficient: 0.4,
         drive_efficiency: 0.88,
         redline: 8400,
         forced_induction: 0,
@@ -242,7 +247,9 @@ const cars = [
         shift_earlier: 300,
         spool_speed: 0,
         blow_off: 0,
-        lsd: 1
+        lsd: 1,
+        sound_pitch_0: 0.3,
+        sound_pitch_1: 1.13
     },
     {
         name: "Toyota_Supra_FF",
@@ -269,7 +276,7 @@ const cars = [
         gear_8: 0,
         gear_9: 0,
         idle_RPM: 1000,
-        shift_delay_coefficient: 7,
+        shift_delay_coefficient: 16,
         flywheel_coefficient: 0.3,
         drive_efficiency: 0.86,
         redline: 7500,
@@ -289,7 +296,9 @@ const cars = [
         shift_earlier: 300,
         spool_speed: 0.03,
         blow_off: 1,
-        lsd: 1
+        lsd: 1,
+        sound_pitch_0: 0.3,
+        sound_pitch_1: 1.05
     },
     {
         name: "Citroen_Saxo_VTS",
@@ -316,8 +325,8 @@ const cars = [
         gear_8: 0,
         gear_9: 0,
         idle_RPM: 1000,
-        shift_delay_coefficient: 9,
-        flywheel_coefficient: 0.23,
+        shift_delay_coefficient: 15,
+        flywheel_coefficient: 0.25,
         drive_efficiency: 0.87,
         redline: 7250,
         forced_induction: 0,
@@ -336,7 +345,9 @@ const cars = [
         shift_earlier: 100,
         spool_speed: 0,
         blow_off: 0,
-        lsd: 0
+        lsd: 0,
+        sound_pitch_0: 0.3,
+        sound_pitch_1: 1.05
     },
     {
         name: "Peugeot_106_GTI",
@@ -383,7 +394,9 @@ const cars = [
         shift_earlier: 100,
         spool_speed: 0,
         blow_off: 0,
-        lsd: 0
+        lsd: 0,
+        sound_pitch_0: 0.3,
+        sound_pitch_1: 1.05
     },
     {
         name: "Saxo_VTS_Custom",
@@ -479,7 +492,9 @@ const cars = [
         shift_earlier: 100,
         spool_speed: 0.09,
         blow_off: 3,
-        lsd: 1
+        lsd: 1,
+        sound_pitch_0: 0.3,
+        sound_pitch_1: 1.05
     },
 ];
 

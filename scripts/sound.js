@@ -1,5 +1,13 @@
 
-// Load and loop the audio
+
+/**
+ * Loads and decodes an audio file for a car's engine sound.
+ *
+ * @param {string} audioUrl - The URL of the audio file to load.
+ * @returns {boolean} - 1 if the audio file is successfully loaded and decoded,
+ * or 0 if an error occurs.
+ *
+ */
 async function loadEngineSound(audioUrl) {
     console.log('Fetching engine sound for ' + car.name);
     let buffer;
@@ -14,37 +22,44 @@ async function loadEngineSound(audioUrl) {
         return 0;
     }
 
-
     basePlaybackRate = car.sound_pitch_0;
+
     sourceNode = audioContext.createBufferSource();
     sourceNode.buffer = buffer;
-    console.log('sourcenode = ', sourceNode);
     sourceNode.loop = true;
 
     gainNode = audioContext.createGain();
     gainNode.gain.value = 1.0;
+
     sourceNode.connect(gainNode).connect(audioContext.destination);
     sourceNode.start(0); // Start playing the sound
     return 1;
-
 }
 
 
-// Update pitch based on RPM
+/**
+ * Updates the engine sound pitch based on the current RPM, only 
+ * if the difference in rpm between updates is greater than
+ * a set threshold.
+ * This function adjusts the playback rate and volume of the engine sound
+ * to simulate changes in engine speed.
+ *
+ * @param {number} rpm - The current rpm.
+ * @returns {void}
+ */
 function updateEnginePitch(rpm) {
     if (!sourceNode) return;
 
     if (Math.abs(rpm - previous_rpm) > 10) {
-        //console.log("updating sound");
 
-        // Normalize RPM to a 0-1 range and map it to playback rate
+        // normalize RPM to a 0-1 range and map it to playback rate
         const normalizedRPM = (rpm) / (maxRPM);
         const playbackRate = basePlaybackRate + normalizedRPM * (car.sound_pitch_1 - basePlaybackRate); // Adjust range
 
         if (previous_rpm > rpm) {
-            gainNode.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.1); // Smooth volume change
+            gainNode.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.2); // Smooth volume change
         } else {
-            gainNode.gain.linearRampToValueAtTime(1.0, audioContext.currentTime + 0.1); // Smooth volume change
+            gainNode.gain.linearRampToValueAtTime(1.0, audioContext.currentTime + 0.2); // Smooth volume change
         }
         // Update playback rate continuously without restarting the sound
         console.log('playback rate = ' + playbackRate);

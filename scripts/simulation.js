@@ -184,7 +184,7 @@ class Run {
 	}
 
 	off_throttle() {
-		let decrement = 50 + this.car.transmission.flywheel_coefficient;
+		let decrement = 100 * this.car.transmission.flywheel_coefficient;
 		this.current_rpm = Math.max(this.current_rpm - decrement, this.car.engine.idle_RPM);
 	}
 
@@ -442,7 +442,7 @@ class Run {
 		);
 		this.clutch_extra_revs = Math.max(
 			0,
-			this.clutch_extra_revs - 120
+			this.clutch_extra_revs - 110
 		);
 
 		if (this.gear_index === 0) {
@@ -514,11 +514,11 @@ class Run {
 		// turbo spool losses and clutch rpm after shifting
 		this.clutch_extra_revs =
 			(60 * this.car.transmission.shift_delay_coefficient) /
-			((this.gear_index + 2) *
+			((this.gear_index ** 0.5 + 2) *
 				this.car.transmission.flywheel_coefficient);
 
 		if (this.car.engine.forced_induction == 1) {
-			this.spool_loss = 0.2;
+			this.spool_loss = 0.4;
 		}
 
 		this.shift_call = false;
@@ -539,7 +539,7 @@ class Run {
 	drop_RPM(i) {
 		this.speed[i] = this.speed[i - 1] - 0.05;
 		this.current_speed = this.speed[i];
-		this.current_rpm -= 500 * this.car.transmission.flywheel_coefficient; // rpm drop each step
+		this.current_rpm -= 100 * this.car.transmission.flywheel_coefficient; // rpm drop each step
 		this.shift_iter_indexs_left -= 1;
 		return;
 	}
