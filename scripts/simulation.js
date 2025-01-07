@@ -537,7 +537,7 @@ class Run {
 	}
 
 	drop_RPM(i) {
-		this.speed[i] = this.speed[i - 1] - 0.05;
+		this.speed[i] = this.speed[i - 1] - 0.01;
 		this.current_speed = this.speed[i];
 		this.current_rpm -= 100 * this.car.transmission.flywheel_coefficient; // rpm drop each step
 		this.shift_iter_indexs_left -= 1;
