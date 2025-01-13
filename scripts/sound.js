@@ -36,6 +36,16 @@ async function loadEngineSound(audioUrl) {
     return 1;
 }
 
+function createSourceNode() {
+    sourceNode = audioContext.createBufferSource();
+    sourceNode.buffer = buffer;
+    sourceNode.loop = false;
+
+    gainNode = audioContext.createGain();
+    gainNode.gain.value = 1.0;
+
+}
+
 
 /**
  * Updates the engine sound pitch based on the current RPM, only 
@@ -57,9 +67,9 @@ function updateEnginePitch(rpm) {
         const playbackRate = basePlaybackRate + normalizedRPM * (car.sound_pitch_1 - basePlaybackRate); // Adjust range
 
         if (previous_rpm > rpm) {
-            gainNode.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.2); // Smooth volume change
+            gainNode.gain.linearRampToValueAtTime(0.7, audioContext.currentTime + 0.3); // Smooth volume change
         } else {
-            gainNode.gain.linearRampToValueAtTime(1.0, audioContext.currentTime + 0.2); // Smooth volume change
+            gainNode.gain.linearRampToValueAtTime(1.0, audioContext.currentTime + 0.3); // Smooth volume change
         }
         // Update playback rate continuously without restarting the sound
         console.log('playback rate = ' + playbackRate);

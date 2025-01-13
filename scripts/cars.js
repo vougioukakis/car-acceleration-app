@@ -228,7 +228,7 @@ const cars = [
         gear_9: 0,
         idle_RPM: 1000,
         shift_delay_coefficient: 15,
-        flywheel_coefficient: 0.4,
+        flywheel_coefficient: 0.6,
         drive_efficiency: 0.88,
         redline: 8400,
         forced_induction: 0,
