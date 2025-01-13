@@ -184,7 +184,7 @@ class Run {
 	}
 
 	off_throttle() {
-		let decrement = 140;
+		let decrement = this.car.engine.redline / 100 * 1.1 + this.car.transmission.flywheel_coefficient * 5;
 		this.current_rpm = Math.max(this.current_rpm - decrement, this.car.engine.idle_RPM);
 	}
 
