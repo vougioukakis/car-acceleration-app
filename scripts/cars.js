@@ -504,7 +504,7 @@ const cars = [
         rear_weight: 0.56,
         c_d: 0.33,
         frontal: 1.873,
-        df_coeff: 0.45,//for wing on,485kg at 250kmh use 0.98,
+        df_coeff: 0.55,//for wing on,485kg at 250kmh use 0.98,
         wheel_radius: 0.3575,
         tyre_coeff: 1.5,
         cm_height: 0.35,
