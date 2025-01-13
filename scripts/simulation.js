@@ -184,7 +184,7 @@ class Run {
 	}
 
 	off_throttle() {
-		let decrement = 100 * this.car.transmission.flywheel_coefficient;
+		let decrement = 140;
 		this.current_rpm = Math.max(this.current_rpm - decrement, this.car.engine.idle_RPM);
 	}
 
@@ -194,22 +194,32 @@ class Run {
 
 	/**
 	 * @param speed
-	 * @returns downforce
+	 * @returns downforce in Newtons
 	 */
 	downforce(speed) {
 		let df_coeff = this.car.chassis.df_coeff;
-		return df_coeff * (speed ** 2);
+		let result = df_coeff * (speed ** 2);
+
+		if (speed > 55.4 && speed < 55.6) console.log("downforce at 200kmh = " + result / 9.81 + 'kg');
+		if (speed > 69.3 && speed < 69.5) console.log("downforce at 250kmh = " + result / 9.81 + 'kg');
+
+		return result;
+
 	}
 
 	/**
 	 * @param speed
-	 * @returns {number} vertical load on all tires
+	 * @returns {number} vertical load on all tires in Newtons
 	 */
 	vertical_load(speed) {
-		let weight = this.car.chassis.weight;
+		let weight = this.car.chassis.weight * 9.81;//convert to Newtons
 		let downforce = this.downforce(speed);
+		let result = weight + downforce; //N
 
-		return weight + downforce;
+		if (speed > 55.4 && speed < 55.6) console.log("load at 200kmh = " + result / 9.81 + 'kg');
+		if (speed > 69.3 && speed < 69.5) console.log("load at 250kmh = " + result / 9.81 + 'kg');
+
+		return result;
 	}
 
 	/**
@@ -311,7 +321,7 @@ class Run {
 
 	roll_resistance(speed) {
 		if (speed > 0.1) {
-			return (0.02 + 1.111 * 1e-7 * speed + 0.24 * 1e-7 * ((speed / 3.6) ** 2)) * 9.81 * this.vertical_load(speed);
+			return (0.02 + 1.111 * 1e-7 * speed + 0.24 * 1e-7 * ((speed / 3.6) ** 2)) * this.vertical_load(speed);
 		} else {
 			return 0;
 		}

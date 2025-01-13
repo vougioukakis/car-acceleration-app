@@ -72,7 +72,7 @@ function updateEnginePitch(rpm) {
             gainNode.gain.linearRampToValueAtTime(1.0, audioContext.currentTime + 0.3); // Smooth volume change
         }
         // Update playback rate continuously without restarting the sound
-        console.log('playback rate = ' + playbackRate);
+        //console.log('playback rate = ' + playbackRate);
         sourceNode.playbackRate.value = playbackRate;
         previous_rpm = rpm;
 
