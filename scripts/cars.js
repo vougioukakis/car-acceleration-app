@@ -1,7 +1,8 @@
-// tyre coeff: not friction coefficient
-// normal road tires: 1.1
+// summer tires: 1.1
 // high performance sports tires : 1.4
-// drag slicks : 1.7
+// racing slick : 1.7
+// drag slicks : 2.0
+// top fuel drag slick : 4.5
 // lsd adds 0.1
 
 const cars = [
@@ -11,7 +12,7 @@ const cars = [
         model: "Speedtail",
         weight: 1597,
         rear_weight: 0.58,
-        c_d: 0.35,
+        c_d: 0.278,
         frontal: 1.98,
         df_coeff: 0.028,
         wheel_radius: 0.36,
