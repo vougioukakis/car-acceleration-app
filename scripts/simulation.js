@@ -213,13 +213,15 @@ class Run {
 	 */
 	vertical_load(speed) {
 		let weight = this.car.chassis.weight * 9.81;//convert to Newtons
+		console.log('downforce = ' + this.downforce(speed));
 		let downforce = this.downforce(speed);
 		let result = weight + downforce; //N
 
 		if (speed > 55.4 && speed < 55.6) console.log("load at 200kmh = " + result / 9.81 + 'kg');
 		if (speed > 69.3 && speed < 69.5) console.log("load at 250kmh = " + result / 9.81 + 'kg');
 
-		return result;
+		if (speed > 0) return result;
+		return weight;
 	}
 
 	/**
@@ -282,13 +284,13 @@ class Run {
 		let redline = this.car.engine.redline;
 		if (N >= redline) return 0;
 
-		let weight = this.car.chassis.weight;
 		let tyre_coeff = this.car.chassis.tyre_coeff;
 		let weight_transfer = this.weight_transfer();
 		let torque_at_wheels = this.torque_at_wheel_axis(N, gear_index);
 		let wheel_radius = this.car.chassis.wheel_radius;
 
-		let Fz = weight_transfer * weight * 9.81; // load on driving tyres
+
+		let Fz = weight_transfer * this.vertical_load(speed);//weight * 9.81; // load on driving tyres
 		let max_force = tyre_coeff * (Fz ** 0.995);
 		let result = Math.min(torque_at_wheels / wheel_radius, max_force);
 
