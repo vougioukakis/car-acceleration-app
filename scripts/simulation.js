@@ -15,6 +15,7 @@ class Engine {
 			data["coefficient_5"],
 			data["coefficient_6"],
 			data["coefficient_7"],
+			data["coefficient_8"]
 		];
 		this.blow_off = data["blow_off"];
 
@@ -95,7 +96,8 @@ class Car {
 
 	torque(N) {
 		let coefficients = this.engine.coefficients;
-		let [w, a, b, c, d, e, f, g] = [
+		let [v, w, a, b, c, d, e, f, g] = [
+			coefficients[8],
 			coefficients[7],
 			coefficients[6],
 			coefficients[5],
@@ -107,6 +109,7 @@ class Car {
 		];
 
 		let poly =
+			v * Math.pow(N, 8) +
 			w * Math.pow(N, 7) +
 			a * Math.pow(N, 6) +
 			b * Math.pow(N, 5) +
@@ -194,7 +197,7 @@ class Run {
 
 	/**
 	 * @param speed
-	 * @returns downforce in Newtons
+	 * @returns downforce in N
 	 */
 	downforce(speed) {
 		let df_coeff = this.car.chassis.df_coeff;
@@ -213,15 +216,17 @@ class Run {
 	 */
 	vertical_load(speed) {
 		let weight = this.car.chassis.weight * 9.81;//convert to Newtons
-		console.log('downforce = ' + this.downforce(speed));
-		let downforce = this.downforce(speed);
+		let downforce = this.downforce(speed); // N
 		let result = weight + downforce; //N
 
 		if (speed > 55.4 && speed < 55.6) console.log("load at 200kmh = " + result / 9.81 + 'kg');
 		if (speed > 69.3 && speed < 69.5) console.log("load at 250kmh = " + result / 9.81 + 'kg');
 
-		if (speed > 0) return result;
-		return weight;
+		if (speed > 0) {
+			return result;
+		} else {
+			return weight;
+		}
 	}
 
 	/**
@@ -291,7 +296,7 @@ class Run {
 
 
 		let Fz = weight_transfer * this.vertical_load(speed);//weight * 9.81; // load on driving tyres
-		let max_force = tyre_coeff * (Fz ** 0.995);
+		let max_force = tyre_coeff * Fz//(Fz ** 0.995);
 		let result = Math.min(torque_at_wheels / wheel_radius, max_force);
 
 		if (torque_at_wheels / wheel_radius > max_force) {
@@ -318,12 +323,25 @@ class Run {
 		let c_d = this.car.chassis.c_d;
 		let frontal_area = this.car.chassis.frontal;
 		let wheel_aero_drag = this.wheel_aero_drag(speed);
-		return 0.5 * c_d * frontal_area * 1.2 * (speed ** 2) + wheel_aero_drag;
+		return 0.5 * c_d * frontal_area * 1.202 * (speed ** 2) + wheel_aero_drag;
 	}
 
 	roll_resistance(speed) {
-		if (speed > 0.1) {
-			return (0.02 + 1.111 * 1e-7 * speed + 0.24 * 1e-7 * ((speed / 3.6) ** 2)) * this.vertical_load(speed);
+		if (speed > 0.01) {
+			let Zalpha = this.vertical_load(speed) ** 1.034; //N^...
+			let Pbeta = 230.632 ** (-0.4108); //kpa ^ ...
+			let a = 0.05933;
+			let b = 9.855e-5;
+			let c = 3.7231e-7;
+
+			let result = Zalpha * Pbeta * (a + b * (speed * 3.6) + c * (speed * 3.6) ** 2); //  SAE standard J2452 - (177,253)
+			//let result = this.vertical_load(speed) * (1e-2 + 5e-7 * speed / 3.6 + 2e-7 * ((speed / 3.6) ** 2)) // (194, 272)
+			//let result = (0.005 + (1 / 2.5) * (1e-2 + 0.0095 * (speed / (3.6 * 100)) ** 2)) * this.vertical_load(speed); // (176, 249)
+
+			if (speed > 69.3 && speed < 69.5) console.log("ROLLING RESISTANCE at 250kmh = " + result + 'N');
+			if (speed > 110.9 && speed < 111.2) console.log("ROLLING RESISTANCE at 400kmh = " + result + 'N');
+
+			return result;
 		} else {
 			return 0;
 		}
