@@ -5,6 +5,7 @@
 // top fuel drag slick : 4.5
 // lsd adds 0.1
 
+// TODO: fix nismo 400r torque curve
 const cars = [
     {
         name: "McLaren_Speedtail",
@@ -113,12 +114,12 @@ const cars = [
         model: "400R",
         weight: 1550,
         rear_weight: 0.42,
-        c_d: 0.4,
-        frontal: 2.2,
-        df_coeff: 0,
+        c_d: 0.36,
+        frontal: 2.3,
+        df_coeff: -0.06,
         wheel_radius: 0.325,
         tyre_coeff: 1.5,
-        cm_height: 0.48,
+        cm_height: 0.5,
         wheelbase: 2.72,
         drive: 0,
         final_drive: 4.111,
@@ -134,7 +135,7 @@ const cars = [
         idle_RPM: 1000,
         shift_delay_coefficient: 11,
         flywheel_coefficient: 0.3,
-        drive_efficiency: 0.83,
+        drive_efficiency: 0.82,
         redline: 8000,
         forced_induction: 1,
         electric: 0,
@@ -318,7 +319,7 @@ const cars = [
         df_coeff: -0.13,
         wheel_radius: 0.2795,
         tyre_coeff: 1.1,
-        cm_height: 0.58,
+        cm_height: 0.56,
         wheelbase: 2.385,
         drive: 1,
         final_drive: 3.936,
@@ -368,7 +369,7 @@ const cars = [
         df_coeff: -0.13,
         wheel_radius: 0.2795,
         tyre_coeff: 1.1,
-        cm_height: 0.58,
+        cm_height: 0.56,
         wheelbase: 2.385,
         drive: 1,
         final_drive: 3.936,
@@ -418,7 +419,7 @@ const cars = [
         df_coeff: -0.125,
         wheel_radius: 0.2985,
         tyre_coeff: 1.1,
-        cm_height: 0.55,
+        cm_height: 0.54,
         wheelbase: 2.38,
         drive: 1,
         final_drive: 4.538,

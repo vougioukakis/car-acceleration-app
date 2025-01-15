@@ -5,6 +5,7 @@ let totalMarks;
 const revFill = document.getElementById('revFill');
 const rpmLabelsContainer = document.querySelector('.rpm-labels');
 
+// TODO: Add perfect shift indicator
 
 function initializeRevMeter() {
     maxRPM = run.car.engine.redline;

@@ -1,5 +1,5 @@
-/**
- *  */
+// TODO: add indication for when a car supports sound
+// TODO: refactor this file
 let throttleButton = document.getElementById("throttle");
 
 function generateCarCard(carObj) {

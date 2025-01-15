@@ -1,3 +1,5 @@
+// TODO: Much later, add tire slip
+
 class Engine {
 	constructor(data) {
 		this.idle_RPM = data["idle_RPM"];
@@ -83,7 +85,6 @@ class Car {
 		this.has_sound = true;
 		this.sound_url = `./engine_sounds/${this.name}.mp3`;
 
-		// TODO: remove the try catch once cars have sound pitch data
 		try {
 			this.sound_pitch_0 = this.data["sound_pitch_0"];
 			this.sound_pitch_1 = this.data["sound_pitch_1"];
