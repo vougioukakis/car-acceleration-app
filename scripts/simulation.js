@@ -473,7 +473,7 @@ class Run {
 		);
 		this.clutch_extra_revs = Math.max(
 			0,
-			this.clutch_extra_revs - 110
+			this.clutch_extra_revs - 80
 		);
 
 		if (this.gear_index === 0) {
@@ -544,9 +544,8 @@ class Run {
 
 		// turbo spool losses and clutch rpm after shifting
 		this.clutch_extra_revs =
-			(60 * this.car.transmission.shift_delay_coefficient) /
-			((this.gear_index ** 0.5 + 2) *
-				this.car.transmission.flywheel_coefficient);
+			(140 * this.car.transmission.shift_delay_coefficient) * (this.car.transmission.flywheel_coefficient) / ((this.gear_index ** 1.5 + 2));
+
 
 		if (this.car.engine.forced_induction == 1) {
 			this.spool_loss = 0.4;

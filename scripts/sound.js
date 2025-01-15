@@ -67,12 +67,13 @@ function updateEnginePitch(rpm) {
         const normalizedRPM = (rpm) / (maxRPM);
         const playbackRate = basePlaybackRate + normalizedRPM * (car.sound_pitch_1 - basePlaybackRate); // Adjust range
 
+
         if (previous_rpm > rpm) {
-            gainNode.gain.value = 0.65
-            //gainNode.gain.linearRampToValueAtTime(0.7, audioContext.currentTime + 0.3); // Smooth volume change
+            //gainNode.gain.value = 1.0;
+            gainNode.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.2); // Smooth volume change
         } else {
-            //gainNode.gain.linearRampToValueAtTime(1.0, audioContext.currentTime + 0.3); // Smooth volume change
-            gainNode.gain.value = 1.0;
+            gainNode.gain.linearRampToValueAtTime(1.0, audioContext.currentTime + 0.2); // Smooth volume change
+            // gainNode.gain.value = 1.0;
         }
         // Update playback rate continuously without restarting the sound
         //console.log('playback rate = ' + playbackRate);
