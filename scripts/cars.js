@@ -54,8 +54,8 @@ const cars = [
         spool_speed: 0.2,
         blow_off: 1,
         lsd: 1,
-        sound_pitch_0: 0.1,
-        sound_pitch_1: 1.05
+        sound_pitch_0: 0.28,
+        sound_pitch_1: 1.02
 
     },
     {
@@ -155,8 +155,8 @@ const cars = [
         spool_speed: 0.065,
         blow_off: 2,
         lsd: 1,
-        sound_pitch_0: 0.2,
-        sound_pitch_1: 1.0
+        sound_pitch_0: 0.1,
+        sound_pitch_1: 1.05
     },
     {
         name: "Opel_Corsa_C_1.4",
@@ -605,8 +605,8 @@ const cars = [
         spool_speed: 0.2,
         blow_off: 1,
         lsd: 1,
-        sound_pitch_0: 0.1,
-        sound_pitch_1: 1.08
+        sound_pitch_0: 0.28,
+        sound_pitch_1: 1.03
 
     },
 ];
