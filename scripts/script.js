@@ -1,3 +1,6 @@
+// TODO: implement a debug mode that enables torque plots, console logs and other test stuff. (disable console logs by redefining console log)
+
+
 function handleThrottlePress(event) {
     if (event.code === "ArrowUp") {
         event.preventDefault();

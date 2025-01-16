@@ -33,19 +33,11 @@ async function loadEngineSound(audioUrl) {
     gainNode.gain.value = 1.0;
 
     sourceNode.connect(gainNode).connect(audioContext.destination);
+    sourceNode.playbackRate.value = basePlaybackRate;
     sourceNode.start(0); // Start playing the sound
     return 1;
 }
 
-function createSourceNode() {
-    sourceNode = audioContext.createBufferSource();
-    sourceNode.buffer = buffer;
-    sourceNode.loop = false;
-
-    gainNode = audioContext.createGain();
-    gainNode.gain.value = 1.0;
-
-}
 
 
 /**

@@ -6,6 +6,8 @@ const revFill = document.getElementById('revFill');
 const rpmLabelsContainer = document.querySelector('.rpm-labels');
 
 // TODO: Add perfect shift indicator
+// TODO: Add perfect launch indicator - at max torque revs for each car. Look at TODO in the cars.js first
+// FIXME: Left side of rpm filling bar has corners, make them rounded.
 
 function initializeRevMeter() {
     maxRPM = run.car.engine.redline;

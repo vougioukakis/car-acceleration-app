@@ -481,8 +481,19 @@ class Run {
 
 			let rng = Math.floor(Math.random() * 251); // random between 0 and 250
 			this.current_rpm = Math.max(N_new, this.launch_RPM - rng);
+			//INFO: This penalizes very high rpm launches:
+			//  The force on ground is determined by torque at engine,
+			//  and it usually falls off at low rpm. The above formula keeps
+			//  the car at the launch rpm until the actual calculated rpm
+			//  based on speed reaches the launch rpm, so the car will be
+			//  stuck at the launch torque, and in some cases it doesnt
+			//  reach the max power it could have put down, therefore losing
+			//  time. Very low rpm launches are also penalized, since its
+			//  possible that the maximum torque of the tires isnt reached.
+
 			//console.log("updating rpm to " + this.current_rpm);
-			//TODO: add a countdown to slowly transition to N_new
+			//TODO: add a countdown to slowly transition to N_new.
+			// If this is added, it will minimize the high rpm launch penalty, read above.
 			//this.current_rpm = max(N_new, 5000 + (-1)**random.randint(0,1) * random.randint(50,150))
 		} else {
 			// If not in 1st gear just update rpm

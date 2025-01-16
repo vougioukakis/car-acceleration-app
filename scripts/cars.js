@@ -1,11 +1,12 @@
 // summer tires: 1.1
 // high performance sports tires : 1.4
-// racing slick : 1.7
 // drag slicks : 2.0
 // top fuel drag slick : 4.5
 // lsd adds 0.1
 
 // TODO: fix nismo 400r torque curve
+// TODO: Add revs of max torque
+// TODO: Add straight_cut_gears boolean in all cars
 const cars = [
     {
         name: "McLaren_Speedtail",
@@ -155,7 +156,7 @@ const cars = [
         spool_speed: 0.06,
         blow_off: 2,
         lsd: 1,
-        sound_pitch_0: 0.06,
+        sound_pitch_0: 0.15,
         sound_pitch_1: 1.08
     },
     {
@@ -205,8 +206,8 @@ const cars = [
         spool_speed: 0,
         blow_off: 0,
         lsd: 0,
-        sound_pitch_0: 0.2,
-        sound_pitch_1: 1.2
+        sound_pitch_0: 0.12,
+        sound_pitch_1: 1.32
     },
     {
         name: "BMW_M3_E92_manual",
@@ -355,8 +356,8 @@ const cars = [
         spool_speed: 0,
         blow_off: 0,
         lsd: 0,
-        sound_pitch_0: 0.1,
-        sound_pitch_1: 1.45
+        sound_pitch_0: 0.2,
+        sound_pitch_1: 1.49
     },
     {
         name: "Peugeot_106_GTI",
@@ -405,8 +406,8 @@ const cars = [
         spool_speed: 0,
         blow_off: 0,
         lsd: 0,
-        sound_pitch_0: 0.1,
-        sound_pitch_1: 1.45
+        sound_pitch_0: 0.2,
+        sound_pitch_1: 1.49
     },
     {
         name: "Saxo_VTS_Custom",
@@ -455,8 +456,8 @@ const cars = [
         spool_speed: 0,
         blow_off: 0,
         lsd: 0,
-        sound_pitch_0: 0.2,
-        sound_pitch_1: 1.24
+        sound_pitch_0: 0.25,
+        sound_pitch_1: 1.25
         //sound_pitch_0: 0.18,
         //sound_pitch_1: 1.03
     },
@@ -610,6 +611,56 @@ const cars = [
         sound_pitch_0: 0.28,
         sound_pitch_1: 1.03
 
+    },
+    {
+        name: "BMW_Z4_GT3",
+        make: "BMW",
+        model: "Z4 GT3",
+        weight: 1255,
+        rear_weight: 0.485,
+        c_d: 0.4,
+        frontal: 2.25,
+        df_coeff: 2.2,
+        wheel_radius: 0.3534,
+        tyre_coeff: 1.5,
+        cm_height: 0.35,
+        wheelbase: 2.512,
+        drive: -1,
+        final_drive: 3.615,// all options: 3.458, 3.615, 3.917, 3.977, 4.087, 4.273, 4.476
+        gear_1: 2.870,
+        gear_2: 1.978,
+        gear_3: 1.615,
+        gear_4: 1.410,
+        gear_5: 1.259,
+        gear_6: 1.130,
+        gear_7: 0,
+        gear_8: 0,
+        gear_9: 0,
+        idle_RPM: 1000,
+        shift_delay_coefficient: 3,
+        flywheel_coefficient: 0.4,
+        drive_efficiency: 0.89,
+        redline: 8820,
+        forced_induction: 0,
+        electric: 0,
+        coefficient_0: -103.674343886979,
+        coefficient_1: 0.5357444557120442,
+        coefficient_2: -0.0003316495692891308,
+        coefficient_3: 1.1777682533778623e-07,
+        coefficient_4: -1.8865523276959203e-11,
+        coefficient_5: 4.639953590952266e-16,
+        coefficient_6: 2.302390285004972e-19,
+        coefficient_7: -2.700508746759877e-23,
+        coefficient_8: 9.26103111871418e-28,
+        max_gear: 5,
+        flat_turbo: 0,
+        max_torque: 515,
+        shift_earlier: 200,
+        spool_speed: 0,
+        blow_off: 0,
+        lsd: 1,
+        sound_pitch_0: 0.3,
+        sound_pitch_1: 1.09
     },
 ];
 

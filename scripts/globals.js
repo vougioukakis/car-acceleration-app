@@ -12,11 +12,6 @@ let sourceNode; // To hold the audio source
 let gainNode; // To control the volume of the audio
 let basePlaybackRate; // The playback rate at the minimum RPM
 let previous_rpm = 0;
-let node1;
-let node2;
-let isNode1Playing = false;
-let isNode2Playing = false;
-let overlapTime = 0.37;
 let buffer;
 
 
