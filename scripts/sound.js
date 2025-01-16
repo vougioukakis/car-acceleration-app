@@ -38,7 +38,9 @@ async function loadEngineSound(audioUrl) {
     return 1;
 }
 
+function loadStututu(audioUrl) {
 
+}
 
 /**
  * Updates the engine sound pitch based on the current RPM, only 
