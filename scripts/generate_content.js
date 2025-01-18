@@ -136,6 +136,7 @@ function resetSimulation() {
         soundStarted = false;
     }
 
+    document.getElementById('gear').innerHTML = "N";
     document.getElementById('rpm').innerHTML = `&nbsp;`;
     document.getElementById('speed').innerHTML = 'Use the throttle to rev the car and click launch when ready!';
     document.getElementById('time').innerHTML = `&nbsp;`;

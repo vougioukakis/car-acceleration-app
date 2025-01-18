@@ -64,6 +64,7 @@ function updateSimulation() {
         updateRevDisplay(run.current_rpm, run.gear_index);
         updateEnginePitch(run.current_rpm);
 
+        document.getElementById("gear").innerText = `${run.gear_index + 1}`;
         document.getElementById("rpm").innerText = `RPM: ${run.current_rpm.toFixed()}`;
         document.getElementById("speed").innerText = `Speed: ${(run.current_speed * 3.6).toFixed()} km/h`;
         document.getElementById("time").innerText = `Time: ${run.current_seconds.toFixed(1)} s`;
