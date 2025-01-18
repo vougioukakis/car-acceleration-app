@@ -61,7 +61,7 @@ function updateSimulation() {
             finish();
         }
         timeAccumulator -= timePerTick;
-        updateRevDisplay(run.current_rpm);
+        updateRevDisplay(run.current_rpm, run.gear_index);
         updateEnginePitch(run.current_rpm);
 
         document.getElementById("rpm").innerText = `RPM: ${run.current_rpm.toFixed()}`;

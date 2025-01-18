@@ -1,5 +1,6 @@
-// TODO: Much later, add tire slip
-
+// TODO: Much later, add tire slip (by faking loss if launching at higher rpm than optimal, and calculate loss using magic formula)
+// TODO: Implement setters and getters, make things that should be private private, and change the way
+//		 the run class interacts with the frontend to fit with the new changes
 class Engine {
 	constructor(data) {
 		this.idle_RPM = data["idle_RPM"];
@@ -150,12 +151,16 @@ class Run {
 	speed = new Array(this.max_steps).fill(0);
 	current_distance = 0;
 
+	//
 	shift_call = false; // becomes True when PLAYER shifts, gets used to change gear and becomes false again
 	shifting = false; // if car is in shifting mode (clutched in)
 	stututu = false; // becomes true for a moment after a successful shift or let off the gas
 	shift_iter_indexs_left = 0; // iter_indexations left until shifting is complete
 	clutch_extra_revs = 0;
 	spool_loss = 1; //e.g. 0.7 means u can use 70% of the max torque
+
+	shift_points;
+
 	spinning = false;
 
 	//times
@@ -171,6 +176,51 @@ class Run {
 	constructor(car, is_player) {
 		this.car = car;
 		this.is_player = is_player;
+
+		this.shift_points = new Array(this.car.transmission.max_gear - 1).fill(0);
+		this.compute_shift_points();
+	}
+
+	compute_shift_points() {
+		const redline = this.car.engine.redline;
+		const idle = this.car.engine.idle_RPM;
+
+		for (let gear = 0; gear <= this.car.transmission.max_gear - 1; gear++) {
+			this.shift_points[gear] = this.car.engine.redline; //default at redline rpm.
+
+			for (let curr_rpm = redline; curr_rpm >= idle; curr_rpm -= 100) {
+				let curr_speed = this.get_current_speed(curr_rpm, gear);
+				let rpm_next_gear = this.compute_RPM(curr_speed, gear + 1);
+
+				let torque_wheels_next = this.torque_at_wheel_axis(rpm_next_gear, gear + 1);
+				let torque_wheels_curr = this.torque_at_wheel_axis(curr_rpm, gear);
+
+				if (gear === 3) {
+					console.log('torque_wheels_cur with gear 0 and rpm ' + curr_rpm + ' ' + torque_wheels_curr);
+					console.log('next rpm = ' + rpm_next_gear);
+					console.log('torque_wheels_next = ' + torque_wheels_next);
+				}
+
+				if (torque_wheels_curr <= torque_wheels_next) {
+					this.shift_points[gear] = curr_rpm;
+				}
+			}
+		}
+
+		console.log('Shift points calculated = ' + this.shift_points);
+	}
+
+	/**
+	 * only used in computing shift points
+	 */
+	get_current_speed(rpm, gear_index) {
+		const gear_ratio = this.car.transmission.gear[gear_index];
+		const final_ratio = this.car.transmission.final_drive;
+		return (rpm * Math.PI * this.car.chassis.wheel_radius) / (gear_ratio * final_ratio * 30);
+	}
+
+	get_shift_points() {
+		return this.shift_points;
 	}
 
 	stututu_done() {
@@ -386,10 +436,10 @@ class Run {
 	 * find engine speed from vehicle speed and gear index
 	 * @param speed
 	 */
-	get_RPM(speed) {
+	compute_RPM(speed, gear) {
 		let final_drive = this.car.transmission.final_drive;
 		let wheel_radius = this.car.chassis.wheel_radius;
-		let current_gear_ratio = this.car.transmission.gear[this.gear_index];
+		let current_gear_ratio = this.car.transmission.gear[gear];
 		let rpm =
 			(speed * 30 * current_gear_ratio * final_drive) /
 			(Math.PI * wheel_radius);
@@ -469,7 +519,7 @@ class Run {
 
 		// find the rpm for the next time step
 		let N_new = Math.min(
-			this.get_RPM(this.speed[i]) + this.clutch_extra_revs,
+			this.compute_RPM(this.speed[i], this.gear_index) + this.clutch_extra_revs,
 			this.car.engine.redline
 		);
 		this.clutch_extra_revs = Math.max(
@@ -556,7 +606,7 @@ class Run {
 
 		// turbo spool losses and clutch rpm after shifting
 		this.clutch_extra_revs =
-			(140 * this.car.transmission.shift_delay_coefficient) * (this.car.transmission.flywheel_coefficient) / ((this.gear_index ** 1.5 + 2));
+			(160 * this.car.transmission.shift_delay_coefficient) / ((this.gear_index ** 1.5 + 2));
 
 
 		if (this.car.engine.forced_induction == 1) {
@@ -589,7 +639,7 @@ class Run {
 	release_clutch(i) {
 		this.shifting = false; // release clutch
 		this.speed[i] += 0.2; // jolt when clutch is released
-		this.current_rpm = this.get_RPM(this.speed[i - 1]);
+		this.current_rpm = this.compute_RPM(this.speed[i - 1], this.gear_index);
 	}
 
 	distance_calculations() {

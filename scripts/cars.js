@@ -4,7 +4,7 @@
 // top fuel drag slick : 4.5
 // lsd adds 0.1
 
-// TODO: fix nismo 400r torque curve
+// [x] TODO: fix nismo 400r torque curve
 // TODO: Add revs of max torque
 // TODO: Add straight_cut_gears boolean in all cars
 const cars = [
@@ -484,7 +484,7 @@ const cars = [
         gear_9: 0,
         idle_RPM: 1000,
         shift_delay_coefficient: 14,
-        flywheel_coefficient: 0.6,
+        flywheel_coefficient: 0.9,
         drive_efficiency: 0.86,
         redline: 8250,
         forced_induction: 0,
@@ -505,8 +505,8 @@ const cars = [
         spool_speed: 0,
         blow_off: 0,
         lsd: 0,
-        sound_pitch_0: 0.25,
-        sound_pitch_1: 1.25
+        sound_pitch_0: 0.22,
+        sound_pitch_1: 1.27
         //sound_pitch_0: 0.18,
         //sound_pitch_1: 1.03
     },
@@ -555,7 +555,7 @@ const cars = [
         max_torque: 330,
         shift_earlier: 100,
         spool_speed: 0.09,
-        blow_off: 3,
+        blow_off: 1,
         lsd: 1,
         sound_pitch_0: 0.2,
         sound_pitch_1: 1.3
@@ -585,8 +585,8 @@ const cars = [
         gear_8: 0,
         gear_9: 0,
         idle_RPM: 1000,
-        shift_delay_coefficient: 8,
-        flywheel_coefficient: 1.8,
+        shift_delay_coefficient: 9,
+        flywheel_coefficient: 2.4,
         drive_efficiency: 0.87,
         redline: 8250,
         forced_induction: 0,

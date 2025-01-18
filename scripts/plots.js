@@ -1,7 +1,7 @@
 const ctx = document.getElementById('torqueChart').getContext('2d');
 let torqueChart;
 
-// FIXME: Controls not aligned when i disable plot
+// FIXME: Controls not aligned when i disable plot?
 function plotTorque() {
     console.log("plotting torque for " + run.car.name);
     let N_values = [];
