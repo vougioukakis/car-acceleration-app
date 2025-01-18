@@ -1,5 +1,3 @@
-// TODO: Add blow off valve sound logic. We have the sound files.
-// TODO: Make sure blow off valve doesnt sound when a car doesnt have sound
 
 /**
  * Loads and decodes an audio file for a car's engine sound.
@@ -38,9 +36,62 @@ async function loadEngineSound(audioUrl) {
     return 1;
 }
 
-function loadStututu(audioUrl) {
+/**
+ * Loads and prepares a blow-off valve sound for playback.
+ * This creates a dedicated audio buffer source node that can be triggered
+ * to play the blow-off valve sound on demand.
+ *
+ * @param {string} audioUrl - The URL of the blow-off valve audio file to load.
+ * @returns {Promise<boolean>} - Resolves to true if the sound is loaded successfully, false otherwise.
+ */
+async function loadStututu(audioUrl) {
+    console.log('Fetching blow off sound for ' + car.name);
 
+    try {
+        const response = await fetch(audioUrl);
+        const data = await response.arrayBuffer();
+        const buffer = await audioContext.decodeAudioData(data);
+
+        // Assign the buffer to a global blow-off valve sound buffer
+        car.blowOffBuffer = buffer;
+
+        console.log('Blow off sound loaded successfully for ' + car.name);
+        return true;
+    } catch (error) {
+        console.error('Error fetching or decoding blow-off audio data for ' + car.name + ':', error);
+        return false;
+    }
 }
+
+/**
+ * Plays the blow-off valve sound if available.
+ * Ensures that the sound only plays if the car has a blow-off valve sound loaded.
+ *
+ * @returns {void}
+ */
+function playBlowOffValve() {
+    if (!soundStarted) {
+        //console.warn('Blow off valve sound not loaded or not available for ' + car.name);
+        return;
+    }
+
+    // Create a new buffer source node for each playback
+    blowOffSourceNode = audioContext.createBufferSource();
+    blowOffSourceNode.buffer = car.blowOffBuffer;
+
+    // Create a gain node for controlling volume (if needed)
+    blowOffGainNode = audioContext.createGain();
+    blowOffGainNode.gain.value = 1.0; // Default gain value
+
+    // Connect the source node to the gain node and the audio context destination
+    blowOffSourceNode.connect(blowOffGainNode).connect(audioContext.destination);
+
+    // Start playback from the beginning of the buffer
+    blowOffSourceNode.start(0);
+
+    console.log('Playing blow-off valve sound for ' + car.name);
+}
+
 
 /**
  * Updates the engine sound pitch based on the current RPM, only 

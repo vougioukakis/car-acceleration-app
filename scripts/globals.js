@@ -14,6 +14,10 @@ let basePlaybackRate; // The playback rate at the minimum RPM
 let previous_rpm = 0;
 let buffer;
 
+let blowOffBuffer;
+let blowOffSourceNode;
+let blowOffGainNode;
+
 
 // timing
 const targetFps = 40;

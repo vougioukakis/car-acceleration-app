@@ -85,12 +85,15 @@ document.getElementById("startButton").addEventListener("click", launchSimulatio
 
 function gameLoop() {
     if (!started) return;
+
     if (started && !soundStarted && car.has_sound) {
         let isWorking = loadEngineSound(car.sound_url);
         if (isWorking) {
             soundStarted = true;
+            loadStututu('./turbo_sounds/blowoff_' + car.engine.blow_off + '.mp3');
         }
     }
+
     if (started && isRevving && !launched) {
         run.rev();
         updateEnginePitch(run.current_rpm);
@@ -99,8 +102,13 @@ function gameLoop() {
         run.off_throttle();
         updateEnginePitch(run.current_rpm);
     }
-    updateSimulation(); // if not started, will exit immediately
 
+    if (run.stututu) {
+        playBlowOffValve();
+        run.stututu_done();
+    }
+
+    updateSimulation(); // if not started, will exit immediately
     requestAnimationFrame(gameLoop);  // this calls gameLoop recursively and adjusts to the frame rate
 }
 
