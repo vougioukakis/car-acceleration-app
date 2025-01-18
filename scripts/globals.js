@@ -12,11 +12,15 @@ let sourceNode; // To hold the audio source
 let gainNode; // To control the volume of the audio
 let basePlaybackRate; // The playback rate at the minimum RPM
 let previous_rpm = 0;
+let previous_rpm_gearbox = 0;
 let buffer;
 
 let blowOffBuffer;
 let blowOffSourceNode;
 let blowOffGainNode;
+
+let gearOscillator;
+let gearGainNode;
 
 
 // timing

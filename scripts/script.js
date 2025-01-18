@@ -63,6 +63,8 @@ function updateSimulation() {
         timeAccumulator -= timePerTick;
         updateRevDisplay(run.current_rpm, run.gear_index);
         updateEnginePitch(run.current_rpm);
+        updateSyntheticGearSound(run.current_rpm, run.gear_index);
+
 
         document.getElementById("gear").innerText = `${run.gear_index + 1}`;
         document.getElementById("rpm").innerText = `RPM: ${run.current_rpm.toFixed()}`;
@@ -92,16 +94,20 @@ function gameLoop() {
         if (isWorking) {
             soundStarted = true;
             loadStututu('./turbo_sounds/blowoff_' + car.engine.blow_off + '.mp3');
+            if (car.transmission.straight_cut) generateStraightCutGearSound();
         }
     }
 
     if (started && isRevving && !launched) {
         run.rev();
         updateEnginePitch(run.current_rpm);
+        updateSyntheticGearSound(run.current_rpm, run.gear_index);
     }
     else if (started && !isRevving && !launched) {
         run.off_throttle();
         updateEnginePitch(run.current_rpm);
+        updateSyntheticGearSound(run.current_rpm, run.gear_index);
+
     }
 
     if (run.stututu) {
@@ -120,6 +126,7 @@ function finish() {
         sourceNode = null;
         soundStarted = false;
     }
+    stopSyntheticGearSound();
     started = false;
     launched = false;
     document.getElementById('state').innerHTML = 'Finished';

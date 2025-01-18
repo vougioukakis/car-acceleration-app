@@ -135,6 +135,7 @@ function resetSimulation() {
         sourceNode = null;
         soundStarted = false;
     }
+    stopSyntheticGearSound();
 
     document.getElementById('gear').innerHTML = "N";
     document.getElementById('rpm').innerHTML = `&nbsp;`;

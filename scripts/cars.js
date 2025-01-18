@@ -6,7 +6,7 @@
 
 // [x] TODO: fix nismo 400r torque curve
 // TODO: Add revs of max torque
-// TODO: Add straight_cut_gears boolean in all cars
+// [x] TODO: Add straight_cut_gears boolean in all cars
 const cars = [
     {
         name: "McLaren_Speedtail",
@@ -56,7 +56,8 @@ const cars = [
         blow_off: 0,
         lsd: 1,
         sound_pitch_0: 0.28,
-        sound_pitch_1: 1.02
+        sound_pitch_1: 1.02,
+        straight_cut: 0
     },
     {
         name: "2013_Peugeot_208_GTI",
@@ -106,7 +107,8 @@ const cars = [
         blow_off: 1,
         lsd: 0,
         sound_pitch_0: 0.2,
-        sound_pitch_1: 1.3
+        sound_pitch_1: 1.3,
+        straight_cut: 0
     },
     {
         name: "Nismo_400R",
@@ -156,7 +158,8 @@ const cars = [
         blow_off: 3,
         lsd: 1,
         sound_pitch_0: 0.15,
-        sound_pitch_1: 1.12
+        sound_pitch_1: 1.12,
+        straight_cut: 0
     },
     {
         name: "Opel_Corsa_C_14",
@@ -206,7 +209,8 @@ const cars = [
         blow_off: 0,
         lsd: 0,
         sound_pitch_0: 0.12,
-        sound_pitch_1: 1.32
+        sound_pitch_1: 1.32,
+        straight_cut: 0
     },
     {
         name: "Opel_Corsa_C_18",
@@ -256,7 +260,8 @@ const cars = [
         blow_off: 0,
         lsd: 0,
         sound_pitch_0: 0.12,
-        sound_pitch_1: 1.34
+        sound_pitch_1: 1.34,
+        straight_cut: 0
     },
     {
         name: "BMW_M3_E92_manual",
@@ -306,7 +311,8 @@ const cars = [
         blow_off: 0,
         lsd: 1,
         sound_pitch_0: 0.3,
-        sound_pitch_1: 1.135
+        sound_pitch_1: 1.135,
+        straight_cut: 0
     },
     {
         name: "Toyota_Supra_FF",
@@ -356,7 +362,8 @@ const cars = [
         blow_off: 2,
         lsd: 1,
         sound_pitch_0: 0.16,
-        sound_pitch_1: 1.15
+        sound_pitch_1: 1.15,
+        straight_cut: 0
     },
     {
         name: "Citroen_Saxo_VTS",
@@ -406,7 +413,8 @@ const cars = [
         blow_off: 0,
         lsd: 0,
         sound_pitch_0: 0.2,
-        sound_pitch_1: 1.49
+        sound_pitch_1: 1.49,
+        straight_cut: 0
     },
     {
         name: "Peugeot_106_GTI",
@@ -456,7 +464,8 @@ const cars = [
         blow_off: 0,
         lsd: 0,
         sound_pitch_0: 0.2,
-        sound_pitch_1: 1.49
+        sound_pitch_1: 1.49,
+        straight_cut: 0
     },
     {
         name: "Saxo_VTS_Custom",
@@ -506,9 +515,10 @@ const cars = [
         blow_off: 0,
         lsd: 0,
         sound_pitch_0: 0.22,
-        sound_pitch_1: 1.27
+        sound_pitch_1: 1.27,
         //sound_pitch_0: 0.18,
         //sound_pitch_1: 1.03
+        straight_cut: 0
     },
     {
         name: "Peugeot_308_GTI",
@@ -558,7 +568,8 @@ const cars = [
         blow_off: 1,
         lsd: 1,
         sound_pitch_0: 0.2,
-        sound_pitch_1: 1.3
+        sound_pitch_1: 1.3,
+        straight_cut: 0
     },
     {
         name: "Agera_RS",
@@ -608,7 +619,8 @@ const cars = [
         blow_off: 0,
         lsd: 1,
         sound_pitch_0: 0.18,
-        sound_pitch_1: 1.1
+        sound_pitch_1: 1.1,
+        straight_cut: 0
     },
     {
         name: "McLaren_P1",
@@ -658,8 +670,8 @@ const cars = [
         blow_off: 1,
         lsd: 1,
         sound_pitch_0: 0.28,
-        sound_pitch_1: 1.03
-
+        sound_pitch_1: 1.03,
+        straight_cut: 0
     },
     {
         name: "BMW_Z4_GT3",
@@ -709,7 +721,59 @@ const cars = [
         blow_off: 0,
         lsd: 1,
         sound_pitch_0: 0.3,
-        sound_pitch_1: 1.09
+        sound_pitch_1: 1.09,
+        straight_cut: 1
+    },
+    {
+        name: "BMW_M3_GTR",
+        make: "BMW",
+        model: "M3 GTR",
+        weight: 1120,
+        rear_weight: 0.485,
+        c_d: 0.4,
+        frontal: 2.21,
+        df_coeff: 2.2,
+        wheel_radius: 0.3534,
+        tyre_coeff: 1.5,
+        cm_height: 0.37,
+        wheelbase: 2.731,
+        drive: -1,
+        final_drive: 3.87,// all options: 3.458, 3.615, 3.917, 3.977, 4.087, 4.273, 4.476
+        gear_1: 2.5,
+        gear_2: 2.07,
+        gear_3: 1.69,
+        gear_4: 1.38,
+        gear_5: 1.18,
+        gear_6: 1.04,
+        gear_7: 0,
+        gear_8: 0,
+        gear_9: 0,
+        idle_RPM: 1000,
+        shift_delay_coefficient: 4,
+        flywheel_coefficient: 0.3,
+        drive_efficiency: 0.89,
+        redline: 8500,
+        forced_induction: 0,
+        electric: 0,
+        coefficient_0: -73.45035722916211,
+        coefficient_1: 0.43351052800415885,
+        coefficient_2: -0.00021071424819866678,
+        coefficient_3: 5.719243565595494e-08,
+        coefficient_4: -6.5548328961878855e-12,
+        coefficient_5: -4.1040593868932394e-17,
+        coefficient_6: 6.001330591690171e-20,
+        coefficient_7: -2.4273931418243024e-24,
+        coefficient_8: -7.06550035040068e-29,
+        max_gear: 5,
+        flat_turbo: 0,
+        max_torque: 480,
+        shift_earlier: 200,
+        spool_speed: 0,
+        blow_off: 0,
+        lsd: 1,
+        sound_pitch_0: 0.3,
+        sound_pitch_1: 0.99,
+        straight_cut: 1
     },
 ];
 
@@ -757,7 +821,8 @@ const cars = [
         shift_earlier: 100,
         spool_speed: 0,
         blow_off: 0
-    },
+        straight_cut: 0
+        },
 */
 
 /*

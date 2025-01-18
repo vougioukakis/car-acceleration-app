@@ -127,3 +127,85 @@ function updateEnginePitch(rpm) {
 
     }
 }
+
+
+//straight cut gears
+/**
+ * Generates a synthetic straight-cut gear sound using an oscillator.
+ * This sound dynamically changes its pitch based on RPM and gear.
+ *
+ * @returns {void}
+ */
+function generateStraightCutGearSound() {
+    if (!audioContext) {
+        console.error('AudioContext is not initialized.');
+        return;
+    }
+
+    // Create an oscillator for the synthetic sound
+    gearOscillator = audioContext.createOscillator();
+    gearGainNode = audioContext.createGain();
+
+    // Set up the oscillator and gain
+    gearOscillator.type = 'sawtooth'; // Harsh mechanical sound
+    gearGainNode.gain.value = 0.021; // Initial volume
+
+    // Connect the oscillator to the gain node and the audio context destination
+    gearOscillator.connect(gearGainNode).connect(audioContext.destination);
+
+    // Start the oscillator
+    gearOscillator.start();
+
+    console.log('Synthetic straight-cut gear sound generated.');
+}
+
+/**
+ * Updates the pitch of the synthetic straight-cut gear sound based on RPM and gear.
+ *
+ * @param {number} rpm - The current RPM of the car.
+ * @param {number} gear - The current gear index of the car.
+ * @returns {void}
+ */
+function updateSyntheticGearSound(rpm, gear) {
+    if (!gearOscillator) {
+        console.warn('Straight-cut gear sound has not been generated.');
+        return;
+    }
+
+    if (Math.abs(rpm - previous_rpm_gearbox) > 40) {
+        // Calculate the frequency based on RPM and gear
+        const normalizedRPM = rpm / maxRPM; // Normalize RPM to a 0-1 range
+        const baseFrequency = 600; // Base frequency for the lowest RPM
+        const gearFactor = 1 + gear * 1; // Increase frequency based on gear index
+        const frequency = baseFrequency + normalizedRPM * baseFrequency * gearFactor;
+
+        // Update the oscillator frequency
+        gearOscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+
+        console.log(`Synthetic gear sound updated: RPM=${rpm}, Gear=${gear}, Frequency=${frequency.toFixed(2)}Hz`);
+
+        if (previous_rpm_gearbox > rpm) {
+            gearGainNode.gain.value = 0.01;
+        } else {
+            gearGainNode.gain.value = 0.021;
+        }
+
+        previous_rpm_gearbox = rpm;
+    }
+}
+
+/**
+ * Stops the synthetic straight-cut gear sound.
+ *
+ * @returns {void}
+ */
+function stopSyntheticGearSound() {
+    if (gearOscillator) {
+        gearOscillator.stop();
+        gearOscillator.disconnect();
+        gearOscillator = null;
+        gearGainNode = null;
+
+        console.log('Synthetic straight-cut gear sound stopped.');
+    }
+}

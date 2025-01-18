@@ -55,6 +55,7 @@ class Transmission {
 		this.flywheel_coefficient = data["flywheel_coefficient"];
 		this.drive_efficiency = data["drive_efficiency"];
 		this.lsd = data["lsd"];
+		this.straight_cut = data["straight_cut"];
 	}
 }
 
