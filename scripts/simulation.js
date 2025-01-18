@@ -334,6 +334,7 @@ class Run {
 			let a = 0.05933;
 			let b = 9.855e-5;
 			let c = 3.7231e-7;
+			//
 
 			let result = Zalpha * Pbeta * (a + b * (speed * 3.6) + c * (speed * 3.6) ** 2); //  SAE standard J2452 - (177,253)
 			//let result = this.vertical_load(speed) * (1e-2 + 5e-7 * speed / 3.6 + 2e-7 * ((speed / 3.6) ** 2)) // (194, 272)
