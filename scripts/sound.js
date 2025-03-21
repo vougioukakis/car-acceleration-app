@@ -175,8 +175,8 @@ function updateSyntheticGearSound(rpm, gear) {
     if (Math.abs(rpm - previous_rpm_gearbox) > 40) {
         // Calculate the frequency based on RPM and gear
         const normalizedRPM = rpm / maxRPM; // Normalize RPM to a 0-1 range
-        const baseFrequency = 600; // Base frequency for the lowest RPM
-        const gearFactor = 1 + gear * 1; // Increase frequency based on gear index
+        const baseFrequency = 500; // Base frequency for the lowest RPM
+        const gearFactor = 1 + gear ** 1.1; // Increase frequency based on gear index
         const frequency = baseFrequency + normalizedRPM * baseFrequency * gearFactor;
 
         // Update the oscillator frequency
