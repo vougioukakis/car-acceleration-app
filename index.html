@@ -1,69 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulation</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Simulation</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" href="styles.css">
+    </head>
 
-<body>
-    <div id="manufacturersScreen" class="screen active">
-        <h1>Select a Manufacturer</h1>
-        <div class="selectionScreen"></div>
-    </div>
-
-    <div id="carsScreen" class="screen" style="display: none;">
-        <button id="backToManufacturers">Back to Manufacturers</button>
-        <h1>Select a Car</h1>
-        <div class="carSelectionScreen selectionScreen"></div>
-    </div>
-
-    <div id="simulationScreen" class="screen">
-        <button id="backToCars">Back to Cars</button>
-        <h1>Simulation</h1>
-        <div id="simulationDetails">
-            <div id="gear">N</div>
-            <div id="rpm">&nbsp; </div>
-            <div id="speed">Use the throttle to rev the car and click launch when ready!</div>
-            <div id="time">&nbsp; </div>
-            <div id="quarterMile"> &nbsp;</div>
-            <div id="to_100km"> &nbsp; </div>
-            <!--<div id="halfMile">Half Mile:</div>-->
-            <!--<div id="realTime">Real Time:</div>-->
-            <div id="state"> &nbsp; </div>
+    <body>
+        <div id="manufacturersScreen" class="screen active">
+            <h1>Select a Manufacturer</h1>
+            <div class="selectionScreen"></div>
         </div>
 
-        <div id="rpmMeterDiv">
-            <div class="rev-meter" id="revMeter">
-                <div id="revFill" class="rev-fill"></div>
-
-            </div>
-            <div class="rpm-labels">
-                <!-- RPM labels (generated dynamically) -->
-            </div>
-
-
+        <div id="carsScreen" class="screen" style="display: none;">
+            <button id="backToManufacturers">Back to Manufacturers</button>
+            <h1>Select a Car</h1>
+            <div class="carSelectionScreen selectionScreen"></div>
         </div>
 
-        <button id="startButton">LAUNCH</button>
-        <button id="shiftButton">+</button>
-        <button id="throttle" style="user-select: none;">POWER</button>
+        <div id="simulationScreen" class="screen">
+            <button id="backToCars">Back to Cars</button>
+            <h1>Simulation</h1>
+            <div id="simulationDetails">
+                <div id="gear">N</div>
+                <div id="rpm">&nbsp; </div>
+                <div id="speed">Use the throttle to rev the car and click launch when ready!</div>
+                <div id="time">&nbsp; </div>
+                <div id="quarterMile"> &nbsp;</div>
+                <div id="to_100km"> &nbsp; </div>
+                <!--<div id="halfMile">Half Mile:</div>-->
+                <!--<div id="realTime">Real Time:</div>-->
+                <div id="state"> &nbsp; </div>
+            </div>
 
-        <canvas id="torqueChart" width="400" height="300" style="visibility: hidden;"></canvas>
-    </div>
+            <div id="rpmMeterDiv">
+                <div class="rev-meter" id="revMeter">
+                    <div id="revFill" class="rev-fill"></div>
 
-    <script src="scripts/cars.js" defer></script>
-    <script src="scripts/globals.js" defer></script>
-    <script src="scripts/util.js" defer></script>
-    <script src="scripts/simulation.js" defer></script>
-    <script src="scripts/plots.js" defer></script>
-    <script src="scripts/generate_content.js" defer></script>
-    <script src="scripts/rpm_meter.js" defer></script>
-    <script src="scripts/script.js" defer></script>
-    <script src="scripts/sound.js" defer></script>
-</body>
+                </div>
+                <div class="rpm-labels">
+                    <!-- RPM labels (generated dynamically) -->
+                </div>
+
+
+            </div>
+
+            <button id="startButton">LAUNCH</button>
+            <button id="shiftButton">+</button>
+            <button id="throttle" style="user-select: none;">POWER</button>
+
+            <canvas id="torqueChart" width="400" height="300" style="visibility: hidden;"></canvas>
+        </div>
+
+        <script src="scripts/cars.js" defer></script>
+        <script src="scripts/globals.js" defer></script>
+        <script src="scripts/util.js" defer></script>
+        <script src="scripts/simulation.js" defer></script>
+        <script src="scripts/plots.js" defer></script>
+        <script src="scripts/generate_content.js" defer></script>
+        <script src="scripts/rpm_meter.js" defer></script>
+        <script src="scripts/script.js" defer></script>
+        <script src="scripts/sound.js" defer></script>
+    </body>
 
 </html>

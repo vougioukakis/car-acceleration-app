@@ -208,8 +208,8 @@ const cars = [
         spool_speed: 0,
         blow_off: 0,
         lsd: 0,
-        sound_pitch_0: 0.12,
-        sound_pitch_1: 1.32,
+        sound_pitch_0: 0.11,
+        sound_pitch_1: 1.37,
         straight_cut: 0
     },
     {
@@ -259,8 +259,8 @@ const cars = [
         spool_speed: 0,
         blow_off: 0,
         lsd: 0,
-        sound_pitch_0: 0.12,
-        sound_pitch_1: 1.34,
+        sound_pitch_0: 0.11,
+        sound_pitch_1: 1.38,
         straight_cut: 0
     },
     {
@@ -412,8 +412,8 @@ const cars = [
         spool_speed: 0,
         blow_off: 0,
         lsd: 0,
-        sound_pitch_0: 0.2,
-        sound_pitch_1: 1.49,
+        sound_pitch_0: 0.19,
+        sound_pitch_1: 1.5,
         straight_cut: 0
     },
     {
@@ -463,8 +463,8 @@ const cars = [
         spool_speed: 0,
         blow_off: 0,
         lsd: 0,
-        sound_pitch_0: 0.2,
-        sound_pitch_1: 1.49,
+        sound_pitch_0: 0.19,
+        sound_pitch_1: 1.5,
         straight_cut: 0
     },
     {
@@ -514,8 +514,8 @@ const cars = [
         spool_speed: 0,
         blow_off: 0,
         lsd: 0,
-        sound_pitch_0: 0.22,
-        sound_pitch_1: 1.27,
+        sound_pitch_0: 0.21,
+        sound_pitch_1: 1.29,
         //sound_pitch_0: 0.18,
         //sound_pitch_1: 1.03
         straight_cut: 0
