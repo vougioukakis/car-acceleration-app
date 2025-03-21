@@ -514,7 +514,7 @@ const cars = [
         spool_speed: 0,
         blow_off: 0,
         lsd: 0,
-        sound_pitch_0: 0.21,
+        sound_pitch_0: 0.16,
         sound_pitch_1: 1.29,
         //sound_pitch_0: 0.18,
         //sound_pitch_1: 1.03
