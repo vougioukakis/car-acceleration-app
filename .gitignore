@@ -7,3 +7,4 @@ main.py
 krita/
 *.log
 cars.csv
+node_modules
