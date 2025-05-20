@@ -492,8 +492,8 @@ const cars = [
         gear_8: 0,
         gear_9: 0,
         idle_RPM: 1000,
-        shift_delay_coefficient: 14,
-        flywheel_coefficient: 0.9,
+        shift_delay_coefficient: 15,
+        flywheel_coefficient: 0.5,
         drive_efficiency: 0.86,
         redline: 8250,
         forced_induction: 0,
@@ -514,10 +514,8 @@ const cars = [
         spool_speed: 0,
         blow_off: 0,
         lsd: 0,
-        sound_pitch_0: 0.16,
-        sound_pitch_1: 1.29,
-        //sound_pitch_0: 0.18,
-        //sound_pitch_1: 1.03
+        sound_pitch_0: 0.11,
+        sound_pitch_1: 1.33,
         straight_cut: 0
     },
     {
