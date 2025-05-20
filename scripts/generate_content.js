@@ -19,9 +19,7 @@ function generateCarCard(carObj) {
     card.appendChild(title);
 
     card.addEventListener('click', () => {
-        console.log('Card clicked:', carObj);
-        console.log('Test');
-        showSimulationScreen(carObj);
+        window.location.hash = `simulation-${carObj.make}-${carObj.name}`;
     });
 
     return card;
@@ -47,8 +45,7 @@ function showCarsScreen(make) {
 
     // add back to manufacturers button functionality
     document.getElementById('backToManufacturers').addEventListener('click', () => {
-        carsScreen.style.display = 'none';
-        document.getElementById('manufacturersScreen').style.display = 'block';
+        window.location.hash = 'manufacturers';
     });
 }
 
@@ -85,7 +82,7 @@ function generateMakeCard(make) {
     makeCard.appendChild(makeImage);
     makeCard.appendChild(makeTitle);
 
-    makeCard.addEventListener('click', () => showCarsScreen(make));
+    makeCard.addEventListener('click', () => window.location.hash = `cars-${make}`);
 
     return makeCard;
 }
@@ -114,8 +111,7 @@ function showSimulationScreen(carObj) {
         addEventListenerForThrottle();
 
         document.getElementById('backToCars').addEventListener('click', () => {
-            document.getElementById('simulationScreen').style.display = 'none';
-            document.getElementById('carsScreen').style.display = 'block';
+            window.location.hash = `cars-${selectedMake}`;
             resetSimulation();
             resetRevMeter();
             removeEventListenersForThrottle();
