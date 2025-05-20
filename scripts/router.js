@@ -48,6 +48,10 @@ function router() {
         return;
     }
 
+    // every time, reset stuff
+    resetSimulation();
+    resetRevMeter();
+    removeEventListenersForThrottle();
     // Example hash formats:
     // #cars-Toyota
     // #simulation-Toyota-Corolla
@@ -59,6 +63,7 @@ function router() {
     } else if (parts[0] === 'simulation' && parts[1] && parts[2]) {
         const carObj = cars.find(c => c.make === parts[1] && c.name === parts[2]);
         if (carObj) {
+            selectedMake = parts[1];
             showSimulation(carObj);
         } else {
             showManufacturers();
