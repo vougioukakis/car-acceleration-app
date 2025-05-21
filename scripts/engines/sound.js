@@ -52,7 +52,6 @@ async function loadStututu(audioUrl) {
         const data = await response.arrayBuffer();
         const buffer = await AUDIO_CONTEXT.decodeAudioData(data);
 
-        // Assign the buffer to a global blow-off valve sound buffer
         BLOW_OFF_BUFFER = buffer;
 
         console.log('Blow off sound loaded successfully for ' + CAR.name);
@@ -74,19 +73,14 @@ function playBlowOffValve() {
         //console.warn('Blow off valve sound not loaded or not available for ' + CAR.name);
         return;
     }
-
-    // Create a new buffer source node for each playback
     BLOW_OFF_SOURCE_NODE = AUDIO_CONTEXT.createBufferSource();
     BLOW_OFF_SOURCE_NODE.buffer = BLOW_OFF_BUFFER;
 
-    // Create a gain node for controlling volume (if needed)
     BLOW_OFF_GAIN_NODE = AUDIO_CONTEXT.createGain();
     BLOW_OFF_GAIN_NODE.gain.value = 1.0; // Default gain value
 
-    // Connect the source node to the gain node and the audio context destination
     BLOW_OFF_SOURCE_NODE.connect(BLOW_OFF_GAIN_NODE).connect(AUDIO_CONTEXT.destination);
 
-    // Start playback from the beginning of the buffer
     BLOW_OFF_SOURCE_NODE.start(0);
 
     console.log('Playing blow-off valve sound for ' + CAR.name);
@@ -117,8 +111,8 @@ function updateEnginePitch(rpm) {
             //GAIN_NODE.gain.value = 1.0;
             GAIN_NODE.gain.linearRampToValueAtTime(0.6, AUDIO_CONTEXT.currentTime + 0.2); // Smooth volume change
         } else {
-            GAIN_NODE.gain.linearRampToValueAtTime(1.0, AUDIO_CONTEXT.currentTime + 0.2); // Smooth volume change
-            // GAIN_NODE.gain.value = 1.0;
+            //GAIN_NODE.gain.linearRampToValueAtTime(1.0, AUDIO_CONTEXT.currentTime + 0.5); // Smooth volume change
+            GAIN_NODE.gain.value = 1.0;
         }
         // Update playback rate continuously without restarting the sound
         //console.log('playback rate = ' + playbackRate);

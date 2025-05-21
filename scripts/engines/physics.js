@@ -85,7 +85,7 @@ class Car {
 
         //sounds
         this.has_sound = true;
-        this.sound_url = `./engine_sounds/${this.name}.mp3`;
+        this.sound_url = `.assets/engine_sounds/${this.name}.mp3`;
 
         try {
             this.sound_pitch_0 = this.data["sound_pitch_0"];
