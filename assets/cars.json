@@ -262,7 +262,7 @@
 		"rear_weight": 0.478,
 		"c_d": 0.31,
 		"frontal": 2.17,
-		"df_coeff": -0.11,
+		"df_coeff": -0.105,
 		"wheel_radius": 0.3345,
 		"tyre_coeff": 1.5,
 		"cm_height": 0.432,

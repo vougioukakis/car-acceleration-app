@@ -375,7 +375,7 @@ class Run {
         let c_d = this.car.chassis.c_d;
         let frontal_area = this.car.chassis.frontal;
         let wheel_aero_drag = this.wheel_aero_drag(speed);
-        return 0.5 * c_d * frontal_area * 1.202 * (speed ** 2) + wheel_aero_drag;
+        return 0.5 * c_d * frontal_area * 1.204 * (speed ** 2) + wheel_aero_drag;
     }
 
     roll_resistance(speed) {
