@@ -10,6 +10,7 @@
     </head>
 
     <body>
+        <div id="vignetteOverlay"></div>
         <div id="manufacturersScreen" class="screen active">
             <h1>Select a Manufacturer</h1>
             <div class="selectionScreen"></div>
@@ -24,28 +25,30 @@
         <div id="simulationScreen" class="screen">
             <button id="backToCars">Back to Cars</button>
             <h1>Simulation</h1>
-            <div id="simulationDetails">
-                <div id="gear">N</div>
-                <div id="rpm">&nbsp; </div>
-                <div id="speed">Use the throttle to rev the car and click launch when ready!</div>
-                <div id="time">&nbsp; </div>
-                <div id="quarterMile"> &nbsp;</div>
-                <div id="to_100km"> &nbsp; </div>
-                <!--<div id="halfMile">Half Mile:</div>-->
-                <!--<div id="realTime">Real Time:</div>-->
-                <div id="state"> &nbsp; </div>
-            </div>
-
-            <div id="rpmMeterDiv">
-                <div class="rev-meter" id="revMeter">
-                    <div id="revFill" class="rev-fill"></div>
-
-                </div>
-                <div class="rpm-labels">
-                    <!-- RPM labels (generated dynamically) -->
+            <div id="animated">
+                <div id="simulationDetails">
+                    <div id="gear">N</div>
+                    <div id="rpm">&nbsp; </div>
+                    <div id="speed">Use the throttle to rev the car and click launch when ready!</div>
+                    <div id="time">&nbsp; </div>
+                    <div id="quarterMile"> &nbsp;</div>
+                    <div id="to_100km"> &nbsp; </div>
+                    <!--<div id="halfMile">Half Mile:</div>-->
+                    <!--<div id="realTime">Real Time:</div>-->
+                    <div id="state"> &nbsp; </div>
                 </div>
 
+                <div id="rpmMeterDiv">
+                    <div class="rev-meter" id="revMeter">
+                        <div id="revFill" class="rev-fill"></div>
 
+                    </div>
+                    <div class="rpm-labels">
+                        <!-- RPM labels (generated dynamically) -->
+                    </div>
+
+
+                </div>
             </div>
 
             <button id="startButton">LAUNCH</button>

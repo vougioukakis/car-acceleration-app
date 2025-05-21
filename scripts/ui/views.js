@@ -6,6 +6,11 @@ function resetUI() {
     document.getElementById('quarterMile').innerHTML = `&nbsp;`;
     document.getElementById('to_100km').innerHTML = `&nbsp;`;
     document.getElementById('state').innerHTML = `&nbsp;`;
+
+    const overlay = document.getElementById('vignetteOverlay');
+    const opacity = 0;
+    overlay.style.opacity = opacity.toFixed(2);
+
 }
 
 function generateCarCard(carObj) {
