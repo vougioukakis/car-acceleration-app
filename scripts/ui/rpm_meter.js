@@ -14,9 +14,9 @@ let perfect_shift_indicator = document.createElement('div');
 // [x] FIXME: Left side of rpm filling bar has corners, make them rounded.
 
 function initializeRevMeter() {
-    shift_points = run.get_shift_points();
+    shift_points = RUN.get_shift_points();
     console.log('got shift points: ' + shift_points);
-    maxRPM = run.car.engine.redline;
+    maxRPM = RUN.car.engine.redline;
     extendedMaxRPM = maxRPM + (1000 - maxRPM % 1000);
     totalMarks = extendedMaxRPM / 1000;
     console.log('marks', totalMarks);
