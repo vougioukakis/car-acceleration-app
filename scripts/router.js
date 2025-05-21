@@ -56,7 +56,7 @@ function router() {
         showCars(parts[1]);
     } else if (parts[0] === 'simulation' && parts[1] && parts[2]) {
         const carObj = cars.find(c => c.make === parts[1] && c.name === parts[2]);
-        if (carObj) {
+        if (carObj && selectedMake) {
             showSimulation(carObj);
         } else {
             showManufacturers();
@@ -64,10 +64,7 @@ function router() {
     } else {
         showManufacturers();
     }
+
+    // NOTE: if someone enters the car immediately from the address bar, we kept the selectedMake variable
+    // undefined. if its found undefined, show manufacturers
 }
-
-// Listen for URL hash changes
-window.addEventListener('hashchange', router);
-
-// On initial load
-window.addEventListener('load', router);
