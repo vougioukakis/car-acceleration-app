@@ -114,8 +114,7 @@ function updateEnginePitch(rpm) {
             GAIN_NODE.gain.linearRampToValueAtTime(1.0, AUDIO_CONTEXT.currentTime + 0.4); // Smooth volume change
             //GAIN_NODE.gain.value = 1.0;
         }
-        // Update playback rate continuously without restarting the sound
-        //console.log('playback rate = ' + playbackRate);
+        // update playback rate continuously without restarting the sound
         SOURCE_NODE.playbackRate.value = playbackRate;
         PREVIOUS_RPM = rpm;
 
@@ -136,20 +135,15 @@ function generateStraightCutGearSound() {
         return;
     }
 
-    // Create an oscillator for the synthetic sound
+    // create an oscillator for the synthetic sound
     GEAR_OSCILLATOR = AUDIO_CONTEXT.createOscillator();
     GEAR_GAIN_NODE = AUDIO_CONTEXT.createGain();
 
-    // Set up the oscillator and gain
-    GEAR_OSCILLATOR.type = 'sawtooth'; // Harsh mechanical sound
-    GEAR_GAIN_NODE.gain.value = 0.021; // Initial volume
+    GEAR_OSCILLATOR.type = 'sawtooth';
+    GEAR_GAIN_NODE.gain.value = 0.021;
 
-    // Connect the oscillator to the gain node and the audio context destination
     GEAR_OSCILLATOR.connect(GEAR_GAIN_NODE).connect(AUDIO_CONTEXT.destination);
-
-    // Start the oscillator
     GEAR_OSCILLATOR.start();
-
     console.log('Synthetic straight-cut gear sound generated.');
 }
 
@@ -167,13 +161,11 @@ function updateSyntheticGearSound(rpm, gear) {
     }
 
     if (Math.abs(rpm - PREVIOUS_RPM_GEARBOX) > 40) {
-        // Calculate the frequency based on RPM and gear
-        const normalizedRPM = rpm / maxRPM; // Normalize RPM to a 0-1 range
-        const baseFrequency = 500; // Base frequency for the lowest RPM
-        const gearFactor = 1 + gear ** 1.1; // Increase frequency based on gear index
+        const normalizedRPM = rpm / maxRPM; // normalize RPM
+        const baseFrequency = 500; // base frequency
+        const gearFactor = 1 + gear ** 1.1; // freq increased based on gear index
         const frequency = baseFrequency + normalizedRPM * baseFrequency * gearFactor;
 
-        // Update the oscillator frequency
         GEAR_OSCILLATOR.frequency.setValueAtTime(frequency, AUDIO_CONTEXT.currentTime);
 
         console.log(`Synthetic gear sound updated: RPM=${rpm}, Gear=${gear}, Frequency=${frequency.toFixed(2)}Hz`);
