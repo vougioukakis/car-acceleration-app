@@ -85,7 +85,7 @@ class Car {
 
         //sounds
         this.has_sound = true;
-        this.sound_url = `./engine_sounds/${this.name}.mp3`;
+        this.sound_url = `./assets/engine_sounds/${this.name}.mp3`;
 
         try {
             this.sound_pitch_0 = this.data["sound_pitch_0"];
@@ -142,7 +142,7 @@ class Run {
 
     current_seconds = 0;
     end = 80; //run duration in s
-    max_steps = this.end * targetFps;
+    max_steps = this.end * TARGET_FPS;
     step = this.end / this.max_steps;
     iter_index = 0;
     time = linspace(0, this.end, this.max_steps); //s
@@ -375,7 +375,7 @@ class Run {
         let c_d = this.car.chassis.c_d;
         let frontal_area = this.car.chassis.frontal;
         let wheel_aero_drag = this.wheel_aero_drag(speed);
-        return 0.5 * c_d * frontal_area * 1.202 * (speed ** 2) + wheel_aero_drag;
+        return 0.5 * c_d * frontal_area * 1.204 * (speed ** 2) + wheel_aero_drag;
     }
 
     roll_resistance(speed) {

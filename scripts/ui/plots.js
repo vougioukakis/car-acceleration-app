@@ -3,12 +3,12 @@ let torqueChart;
 
 // FIXME: Controls not aligned when i disable plot?
 function plotTorque() {
-    console.log("plotting torque for " + run.car.name);
+    console.log("plotting torque for " + RUN.car.name);
     let N_values = [];
     let torque_values = [];
-    for (let N = run.car.engine.idle_RPM; N <= run.car.engine.redline; N += 100) {
+    for (let N = RUN.car.engine.idle_RPM; N <= RUN.car.engine.redline; N += 100) {
         N_values.push(N);
-        torque_values.push(run.car.torque(N));
+        torque_values.push(RUN.car.torque(N));
     }
 
     // Create the chart using Chart.js
@@ -48,7 +48,7 @@ function plotTorque() {
                         text: 'Torque (Nm) / Horsepower (HP)'
                     },
                     min: 0,
-                    max: Math.max(run.car.engine.max_torque + 20, Math.max(...torque_values))  // Adjust max y-value for torque and horsepower
+                    max: Math.max(RUN.car.engine.max_torque + 20, Math.max(...torque_values))  // Adjust max y-value for torque and horsepower
                 }
             }
         }

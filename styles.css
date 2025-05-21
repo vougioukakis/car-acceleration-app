@@ -17,6 +17,10 @@ button {
     justify-content: center;
 }
 
+#animated {
+    transition: transform 0.1s ease-out;
+}
+
 .car-card,
 .make-card {
     width: 200px;
@@ -30,7 +34,7 @@ button {
 .car-card img,
 .make-card img {
     width: 100%;
-    height: auto;
+    height: 160px;
     object-fit: cover;
 }
 
@@ -91,4 +95,17 @@ body {
 
 #gear {
     font-size: 20px;
+}
+
+#vignetteOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.6) 100%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
