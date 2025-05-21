@@ -13,6 +13,29 @@ function resetUI() {
 
 }
 
+function animate() {
+    const div = document.getElementById("animated");
+    let scale;
+    if (RUN.shifting) {
+        scale = 1;
+    } else {
+        const clampedAccel = Math.min(RUN.accel, 1.7);
+        scale = 0.95 - 0.2 * (clampedAccel ** 1.7);
+    }
+    const jitterRange = RUN.current_speed * 3.6 / 45; // max pixels in any direction
+    const jitterX = (Math.random() - 0.5) * 2 * jitterRange;
+    const jitterY = (Math.random() - 0.5) * 2 * jitterRange;
+
+    div.style.transform = `scale(${scale}) translate(${jitterX}px, ${jitterY}px)`;
+
+    const overlay = document.getElementById('vignetteOverlay');
+
+    const clampedSpeed = Math.min(RUN.current_speed, 300);
+    const opacity = clampedSpeed / 300; // max 0.6 opacity
+
+    overlay.style.opacity = opacity.toFixed(2);
+}
+
 function generateCarCard(carObj) {
     const card = document.createElement('div');
     card.classList.add('car-card');
