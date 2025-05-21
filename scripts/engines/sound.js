@@ -109,10 +109,10 @@ function updateEnginePitch(rpm) {
 
         if (PREVIOUS_RPM > rpm) {
             //GAIN_NODE.gain.value = 1.0;
-            GAIN_NODE.gain.linearRampToValueAtTime(0.6, AUDIO_CONTEXT.currentTime + 0.2); // Smooth volume change
+            GAIN_NODE.gain.linearRampToValueAtTime(0.6, AUDIO_CONTEXT.currentTime + 0.4); // Smooth volume change
         } else {
-            //GAIN_NODE.gain.linearRampToValueAtTime(1.0, AUDIO_CONTEXT.currentTime + 0.5); // Smooth volume change
-            GAIN_NODE.gain.value = 1.0;
+            GAIN_NODE.gain.linearRampToValueAtTime(1.0, AUDIO_CONTEXT.currentTime + 0.4); // Smooth volume change
+            //GAIN_NODE.gain.value = 1.0;
         }
         // Update playback rate continuously without restarting the sound
         //console.log('playback rate = ' + playbackRate);

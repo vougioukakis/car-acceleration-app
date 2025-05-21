@@ -13,7 +13,7 @@ function generateCarCard(carObj) {
     card.classList.add('car-card');
 
     const image = document.createElement('img');
-    image.src = `images/${carObj.make}/${carObj.name}.jpg`;
+    image.src = `./assets/images/${carObj.make}/${carObj.name}.jpg`;
     image.alt = `${carObj.make} ${carObj.model}`;
 
     const title = document.createElement('h3');
@@ -66,7 +66,7 @@ function generateMakeCard(make) {
     makeCard.classList.add('make-card');
 
     const makeImage = document.createElement('img');
-    makeImage.src = `images/${make}/logo.jpg`;
+    makeImage.src = `./assets/images/${make}/logo.jpg`;
     makeImage.alt = `${make} logo`;
 
     const makeTitle = document.createElement('h3');
