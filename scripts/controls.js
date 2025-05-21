@@ -2,56 +2,56 @@
 
 // controls
 function handleThrottlePress(event) {
-    if (started && event.code === "ArrowUp") {
+    if (STARTED && event.code === "ArrowUp") {
         event.preventDefault();
-        isRevving = true;
+        IS_REVVING = true;
     }
 }
 
 function handleThrottleRelease(event) {
-    if (started && event.code === "ArrowUp") {
+    if (STARTED && event.code === "ArrowUp") {
         event.preventDefault();
-        isRevving = false;
+        IS_REVVING = false;
     }
 }
 
 function handleThrottlePressButton(event) {
-    if (started) {
+    if (STARTED) {
         event.preventDefault();
-        isRevving = true;
+        IS_REVVING = true;
     }
 }
 
 function handleThrottleReleaseButton(event) {
-    if (started) {
+    if (STARTED) {
         event.preventDefault();
-        isRevving = false;
+        IS_REVVING = false;
     }
 }
 
 // sim state
 function resetSimulation() {
     //state
-    started = false;
-    launched = false;
-    run = null;
-    car = null;
+    STARTED = false;
+    LAUNCHED = false;
+    RUN = null;
+    CAR = null;
 
     //sound
-    if (sourceNode) {
-        sourceNode.stop();
-        sourceNode = null;
-        soundStarted = false;
+    if (SOURCE_NODE) {
+        SOURCE_NODE.stop();
+        SOURCE_NODE = null;
+        SOUND_STARTED = false;
     }
     stopSyntheticGearSound();
 }
 
 function startSimulation(carObj) {
     try {
-        car = new Car(carObj.name);
-        run = new Run(car, true);
+        CAR = new Car(carObj.name);
+        RUN = new Run(CAR, true);
         resetPlot();
-        started = true;
+        STARTED = true;
         requestAnimationFrame(gameLoop);
         plotTorque();
         initializeRevMeter();
@@ -61,11 +61,11 @@ function startSimulation(carObj) {
 }
 
 function launchSimulation() {
-    launched = true;
-    startTime = performance.now();  // store the current time when simulation starts
-    lastTime = startTime;  // initialize last time for delta calculation
+    LAUNCHED = true;
+    START_TIME = performance.now();  // store the current time when simulation starts
+    LAST_TIME = START_TIME;  // initialize last time for delta calculation
 }
 
 function shiftSimulation() {
-    run.shift_call = true;
+    RUN.shift_call = true;
 }

@@ -25,13 +25,13 @@ function showCars(make) {
     document.getElementById('simulationScreen').style.display = 'none';
 }
 
-function showSimulation(car) {
-    if (!car) {
+function showSimulation(CAR) {
+    if (!CAR) {
         showCars(selectedMake);
         return;
     }
-    selectedCar = car;
-    startSimulation(car);
+    selectedCar = CAR;
+    startSimulation(CAR);
 
     document.getElementById('manufacturersScreen').style.display = 'none';
     document.getElementById('carsScreen').style.display = 'none';

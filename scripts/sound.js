@@ -8,31 +8,31 @@
  *
  */
 async function loadEngineSound(audioUrl) {
-    console.log('Fetching engine sound for ' + car.name);
+    console.log('Fetching engine sound for ' + CAR.name);
     let buffer;
     try {
         const response = await fetch(audioUrl);
         const data = await response.arrayBuffer();
-        buffer = await audioContext.decodeAudioData(data);
+        buffer = await AUDIO_CONTEXT.decodeAudioData(data);
     } catch (error) {
-        console.log('Error fetching or decoding audio data for' + car.name + ',' + error);
-        car.has_sound = false;
-        soundStarted = false;
+        console.log('Error fetching or decoding audio data for' + CAR.name + ',' + error);
+        CAR.has_sound = false;
+        SOUND_STARTED = false;
         return 0;
     }
 
-    basePlaybackRate = car.sound_pitch_0;
+    BASE_PLAYBACK_RATE = CAR.sound_pitch_0;
 
-    sourceNode = audioContext.createBufferSource();
-    sourceNode.buffer = buffer;
-    sourceNode.loop = true;
+    SOURCE_NODE = AUDIO_CONTEXT.createBufferSource();
+    SOURCE_NODE.buffer = buffer;
+    SOURCE_NODE.loop = true;
 
-    gainNode = audioContext.createGain();
-    gainNode.gain.value = 1.0;
+    GAIN_NODE = AUDIO_CONTEXT.createGain();
+    GAIN_NODE.gain.value = 1.0;
 
-    sourceNode.connect(gainNode).connect(audioContext.destination);
-    sourceNode.playbackRate.value = basePlaybackRate;
-    sourceNode.start(0); // Start playing the sound
+    SOURCE_NODE.connect(GAIN_NODE).connect(AUDIO_CONTEXT.destination);
+    SOURCE_NODE.playbackRate.value = BASE_PLAYBACK_RATE;
+    SOURCE_NODE.start(0); // Start playing the sound
     return 1;
 }
 
@@ -45,51 +45,51 @@ async function loadEngineSound(audioUrl) {
  * @returns {Promise<boolean>} - Resolves to true if the sound is loaded successfully, false otherwise.
  */
 async function loadStututu(audioUrl) {
-    console.log('Fetching blow off sound for ' + car.name);
+    console.log('Fetching blow off sound for ' + CAR.name);
 
     try {
         const response = await fetch(audioUrl);
         const data = await response.arrayBuffer();
-        const buffer = await audioContext.decodeAudioData(data);
+        const buffer = await AUDIO_CONTEXT.decodeAudioData(data);
 
         // Assign the buffer to a global blow-off valve sound buffer
-        car.blowOffBuffer = buffer;
+        BLOW_OFF_BUFFER = buffer;
 
-        console.log('Blow off sound loaded successfully for ' + car.name);
+        console.log('Blow off sound loaded successfully for ' + CAR.name);
         return true;
     } catch (error) {
-        console.error('Error fetching or decoding blow-off audio data for ' + car.name + ':', error);
+        console.error('Error fetching or decoding blow-off audio data for ' + CAR.name + ':', error);
         return false;
     }
 }
 
 /**
  * Plays the blow-off valve sound if available.
- * Ensures that the sound only plays if the car has a blow-off valve sound loaded.
+ * Ensures that the sound only plays if the CAR has a blow-off valve sound loaded.
  *
  * @returns {void}
  */
 function playBlowOffValve() {
-    if (!soundStarted) {
-        //console.warn('Blow off valve sound not loaded or not available for ' + car.name);
+    if (!SOUND_STARTED) {
+        //console.warn('Blow off valve sound not loaded or not available for ' + CAR.name);
         return;
     }
 
     // Create a new buffer source node for each playback
-    blowOffSourceNode = audioContext.createBufferSource();
-    blowOffSourceNode.buffer = car.blowOffBuffer;
+    BLOW_OFF_SOURCE_NODE = AUDIO_CONTEXT.createBufferSource();
+    BLOW_OFF_SOURCE_NODE.buffer = BLOW_OFF_BUFFER;
 
     // Create a gain node for controlling volume (if needed)
-    blowOffGainNode = audioContext.createGain();
-    blowOffGainNode.gain.value = 1.0; // Default gain value
+    BLOW_OFF_GAIN_NODE = AUDIO_CONTEXT.createGain();
+    BLOW_OFF_GAIN_NODE.gain.value = 1.0; // Default gain value
 
     // Connect the source node to the gain node and the audio context destination
-    blowOffSourceNode.connect(blowOffGainNode).connect(audioContext.destination);
+    BLOW_OFF_SOURCE_NODE.connect(BLOW_OFF_GAIN_NODE).connect(AUDIO_CONTEXT.destination);
 
     // Start playback from the beginning of the buffer
-    blowOffSourceNode.start(0);
+    BLOW_OFF_SOURCE_NODE.start(0);
 
-    console.log('Playing blow-off valve sound for ' + car.name);
+    console.log('Playing blow-off valve sound for ' + CAR.name);
 }
 
 
@@ -104,26 +104,26 @@ function playBlowOffValve() {
  * @returns {void}
  */
 function updateEnginePitch(rpm) {
-    if (!sourceNode) return;
+    if (!SOURCE_NODE) return;
 
-    if (Math.abs(rpm - previous_rpm) > 40) {
+    if (Math.abs(rpm - PREVIOUS_RPM) > 40) {
 
         // normalize RPM to a 0-1 range and map it to playback rate
         const normalizedRPM = (rpm) / (maxRPM);
-        const playbackRate = basePlaybackRate + normalizedRPM * (car.sound_pitch_1 - basePlaybackRate); // Adjust range
+        const playbackRate = BASE_PLAYBACK_RATE + normalizedRPM * (CAR.sound_pitch_1 - BASE_PLAYBACK_RATE); // Adjust range
 
 
-        if (previous_rpm > rpm) {
-            //gainNode.gain.value = 1.0;
-            gainNode.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.2); // Smooth volume change
+        if (PREVIOUS_RPM > rpm) {
+            //GAIN_NODE.gain.value = 1.0;
+            GAIN_NODE.gain.linearRampToValueAtTime(0.6, AUDIO_CONTEXT.currentTime + 0.2); // Smooth volume change
         } else {
-            gainNode.gain.linearRampToValueAtTime(1.0, audioContext.currentTime + 0.2); // Smooth volume change
-            // gainNode.gain.value = 1.0;
+            GAIN_NODE.gain.linearRampToValueAtTime(1.0, AUDIO_CONTEXT.currentTime + 0.2); // Smooth volume change
+            // GAIN_NODE.gain.value = 1.0;
         }
         // Update playback rate continuously without restarting the sound
         //console.log('playback rate = ' + playbackRate);
-        sourceNode.playbackRate.value = playbackRate;
-        previous_rpm = rpm;
+        SOURCE_NODE.playbackRate.value = playbackRate;
+        PREVIOUS_RPM = rpm;
 
     }
 }
@@ -137,24 +137,24 @@ function updateEnginePitch(rpm) {
  * @returns {void}
  */
 function generateStraightCutGearSound() {
-    if (!audioContext) {
+    if (!AUDIO_CONTEXT) {
         console.error('AudioContext is not initialized.');
         return;
     }
 
     // Create an oscillator for the synthetic sound
-    gearOscillator = audioContext.createOscillator();
-    gearGainNode = audioContext.createGain();
+    GEAR_OSCILLATOR = AUDIO_CONTEXT.createOscillator();
+    GEAR_GAIN_NODE = AUDIO_CONTEXT.createGain();
 
     // Set up the oscillator and gain
-    gearOscillator.type = 'sawtooth'; // Harsh mechanical sound
-    gearGainNode.gain.value = 0.021; // Initial volume
+    GEAR_OSCILLATOR.type = 'sawtooth'; // Harsh mechanical sound
+    GEAR_GAIN_NODE.gain.value = 0.021; // Initial volume
 
     // Connect the oscillator to the gain node and the audio context destination
-    gearOscillator.connect(gearGainNode).connect(audioContext.destination);
+    GEAR_OSCILLATOR.connect(GEAR_GAIN_NODE).connect(AUDIO_CONTEXT.destination);
 
     // Start the oscillator
-    gearOscillator.start();
+    GEAR_OSCILLATOR.start();
 
     console.log('Synthetic straight-cut gear sound generated.');
 }
@@ -167,12 +167,12 @@ function generateStraightCutGearSound() {
  * @returns {void}
  */
 function updateSyntheticGearSound(rpm, gear) {
-    if (!gearOscillator) {
+    if (!GEAR_OSCILLATOR) {
         console.warn('Straight-cut gear sound has not been generated.');
         return;
     }
 
-    if (Math.abs(rpm - previous_rpm_gearbox) > 40) {
+    if (Math.abs(rpm - PREVIOUS_RPM_GEARBOX) > 40) {
         // Calculate the frequency based on RPM and gear
         const normalizedRPM = rpm / maxRPM; // Normalize RPM to a 0-1 range
         const baseFrequency = 500; // Base frequency for the lowest RPM
@@ -180,17 +180,17 @@ function updateSyntheticGearSound(rpm, gear) {
         const frequency = baseFrequency + normalizedRPM * baseFrequency * gearFactor;
 
         // Update the oscillator frequency
-        gearOscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+        GEAR_OSCILLATOR.frequency.setValueAtTime(frequency, AUDIO_CONTEXT.currentTime);
 
         console.log(`Synthetic gear sound updated: RPM=${rpm}, Gear=${gear}, Frequency=${frequency.toFixed(2)}Hz`);
 
-        if (previous_rpm_gearbox > rpm) {
-            gearGainNode.gain.value = 0.01;
+        if (PREVIOUS_RPM_GEARBOX > rpm) {
+            GEAR_GAIN_NODE.gain.value = 0.01;
         } else {
-            gearGainNode.gain.value = 0.021;
+            GEAR_GAIN_NODE.gain.value = 0.021;
         }
 
-        previous_rpm_gearbox = rpm;
+        PREVIOUS_RPM_GEARBOX = rpm;
     }
 }
 
@@ -200,11 +200,11 @@ function updateSyntheticGearSound(rpm, gear) {
  * @returns {void}
  */
 function stopSyntheticGearSound() {
-    if (gearOscillator) {
-        gearOscillator.stop();
-        gearOscillator.disconnect();
-        gearOscillator = null;
-        gearGainNode = null;
+    if (GEAR_OSCILLATOR) {
+        GEAR_OSCILLATOR.stop();
+        GEAR_OSCILLATOR.disconnect();
+        GEAR_OSCILLATOR = null;
+        GEAR_GAIN_NODE = null;
 
         console.log('Synthetic straight-cut gear sound stopped.');
     }

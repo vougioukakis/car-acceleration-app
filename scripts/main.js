@@ -1,73 +1,73 @@
 
 //loop
 function updateSimulation() {
-    //console.log('started = ', started);
-    if (!started) {
+    //console.log('started = ', STARTED);
+    if (!STARTED) {
         return;
     }
 
-    if (!launched) {
-        updateRevDisplay(run.current_rpm);
-        document.getElementById("rpm").innerText = `RPM: ${run.current_rpm.toFixed()}`;
+    if (!LAUNCHED) {
+        updateRevDisplay(RUN.current_rpm);
+        document.getElementById("rpm").innerText = `RPM: ${RUN.current_rpm.toFixed()}`;
 
         return;
     }
 
     const currentTime = performance.now();
 
-    deltaTime = currentTime - lastTime;
-    timeAccumulator += deltaTime;
+    DELTA_TIME = currentTime - LAST_TIME;
+    TIME_ACCUMULATOR += DELTA_TIME;
 
     // update the simulation based on delta time if enough time has passed
-    while (timeAccumulator >= timePerTick) {
-        run.simulate_step();
-        if (run.done) {
+    while (TIME_ACCUMULATOR >= TIME_PER_TICK) {
+        RUN.simulate_step();
+        if (RUN.done) {
             finish();
         }
-        timeAccumulator -= timePerTick;
-        updateRevDisplay(run.current_rpm, run.gear_index);
-        updateEnginePitch(run.current_rpm);
-        updateSyntheticGearSound(run.current_rpm, run.gear_index);
+        TIME_ACCUMULATOR -= TIME_PER_TICK;
+        updateRevDisplay(RUN.current_rpm, RUN.gear_index);
+        updateEnginePitch(RUN.current_rpm);
+        updateSyntheticGearSound(RUN.current_rpm, RUN.gear_index);
 
 
-        document.getElementById("gear").innerText = `${run.gear_index + 1}`;
-        document.getElementById("rpm").innerText = `RPM: ${run.current_rpm.toFixed()}`;
-        document.getElementById("speed").innerText = `Speed: ${(run.current_speed * 3.6).toFixed()} km/h`;
-        document.getElementById("time").innerText = `Time: ${run.current_seconds.toFixed(1)} s`;
-        document.getElementById("quarterMile").innerText = `Quarter Mile: ${run.to_400m}s`;
-        document.getElementById("to_100km").innerText = `0-100 kmh: ${run.to_100km}s`;
+        document.getElementById("gear").innerText = `${RUN.gear_index + 1}`;
+        document.getElementById("rpm").innerText = `RPM: ${RUN.current_rpm.toFixed()}`;
+        document.getElementById("speed").innerText = `Speed: ${(RUN.current_speed * 3.6).toFixed()} km/h`;
+        document.getElementById("time").innerText = `Time: ${RUN.current_seconds.toFixed(1)} s`;
+        document.getElementById("quarterMile").innerText = `Quarter Mile: ${RUN.to_400m}s`;
+        document.getElementById("to_100km").innerText = `0-100 kmh: ${RUN.to_100km}s`;
     }
 
     // save the current time as last time for next frame
-    lastTime = currentTime;
+    LAST_TIME = currentTime;
 }
 function gameLoop() {
-    if (!started) return;
+    if (!STARTED) return;
 
-    if (started && !soundStarted && car.has_sound) {
-        let isWorking = loadEngineSound(car.sound_url);
+    if (STARTED && !SOUND_STARTED && CAR.has_sound) {
+        let isWorking = loadEngineSound(CAR.sound_url);
         if (isWorking) {
-            soundStarted = true;
-            loadStututu('./turbo_sounds/blowoff_' + car.engine.blow_off + '.mp3');
-            if (car.transmission.straight_cut) generateStraightCutGearSound();
+            SOUND_STARTED = true;
+            loadStututu('./turbo_sounds/blowoff_' + CAR.engine.blow_off + '.mp3');
+            if (CAR.transmission.straight_cut) generateStraightCutGearSound();
         }
     }
 
-    if (started && isRevving && !launched) {
-        run.rev();
-        updateEnginePitch(run.current_rpm);
-        updateSyntheticGearSound(run.current_rpm, run.gear_index);
+    if (STARTED && IS_REVVING && !LAUNCHED) {
+        RUN.rev();
+        updateEnginePitch(RUN.current_rpm);
+        updateSyntheticGearSound(RUN.current_rpm, RUN.gear_index);
     }
-    else if (started && !isRevving && !launched) {
-        run.off_throttle();
-        updateEnginePitch(run.current_rpm);
-        updateSyntheticGearSound(run.current_rpm, run.gear_index);
+    else if (STARTED && !IS_REVVING && !LAUNCHED) {
+        RUN.off_throttle();
+        updateEnginePitch(RUN.current_rpm);
+        updateSyntheticGearSound(RUN.current_rpm, RUN.gear_index);
 
     }
 
-    if (run.stututu) {
+    if (RUN.stututu) {
         playBlowOffValve();
-        run.stututu_done();
+        RUN.stututu_done();
     }
 
     updateSimulation(); // if not started, will exit immediately

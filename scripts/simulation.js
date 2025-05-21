@@ -142,7 +142,7 @@ class Run {
 
     current_seconds = 0;
     end = 80; //run duration in s
-    max_steps = this.end * targetFps;
+    max_steps = this.end * TARGET_FPS;
     step = this.end / this.max_steps;
     iter_index = 0;
     time = linspace(0, this.end, this.max_steps); //s
