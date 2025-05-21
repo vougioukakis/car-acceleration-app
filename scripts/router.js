@@ -31,9 +31,7 @@ function showSimulation(car) {
         return;
     }
     selectedCar = car;
-
-    // call your existing simulation function
-    showSimulationScreen(car);
+    startSimulation(car);
 
     document.getElementById('manufacturersScreen').style.display = 'none';
     document.getElementById('carsScreen').style.display = 'none';

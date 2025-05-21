@@ -1,32 +1,63 @@
 // TODO: implement a debug mode that enables torque plots, console logs and other test stuff. (disable console logs by redefining console log)
 
-
+// controls
 function handleThrottlePress(event) {
-    if (event.code === "ArrowUp") {
+    if (started && event.code === "ArrowUp") {
         event.preventDefault();
         isRevving = true;
     }
 }
 
 function handleThrottleRelease(event) {
-    if (event.code === "ArrowUp") {
+    if (started && event.code === "ArrowUp") {
         event.preventDefault();
         isRevving = false;
     }
 }
 
 function handleThrottlePressButton(event) {
-    event.preventDefault();
-    isRevving = true;
+    if (started) {
+        event.preventDefault();
+        isRevving = true;
+    }
 }
 
 function handleThrottleReleaseButton(event) {
-    event.preventDefault();
-    isRevving = false;
+    if (started) {
+        event.preventDefault();
+        isRevving = false;
+    }
 }
 
-function startSimulation() {
-    started = true;
+// sim state
+function resetSimulation() {
+    //state
+    started = false;
+    launched = false;
+    run = null;
+    car = null;
+
+    //sound
+    if (sourceNode) {
+        sourceNode.stop();
+        sourceNode = null;
+        soundStarted = false;
+    }
+    stopSyntheticGearSound();
+}
+
+function startSimulation(carObj) {
+    try {
+        car = new Car(carObj.name);
+        run = new Run(car, true);
+        resetPlot();
+        started = true;
+        requestAnimationFrame(gameLoop);
+        plotTorque();
+        initializeRevMeter();
+    } catch (error) {
+        console.error('Error in startSimulation:', error);
+    }
 }
 
 function launchSimulation() {
@@ -34,7 +65,6 @@ function launchSimulation() {
     startTime = performance.now();  // store the current time when simulation starts
     lastTime = startTime;  // initialize last time for delta calculation
 }
-
 
 function updateSimulation() {
     //console.log('started = ', started);
@@ -83,9 +113,7 @@ function shiftSimulation() {
     //
 }
 
-document.getElementById("shiftButton").addEventListener("click", shiftSimulation);
-document.getElementById("startButton").addEventListener("click", launchSimulation);
-
+//loop
 function gameLoop() {
     if (!started) return;
 
@@ -121,13 +149,6 @@ function gameLoop() {
 
 function finish() {
     console.log('Simulation finished');
-    if (sourceNode) {
-        sourceNode.stop();
-        sourceNode = null;
-        soundStarted = false;
-    }
-    stopSyntheticGearSound();
-    started = false;
-    launched = false;
+    resetSimulation();
     document.getElementById('state').innerHTML = 'Finished';
 }
