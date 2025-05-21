@@ -58,6 +58,7 @@ async function loadStututu(audioUrl) {
         return true;
     } catch (error) {
         console.error('Error fetching or decoding blow-off audio data for ' + CAR.name + ':', error);
+        BLOW_OFF_BUFFER = null;
         return false;
     }
 }
@@ -194,4 +195,19 @@ function stopSyntheticGearSound() {
 
         console.log('Synthetic straight-cut gear sound stopped.');
     }
+}
+
+function resetSound() {
+    if (SOURCE_NODE) {
+        SOURCE_NODE.stop();
+        SOURCE_NODE = null;
+        SOUND_STARTED = false;
+    }
+    if (BLOW_OFF_SOURCE_NODE) {
+        BLOW_OFF_SOURCE_NODE.stop();
+        BLOW_OFF_SOURCE_NODE = null;
+        BLOW_OFF_BUFFER = null;
+        BLOW_OFF_GAIN_NODE = null;
+    }
+    stopSyntheticGearSound();
 }

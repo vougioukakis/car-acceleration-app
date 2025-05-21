@@ -38,12 +38,7 @@ function resetSimulation() {
     CAR = null;
 
     //sound
-    if (SOURCE_NODE) {
-        SOURCE_NODE.stop();
-        SOURCE_NODE = null;
-        SOUND_STARTED = false;
-    }
-    stopSyntheticGearSound();
+    resetSound();
 }
 
 function startSimulation(carObj) {
