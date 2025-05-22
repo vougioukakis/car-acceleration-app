@@ -85,6 +85,12 @@ function playBlowOffValve() {
     BLOW_OFF_SOURCE_NODE.start(0);
 
     console.log('Playing blow-off valve sound for ' + CAR.name);
+
+    BLOW_OFF_SOURCE_NODE.onended = () => {
+        BLOW_OFF_SOURCE_NODE.disconnect();
+        BLOW_OFF_GAIN_NODE.disconnect();
+    };
+
 }
 
 

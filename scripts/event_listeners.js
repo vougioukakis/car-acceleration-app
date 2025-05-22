@@ -1,9 +1,6 @@
 function addEventListenerToBackToCars() {
     document.getElementById('backToCars').addEventListener('click', () => {
         window.location.hash = `cars-${selectedMake}`;
-        resetSimulation();
-        resetUI();
-        resetRevMeter();
     });
 }
 

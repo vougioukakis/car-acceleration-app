@@ -79,5 +79,12 @@ function gameLoop() {
 function finish() {
     console.log('Simulation finished');
     resetSimulation();
+    resetSound();
     document.getElementById('state').innerHTML = 'Finished';
+}
+
+function reset() {
+    resetSimulation();
+    resetSound();
+    resetUI();
 }

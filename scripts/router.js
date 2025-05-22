@@ -1,18 +1,16 @@
+// router state
 let selectedMake = null;
 let selectedCar = null;
 
 function showManufacturers() {
     selectedMake = null;
     selectedCar = null;
-    resetSimulation();
     document.getElementById('manufacturersScreen').style.display = 'block';
     document.getElementById('carsScreen').style.display = 'none';
     document.getElementById('simulationScreen').style.display = 'none';
 }
 
 function showCars(make) {
-    resetSimulation();
-
     if (!make) {
         showManufacturers();
         return;
@@ -33,6 +31,7 @@ function showSimulation(CAR) {
         showCars(selectedMake);
         return;
     }
+
     selectedCar = CAR;
     startSimulation(CAR);
 
@@ -42,6 +41,7 @@ function showSimulation(CAR) {
 }
 
 function router() {
+    reset();
     const hash = window.location.hash.slice(1); // remove #
 
     if (!hash || hash === 'manufacturers') {
@@ -51,7 +51,7 @@ function router() {
 
     // Example hash formats:
     // #cars-Toyota
-    // #simulation-Toyota-Corolla
+    // #simulation-Toyota-Toyota_Corolla
 
     const parts = hash.split('-');
 
@@ -60,7 +60,6 @@ function router() {
     } else if (parts[0] === 'simulation' && parts[1] && parts[2]) {
         const carObj = cars.find(c => c.make === parts[1] && c.name === parts[2]);
         if (carObj && selectedMake) {
-
             showSimulation(carObj);
         } else {
             showManufacturers();

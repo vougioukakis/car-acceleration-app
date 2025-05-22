@@ -36,9 +36,6 @@ function resetSimulation() {
     LAUNCHED = false;
     RUN = null;
     CAR = null;
-
-    //sound
-    resetSound();
 }
 
 function startSimulation(carObj) {

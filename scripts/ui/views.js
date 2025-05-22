@@ -11,6 +11,8 @@ function resetUI() {
     const opacity = 0;
     overlay.style.opacity = opacity.toFixed(2);
 
+    resetRevMeter();
+
 }
 
 function animate() {
