@@ -3,3 +3,4 @@ Sound files that are the same:
 McLaren_Speedtail = McLaren_P1
 Peugeot 106 GTI = Citroen Saxo VTS
 Opel Corsa C 1.4 = 1.8
+Peugeot 208 gti = peugeot 308 gti
