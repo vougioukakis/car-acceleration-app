@@ -525,12 +525,14 @@ class Run {
     }
 
     compute_wheel_speed(i) {
-        //if this.shifting/??????
+        let one_wheel_inertia = 2.7;
+        //around 2.5 for corsa c, around 4 for agera rs (big but lightweight, rims at 5.5kg while volk 18 inch are at 8kg)
+        let drive_wheels_inertia = (2 + 2 * (1 - (this.car.transmission.drive) ** 2)) * one_wheel_inertia;
         let wheel_radius = this.car.chassis.wheel_radius;
         this.torque_at_wheel = this.torque_at_wheel_axis(this.current_rpm, this.gear_index);
         this.ground_force = this.force_at_ground(this.current_rpm, this.gear_index, this.speed[i - 1]);
 
-        const acceleration = (this.torque_at_wheel - this.ground_force * wheel_radius) / 2.25;
+        const acceleration = (this.torque_at_wheel - this.ground_force * wheel_radius) / drive_wheels_inertia;
         const new_wheel_speed = this.wheel_speed[i - 1] + this.step * acceleration;
 
         const upper_bound = Math.min(this.get_max_speed_at_gear(this.gear_index), (1 + this.allowed_slip) * Math.max(this.speed[i - 1], 1)) / wheel_radius;
@@ -710,7 +712,7 @@ class Run {
     }
 
     drop_RPM(i) {
-        this.speed[i] = this.speed[i - 1] - 0.01;
+        this.speed[i] = this.speed[i - 1] - 0.002;
         this.wheel_speed[i] = this.wheel_speed[i - 1] - 0.02;
         this.current_speed = this.speed[i];
         this.current_rpm -= 100 * this.car.transmission.flywheel_coefficient / (TARGET_FPS / 40); // rpm drop each step

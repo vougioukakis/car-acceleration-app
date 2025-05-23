@@ -19,13 +19,13 @@ async function plotAndExportPDF() {
             labels: x,
             datasets: [
                 {
-                    label: "Dataset 1",
+                    label: "Car speed kmh",
                     data: y1,
                     borderColor: "blue",
                     fill: false,
                 },
                 {
-                    label: "Dataset 2",
+                    label: "Wheel speed kmh",
                     data: y2,
                     borderColor: "red",
                     fill: false,
@@ -50,6 +50,6 @@ async function plotAndExportPDF() {
 
     // Create and save the PDF
     const pdf = new jsPDF();
-    pdf.addImage(imgData, "PNG", 10, 10, 180, 90);
+    pdf.addImage(imgData, "PNG", 10, 10, 180, 170);
     pdf.save("chart.pdf");
 }
