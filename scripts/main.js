@@ -36,6 +36,8 @@ function updateSimulation() {
         document.getElementById("time").innerText = `Time: ${RUN.current_seconds.toFixed(1)} s`;
         document.getElementById("quarterMile").innerText = `Quarter Mile: ${RUN.to_400m}s`;
         document.getElementById("to_100km").innerText = `0-100 kmh: ${RUN.to_100km}s`;
+        const indic = document.getElementById("wheelspinIndicator");
+        RUN.spinning ? indic.style.opacity = 1 : indic.style.opacity = 0;
 
         animate();
     }
