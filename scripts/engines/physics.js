@@ -196,9 +196,14 @@ class Run {
         this.best_rpm = 4000;
         for (let curr_rpm = 1100; curr_rpm <= this.car.engine.redline; curr_rpm += 100) {
             let torque_new = this.car.torque(curr_rpm);
-            if (torque_new > max_torque) this.best_rpm = curr_rpm;
+            if (torque_new > max_torque) {
+                max_torque = torque_new;
+                this.best_rpm = curr_rpm;
+            }
         }
+        console.log(`best rpm = ${this.best_rpm}`)
         return this.best_rpm;
+
     }
 
     compute_shift_points() {
