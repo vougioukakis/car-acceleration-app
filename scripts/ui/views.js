@@ -1,7 +1,7 @@
 function resetUI() {
     document.getElementById('gear').innerHTML = "N";
     document.getElementById('rpm').innerHTML = `&nbsp;`;
-    document.getElementById('speed').innerHTML = 'Use the throttle to rev the car and click launch when ready!';
+    document.getElementById('speed').innerHTML = '0 kmh';
     document.getElementById('time').innerHTML = `&nbsp;`;
     document.getElementById('quarterMile').innerHTML = `&nbsp;`;
     document.getElementById('to_100km').innerHTML = `&nbsp;`;
@@ -24,7 +24,7 @@ function animate() {
         const clampedAccel = Math.min(RUN.accel, 1.7);
         scale = 0.95 - 0.2 * (clampedAccel ** 1.7);
     }
-    const jitterRange = RUN.current_speed * 3.6 / 45; // max pixels in any direction
+    const jitterRange = RUN.current_speed * 3.6 / 50; // max pixels in any direction
     const jitterX = (Math.random() - 0.5) * 2 * jitterRange;
     const jitterY = (Math.random() - 0.5) * 2 * jitterRange;
 
@@ -33,31 +33,29 @@ function animate() {
     const overlay = document.getElementById('vignetteOverlay');
 
     const clampedSpeed = Math.min(RUN.current_speed, 300);
-    const opacity = clampedSpeed / 300; // max 0.6 opacity
+    const opacity = clampedSpeed / 300;
 
     overlay.style.opacity = opacity.toFixed(2);
 }
 
-function generateCarCard(carObj) {
+function generateCarCard(car) {
     const card = document.createElement('div');
-    card.classList.add('car-card');
+    card.className = 'car-card';
 
-    const image = document.createElement('img');
-    image.src = `./assets/images/${carObj.make}/${carObj.name}.jpg`;
-    image.alt = `${carObj.make} ${carObj.model}`;
+    card.innerHTML = `
+      <img src="./assets/images/${car.make}/${car.name}.jpg" alt="${car.make} ${car.model}" />
+      <h3>${car.model}</h3>
+    `;
 
-    const title = document.createElement('h3');
-    title.textContent = `${carObj.model}`;
+    card.onclick = () => {
+        window.location.hash = `simulation-${car.make}-${car.name}`;
+    };
 
-    card.appendChild(image);
-    card.appendChild(title);
-
-    card.addEventListener('click', () => {
-        window.location.hash = `simulation-${carObj.make}-${carObj.name}`;
-    });
+    card.setAttribute('tabindex', '0');
 
     return card;
 }
+
 
 /**
  *  Function to show the cars screen for the selected make
@@ -80,7 +78,7 @@ function showCarsScreen(make) {
  *  
  * */
 function generateSelectionScreen() {
-    const uniqueMakes = [...new Set(cars.map(carObj => carObj.make))];
+    const uniqueMakes = [...new Set(cars.map(carObj => carObj.make))].sort();
     const selectionScreen = document.querySelector('.selectionScreen');
     selectionScreen.innerHTML = '';
 
@@ -93,22 +91,21 @@ function generateSelectionScreen() {
 /** generate a make card */
 function generateMakeCard(make) {
     const makeCard = document.createElement('div');
-    makeCard.classList.add('make-card');
+    makeCard.className = 'make-card';
 
-    const makeImage = document.createElement('img');
-    makeImage.src = `./assets/images/${make}/logo.jpg`;
-    makeImage.alt = `${make} logo`;
+    makeCard.innerHTML = `
+      <img src="./assets/images/${make}/logo.jpg" alt="${make} logo" />
+      <h3>${make}</h3>
+    `;
 
-    const makeTitle = document.createElement('h3');
-    makeTitle.textContent = make;
+    makeCard.onclick = () => {
+        window.location.hash = `cars-${make}`;
+    };
 
-    makeCard.appendChild(makeImage);
-    makeCard.appendChild(makeTitle);
-
-    makeCard.addEventListener('click', () => window.location.hash = `cars-${make}`);
-
+    makeCard.setAttribute('tabindex', '0');
     return makeCard;
 }
+
 
 
 /*

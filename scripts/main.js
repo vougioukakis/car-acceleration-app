@@ -33,9 +33,9 @@ function updateSimulation() {
         document.getElementById("gear").innerText = `${RUN.gear_index + 1}`;
         document.getElementById("rpm").innerText = `RPM: ${RUN.current_rpm.toFixed()}`;
         document.getElementById("speed").innerText = `Speed: ${(RUN.current_speed * 3.6).toFixed()} km/h`;
-        document.getElementById("time").innerText = `Time: ${RUN.current_seconds.toFixed(1)} s`;
-        document.getElementById("quarterMile").innerText = `Quarter Mile: ${RUN.to_400m}s`;
-        document.getElementById("to_100km").innerText = `0-100 kmh: ${RUN.to_100km}s`;
+        document.getElementById("time").innerText = `${RUN.current_seconds.toFixed(1)} s`;
+        document.getElementById("quarterMile").innerText = `${RUN.to_400m}s`;
+        document.getElementById("to_100km").innerText = `${RUN.to_100km}s`;
         const indic = document.getElementById("wheelspinIndicator");
         RUN.spinning ? indic.style.opacity = 1 : indic.style.opacity = 0;
 
