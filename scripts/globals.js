@@ -23,7 +23,7 @@ let GEAR_GAIN_NODE;
 
 
 // timing
-const TARGET_FPS = 90;
+const TARGET_FPS = 100;
 let START_TIME = 0;
 let LAST_TIME = 0;
 let TIME_ACCUMULATOR = 0;
