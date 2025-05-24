@@ -345,6 +345,8 @@ button:focus {
 /* controls */
 #carControls {
     position: fixed;
+    max-width: 1280px;
+    margin: 0 auto;
     bottom: 2rem;
     left: 0;
     right: 0;
@@ -358,6 +360,7 @@ button:focus {
 
 #carControls button {
     pointer-events: auto;
+    max-width: 500px;
     appearance: none;
     border: none;
     border-radius: 12px;

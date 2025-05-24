@@ -91,6 +91,9 @@ function playBlowOffValve() {
         BLOW_OFF_GAIN_NODE.disconnect();
     };
 
+    BLOW_OFF_SOURCE_NODE = null;
+    BLOW_OFF_GAIN_NODE = null;
+
 }
 
 

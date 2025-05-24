@@ -10,6 +10,7 @@ function resetUI() {
     const overlay = document.getElementById('vignetteOverlay');
     const opacity = 0;
     overlay.style.opacity = opacity.toFixed(2);
+    document.getElementById("startButton").style.display = 'block';
     document.getElementById("throttle").style.display = 'block';
     document.getElementById("shiftButton").style.display = 'none';
 

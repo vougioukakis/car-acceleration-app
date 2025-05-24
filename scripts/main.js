@@ -74,6 +74,7 @@ function gameLoop() {
     }
 
     if (LAUNCHED) {
+        document.getElementById("startButton").style.display = 'none';
         document.getElementById("throttle").style.display = 'none';
         document.getElementById("shiftButton").style.display = 'block';
     }
