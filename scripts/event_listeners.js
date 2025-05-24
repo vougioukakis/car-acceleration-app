@@ -31,5 +31,6 @@ function addEventListeners() {
     addEventListenerToBackToManufacturers();
     document.getElementById("shiftButton").addEventListener("click", shiftSimulation);
     document.getElementById("startButton").addEventListener("click", launchSimulation);
+    document.getElementById('exportBtn').addEventListener('click', plotAndExportPDF);
 }
 
