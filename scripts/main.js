@@ -25,24 +25,26 @@ function updateSimulation() {
             finish();
         }
         TIME_ACCUMULATOR -= TIME_PER_TICK;
-        updateRevDisplay(RUN.current_rpm, RUN.gear_index);
-        updateEnginePitch(RUN.current_rpm);
-        updateSyntheticGearSound(RUN.current_rpm, RUN.gear_index);
+
+    }
+
+    updateRevDisplay(RUN.current_rpm, RUN.gear_index);
+    updateEnginePitch(RUN.current_rpm);
+    updateSyntheticGearSound(RUN.current_rpm, RUN.gear_index);
 
 
-        document.getElementById("gear").innerText = `${RUN.gear_index + 1}`;
-        document.getElementById("rpm").innerText = `RPM: ${RUN.current_rpm.toFixed()}`;
-        document.getElementById("speed").innerText = `Speed: ${(RUN.current_speed * 3.6).toFixed()} km/h`;
-        document.getElementById("time").innerText = `${RUN.current_seconds.toFixed(1)} s`;
-        document.getElementById("quarterMile").innerText = `${RUN.to_400m}s`;
-        document.getElementById("to_100km").innerText = `${RUN.to_100km}s`;
-        const indic = document.getElementById("wheelspinIndicator");
-        RUN.spinning ? indic.style.opacity = 1 : indic.style.opacity = 0;
+    document.getElementById("gear").innerText = `${RUN.gear_index + 1}`;
+    document.getElementById("rpm").innerText = `RPM: ${RUN.current_rpm.toFixed()}`;
+    document.getElementById("speed").innerText = `Speed: ${(RUN.current_speed * 3.6).toFixed()} km/h`;
+    document.getElementById("time").innerText = `${RUN.current_seconds.toFixed(1)} s`;
+    document.getElementById("quarterMile").innerText = `${RUN.to_400m}s`;
+    document.getElementById("to_100km").innerText = `${RUN.to_100km}s`;
+    const indic = document.getElementById("wheelspinIndicator");
+    RUN.spinning ? indic.style.opacity = 1 : indic.style.opacity = 0;
 
-        if (!IS_MOBILE) {
-            animate();
+    if (!IS_MOBILE) {
+        animate();
 
-        }
     }
 
     // save the current time as last time for next frame
