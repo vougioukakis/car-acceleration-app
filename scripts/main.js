@@ -56,7 +56,7 @@ function gameLoop() {
         let isWorking = loadEngineSound(CAR.sound_url);
         if (isWorking) {
             SOUND_STARTED = true;
-            if (CAR.engine.blow_off) loadStututu('./assets/turbo_sounds/blowoff_' + CAR.engine.blow_off + '.mp3');
+            loadStututu('./assets/turbo_sounds/blowoff_' + CAR.engine.blow_off + '.mp3');
             if (CAR.transmission.straight_cut) generateStraightCutGearSound();
         }
     }
