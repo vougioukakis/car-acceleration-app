@@ -197,7 +197,7 @@ class Run {
         this.best_rpm = 4000;
         for (let curr_rpm = 1100; curr_rpm <= this.car.engine.redline; curr_rpm += 100) {
             let torque_new = this.car.torque(curr_rpm);
-            if (torque_new > max_torque) {
+            if (torque_new >= max_torque) {
                 max_torque = torque_new;
                 this.best_rpm = curr_rpm;
             }
