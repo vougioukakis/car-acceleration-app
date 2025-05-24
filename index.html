@@ -8,7 +8,9 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <!-- jsPDF CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="styles.css">
     </head>
 
@@ -16,53 +18,100 @@
         <div id="vignetteOverlay"></div>
         <div id="manufacturersScreen" class="screen active">
             <h1>Select a Manufacturer</h1>
+            <div class="featured-manufacturer">
+                <h2>🔥 Featured</h2>
+                <div class="featured-card" style="background-image: url('./assets/images/BMW/featured.webp');"
+                    onclick="window.location.hash = 'cars-BMW';">
+                    <div class="featured-overlay">
+                        <h3>BMW</h3>
+                        <p>Experience raw racecar dynamics and straight-cut gear symphonies.</p>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="selectionScreen"></div>
         </div>
 
         <div id="carsScreen" class="screen" style="display: none;">
-            <button id="backToManufacturers">Back to Manufacturers</button>
-            <h1>Select a Car</h1>
+            <div class="wrapper">
+                <div class="header">
+                    <button id="backToManufacturers">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"
+                            aria-hidden="true">
+                            <path d="M15 18l-6-6 6-6"></path>
+                        </svg>
+
+                    </button>
+                    <h1>Select a car</h1>
+                </div>
+            </div>
             <div class="carSelectionScreen selectionScreen"></div>
         </div>
 
         <div id="simulationScreen" class="screen">
-            <button id="backToCars">Back to Cars</button>
-            <h1>Simulation</h1>
+            <div class="wrapper">
+                <div class="header"><button id="backToCars">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"
+                            aria-hidden="true">
+                            <path d="M15 18l-6-6 6-6"></path>
+                        </svg>
+
+                    </button>
+                    <h1>Simulation</h1>
+                </div>
+            </div>
+
             <div id="animated">
                 <div id="simulationDetails">
-                    <div id="gear">N</div>
-                    <div id="rpm">&nbsp; </div>
-                    <div id="speed">Use the throttle to rev the car and click launch when ready!</div>
-                    <div id="time">&nbsp; </div>
-                    <div id="quarterMile"> &nbsp;</div>
-                    <div id="to_100km"> &nbsp; </div>
-                    <!--<div id="halfMile">Half Mile:</div>-->
-                    <!--<div id="realTime">Real Time:</div>-->
-                    <div id="state"> &nbsp; </div>
+                    <div class="primary-line">
+                        <div id="gear" class="primary-stat">N</div>
+                        <div id="speed" class="speed-info primary-stat">
+                            0 km/h
+                        </div>
+                        <div id="rpm" class="primary-stat">&nbsp;</div>
+                        <div id="wheelspinIndicator"></div>
+
+                    </div>
+
+
+                    <div class="secondary-group">
+                        <div><label>Time:</label> <span id="time">&nbsp;</span></div>
+                        <div><label>Quarter Mile:</label> <span id="quarterMile">&nbsp;</span></div>
+                        <div><label>0–100 km/h:</label> <span id="to_100km">&nbsp;</span></div>
+                        <div><label>State:</label> <span id="state">&nbsp;</span></div>
+                    </div>
                 </div>
 
                 <div id="rpmMeterDiv">
                     <div class="rev-meter" id="revMeter">
                         <div id="revFill" class="rev-fill"></div>
-
                     </div>
                     <div class="rpm-labels">
                         <!-- RPM labels (generated dynamically) -->
                     </div>
-
-
                 </div>
 
-                <div id="wheelspinIndicator"></div>
-                <button id="exportBtn">Export</button>
             </div>
 
-            <button id="startButton">LAUNCH</button>
-            <button id="shiftButton">+</button>
-            <button id="throttle" style="user-select: none;">POWER</button>
 
-            <canvas id="torqueChart" width="400" height="300" style="visibility: hidden;"></canvas>
-            <canvas id="chartCanvas" width="400" height="300" style="visibility: hidden;"></canvas>
+
+            <div id="carControls">
+                <button id="startButton" data-action="launch">START</button>
+                <button id="shiftButton" data-action="shift">+</button>
+                <button id="throttle" data-action="throttle">THROTTLE</button>
+            </div>
+
+
+
+
+            <button id="exportBtn" style="display: none;"></button>
+        </div>
+
+        <canvas id="torqueChart" width="400" height="300" style="display: none;"></canvas>
+        <canvas id="chartCanvas" width="400" height="300" style="display: none;"></canvas>
         </div>
 
         <script src="scripts/cars.js" defer></script>
