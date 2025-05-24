@@ -39,7 +39,10 @@ function updateSimulation() {
         const indic = document.getElementById("wheelspinIndicator");
         RUN.spinning ? indic.style.opacity = 1 : indic.style.opacity = 0;
 
-        animate();
+        if (!IS_MOBILE) {
+            animate();
+
+        }
     }
 
     // save the current time as last time for next frame
