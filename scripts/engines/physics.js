@@ -494,7 +494,7 @@ class Run {
         console.log(`raw rpm from wheelspeed = ${wheel_speed * 3.6} is ${rpm}`);
 
         let rpmDelta = Math.abs(this.launch_RPM - this.best_rpm);
-        let timeLimit = 2 * Math.exp(-rpmDelta / 2000) + 1;
+        let timeLimit = 5 * Math.exp(-rpmDelta / 2000) + 2;
         //console.log(`timelimit = ${timeLimit}, launch = ${this.launch_RPM}, best = ${this.best_rpm}, delta = ${rpmDelta}`);
         if (this.gear_index === 0 && this.current_seconds < timeLimit) {
             // in 1st gear, use launch rpm until wheel speed asks for more rpm
