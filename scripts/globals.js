@@ -23,7 +23,7 @@ let GEAR_GAIN_NODE;
 
 
 // timing
-const TARGET_FPS = 180;
+const TARGET_FPS = 100;
 let START_TIME = 0;
 let LAST_TIME = 0;
 let TIME_ACCUMULATOR = 0;
@@ -34,6 +34,11 @@ let DELTA_TIME = 0;
 // data
 let cars;
 
+function isMobileDevice() {
+    return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+const IS_MOBILE = isMobileDevice();
 // summer tires": 1.1
 // high performance sports tires ": 1.4
 // drag slicks ": 2.0

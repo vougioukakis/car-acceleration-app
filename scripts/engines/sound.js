@@ -47,20 +47,27 @@ async function loadEngineSound(audioUrl) {
 async function loadStututu(audioUrl) {
     console.log('Fetching blow off sound for ' + CAR.name);
 
-    try {
-        const response = await fetch(audioUrl);
-        const data = await response.arrayBuffer();
-        const buffer = await AUDIO_CONTEXT.decodeAudioData(data);
+    if (CAR.engine.blow_off) {
+        try {
+            const response = await fetch(audioUrl);
+            const data = await response.arrayBuffer();
+            const buffer = await AUDIO_CONTEXT.decodeAudioData(data);
 
-        BLOW_OFF_BUFFER = buffer;
+            BLOW_OFF_BUFFER = buffer;
 
-        console.log('Blow off sound loaded successfully for ' + CAR.name);
-        return true;
-    } catch (error) {
-        console.error('Error fetching or decoding blow-off audio data for ' + CAR.name + ':', error);
-        BLOW_OFF_BUFFER = null;
-        return false;
+            console.log('Blow off sound loaded successfully for ' + CAR.name);
+            return true;
+        } catch (error) {
+            console.error('Error fetching or decoding blow-off audio data for ' + CAR.name + ':', error);
+            BLOW_OFF_BUFFER = null;
+            return false;
+        }
     }
+    BLOW_OFF_SOURCE_NODE = null;
+    BLOW_OFF_BUFFER = null;
+    BLOW_OFF_GAIN_NODE = null;
+    return false;
+
 }
 
 /**
@@ -87,9 +94,11 @@ function playBlowOffValve() {
     console.log('Playing blow-off valve sound for ' + CAR.name);
 
     BLOW_OFF_SOURCE_NODE.onended = () => {
-        BLOW_OFF_SOURCE_NODE.disconnect();
-        BLOW_OFF_GAIN_NODE.disconnect();
+
     };
+
+    BLOW_OFF_SOURCE_NODE = null;
+    BLOW_OFF_GAIN_NODE = null;
 
 }
 
@@ -211,6 +220,9 @@ function resetSound() {
     }
     if (BLOW_OFF_SOURCE_NODE) {
         BLOW_OFF_SOURCE_NODE.stop();
+        BLOW_OFF_GAIN_NODE.stop();
+        BLOW_OFF_SOURCE_NODE.disconnect();
+        BLOW_OFF_GAIN_NODE.disconnect();
         BLOW_OFF_SOURCE_NODE = null;
         BLOW_OFF_BUFFER = null;
         BLOW_OFF_GAIN_NODE = null;

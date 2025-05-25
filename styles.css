@@ -1,34 +1,57 @@
-.screen {
-    display: none;
+body {
+    margin-inline: auto;
+    padding-inline: 2rem;
+    padding-bottom: 2rem;
+    max-width: 1280px;
+    text-align: center;
+    font-family: "Oxanium", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
 }
 
-button {
-    padding: 20px;
+.screen {
+    display: none;
 }
 
 .screen.active {
     display: block;
 }
 
-.selectionScreen {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
 
 #animated {
+    padding: 1rem 2rem;
+    background: #f9fafb;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.1s ease-out;
 }
 
 .car-card,
 .make-card {
-    width: 200px;
+    width: 220px;
     text-align: center;
     cursor: pointer;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    margin: 12px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.car-card:hover,
+.make-card:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+    transform: translateY(-8px) scale(1.03);
+    border-color: #4a90e2;
+}
+
+.car-card:focus,
+.make-card:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #4A90E2;
 }
 
 .car-card img,
@@ -36,15 +59,16 @@ button {
     width: 100%;
     height: 160px;
     object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    margin-inline: auto;
-    padding: 2rem;
-    max-width: 1280px;
-    text-align: center;
+.car-card:hover img,
+.make-card:hover img {
+    transform: scale(1.05);
 }
+
+
 
 .redline {
     position: absolute;
@@ -65,36 +89,38 @@ body {
 .rev-meter {
     position: relative;
     width: 100%;
-    height: 40px;
-    border: 1px solid rgb(68, 68, 68);
-    margin: 20px auto;
-    background-color: #ddd;
-    border-radius: 7px;
+    height: 30px;
+    background-color: #e5e7eb;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .rev-fill {
     position: absolute;
     height: 100%;
     width: 0%;
-    background: yellow;
-    transition: width 0.1s ease;
-    border-top-left-radius: 7px;
-    border-bottom-left-radius: 7px;
+    background: linear-gradient(90deg, #facc15, #f59e0b);
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    transition: width 0.01s ease-in-out;
+    box-shadow: 0 0 8px rgba(250, 204, 21, 0.7);
 }
 
 .rpm-labels {
     display: flex;
-    width: 100%;
     justify-content: space-between;
-    margin: 20px auto;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: #6b7280;
+    font-weight: 600;
+    user-select: none;
+    letter-spacing: 0.05em;
 }
 
 .rpm-label {
-    font-size: 14px;
-}
-
-#gear {
-    font-size: 20px;
+    flex: 1;
+    text-align: center;
 }
 
 #vignetteOverlay {
@@ -114,7 +140,7 @@ body {
     width: 10px;
     height: 10px;
     background-color: rgba(255, 0, 0, 0);
-    /* fully transparent red */
+    border-radius: 200px;
     animation: fadeInOutBg 0.2s infinite;
 }
 
@@ -123,11 +149,331 @@ body {
     0%,
     100% {
         background-color: rgba(255, 0, 0, 0);
-        /* transparent */
     }
 
     50% {
         background-color: rgba(255, 0, 0, 1);
-        /* fully visible red */
+    }
+}
+
+button {
+    border-radius: 8px;
+    padding: 0.6rem 1.4rem;
+    background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow:
+        inset 0 -3px 0 rgba(0, 0, 0, 0.15),
+        0 3px 8px rgba(37, 99, 235, 0.5);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    user-select: none;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%);
+    box-shadow:
+        inset 0 -4px 0 rgba(0, 0, 0, 0.2),
+        0 5px 12px rgba(29, 78, 216, 0.7);
+}
+
+button:focus {
+    outline: none;
+    box-shadow:
+        0 0 0 3px rgba(59, 130, 246, 0.6),
+        inset 0 -4px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.selectionScreen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+
+
+#simulationDetails {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    border-radius: 12px;
+    margin: 0 auto;
+    color: #1e293b;
+    font-family: "Oxanium", sans-serif;
+    user-select: none;
+}
+
+.primary-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.primary-stat {
+    font-weight: 900;
+    font-size: 2rem;
+    border-radius: 10px;
+    padding: 0.5rem 1.4rem;
+    min-width: 130px;
+    text-align: center;
+    border: 2px solid;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    letter-spacing: 0.03em;
+}
+
+#gear {
+    background: #fff1f2;
+    color: #be123c;
+    border-color: #fecdd3;
+}
+
+#rpm {
+    background: #eef2ff;
+    color: #4338ca;
+    border-color: #c7d2fe;
+}
+
+#speed {
+    background: linear-gradient(90deg, #ecfdf5, #d1fae5);
+    color: #065f46;
+    border-color: #6ee7b7;
+}
+
+
+#rpmMeterDiv {
+    padding-block: 2rem;
+}
+
+.secondary-group {
+    background: #e0f2fe;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1px solid #7dd3fc;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.secondary-group label {
+    color: #3b82f6;
+    margin-right: 0.3rem;
+    font-weight: 600;
+}
+
+.secondary-group span {
+    color: #1a58bb;
+}
+
+.featured-manufacturer {
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    font-family: "Oxanium", sans-serif;
+}
+
+.featured-manufacturer h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: #1e293b;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.featured-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    height: 180px;
+    display: flex;
+    align-items: flex-end;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.featured-card:hover {
+    transform: scale(1.02);
+}
+
+.featured-overlay {
+    background: rgba(0, 0, 0, 0.55);
+    color: #f8fafc;
+    padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.featured-overlay h3 {
+    font-size: 1.4rem;
+    margin: 0;
+    font-weight: 800;
+}
+
+.featured-overlay p {
+    font-size: 0.95rem;
+    margin-top: 0.4rem;
+    opacity: 0.95;
+}
+
+
+/* controls */
+#carControls {
+    position: fixed;
+    max-width: 1280px;
+    margin: 0 auto;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0 1rem;
+    pointer-events: none;
+    z-index: 100;
+}
+
+#carControls button {
+    pointer-events: auto;
+    max-width: 500px;
+    appearance: none;
+    border: none;
+    border-radius: 12px;
+    padding: 0.8rem 1.4rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: "Oxanium", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: rgba(30, 41, 59, 0.85);
+    color: #f1f5f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.1s ease, background 0.2s ease;
+}
+
+/* hover and tap feedback (for web or hybrid apps) */
+#carControls button:hover,
+#carControls button:focus {
+    background: rgba(51, 65, 85, 0.95);
+    outline: none;
+}
+
+#carControls button:active {
+    transform: scale(0.95);
+    background: rgba(71, 85, 105, 1);
+}
+
+#startButton {
+    background: rgba(59, 130, 246, 0.85);
+    flex: 1;
+}
+
+#startButton:hover,
+#startButton:focus {
+    background: rgba(37, 99, 235, 0.95);
+}
+
+#startButton:active {
+    background: rgba(29, 78, 216, 1);
+}
+
+#shiftButton {
+    min-width: 60px;
+    font-size: 1.4rem;
+    padding: 0.8rem 1.2rem;
+    flex: 1;
+}
+
+#throttle {
+    background: rgba(16, 185, 129, 0.85);
+    flex: 1;
+}
+
+#throttle:hover,
+#throttle:focus {
+    background: rgba(5, 150, 105, 0.95);
+}
+
+#throttle:active {
+    background: rgba(4, 120, 87, 1);
+}
+
+
+@media (max-width: 768px) {
+    .selectionScreen {
+        gap: 15px;
+        padding: 0 0.5rem;
+    }
+
+    .primary-line {
+        display: block;
+    }
+
+    .primary-stat {
+        margin-block: 20px;
+        font-size: 1.5rem;
+    }
+
+    #animated {
+        padding-block: 0;
+    }
+
+
+}
+
+
+@media (max-width: 480px) {
+    .selectionScreen {
+        gap: 10px;
+        padding: 0 0.25rem;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .car-card,
+    .make-card {
+        width: 100%;
+        max-width: 400px;
+        margin: 8px auto;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .car-card img,
+    .make-card img {
+        width: 100px;
+        height: 70px;
+        flex-shrink: 0;
+        object-fit: cover;
+        border-radius: 6px;
     }
 }

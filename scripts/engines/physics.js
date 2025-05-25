@@ -167,8 +167,9 @@ class Run {
     best_rpm = 4000;
 
     spinning = false;
-    optimal_slip = 0.10052;
-    allowed_slip = 0.10052;
+    optimal_slip = 0.100052;
+    allowed_slip = 0.100052;
+    slip_penalty_multiplier = 0;
 
     //times
     to_100km = '';
@@ -196,7 +197,7 @@ class Run {
         this.best_rpm = 4000;
         for (let curr_rpm = 1100; curr_rpm <= this.car.engine.redline; curr_rpm += 100) {
             let torque_new = this.car.torque(curr_rpm);
-            if (torque_new > max_torque) {
+            if (torque_new >= max_torque) {
                 max_torque = torque_new;
                 this.best_rpm = curr_rpm;
             }
@@ -375,17 +376,15 @@ class Run {
 
     force_at_ground(N, gear_index, car_speed) {
         let redline = this.car.engine.redline;
-        if (N >= redline) return 0;
+        //if (N >= redline) return 0;
 
         let tyre_coeff = this.car.chassis.tyre_coeff;
         let weight_transfer = this.weight_transfer();
         let wheel_radius = this.car.chassis.wheel_radius;
 
         let Fz = weight_transfer * this.vertical_load(car_speed);//weight * 9.81; // load on driving tyres
-        //let max_force = tyre_coeff * Fz//(Fz ** 0.995);
         let k = this.get_slip_ratio(car_speed);
         const a = 18.01
-        //let magic_formula_sin = Math.max(Math.sin(1.9 * Math.atan(10 * (k) - 0.97 * (10 * (k) - Math.atan(10 * (k))))), 0.1);
         let magic_formula_sin = Math.sin(1.9 * Math.atan(a * (k) - 0.97 * (a * (k) - Math.atan(a * (k)))));
         console.log('magic formula sin = ', magic_formula_sin);
         console.log('k =', k);
@@ -450,7 +449,7 @@ class Run {
      * @param N
      */
     f(t, speed, N) {
-        let Fg = this.ground_force;
+        let Fg = this.force_at_ground(this.current_rpm, this.gear_index, speed);
         let Fdrag = this.drag(speed);
         let Froll = this.roll_resistance(speed);
         let Fnet = Fg - Fdrag - Froll;
@@ -494,7 +493,10 @@ class Run {
 
         console.log(`raw rpm from wheelspeed = ${wheel_speed * 3.6} is ${rpm}`);
 
-        if (this.gear_index === 0) {
+        let rpmDelta = Math.abs(this.launch_RPM - this.best_rpm);
+        let timeLimit = 2 * Math.exp(-rpmDelta / 2000) + 1;
+        //console.log(`timelimit = ${timeLimit}, launch = ${this.launch_RPM}, best = ${this.best_rpm}, delta = ${rpmDelta}`);
+        if (this.gear_index === 0 && this.current_seconds < timeLimit) {
             // in 1st gear, use launch rpm until wheel speed asks for more rpm
 
             /*
@@ -502,8 +504,10 @@ class Run {
             rpm = Math.max(rpm - rng, this.launch_RPM);*/
 
             // slowly transition to real rpm
-            let delta = (this.launch_RPM - rpm);
-            if (delta > 100) rpm = this.launch_RPM - delta / 10;
+            let delta = (rpm - this.launch_RPM);
+            rpm = Math.max(delta * this.current_seconds / timeLimit + this.launch_RPM, rpm);
+
+            //rpm = delta / TARGET_FPS + this.launch_RPM;
 
         }
         // find the rpm for the next time step
@@ -525,37 +529,46 @@ class Run {
     }
 
     compute_wheel_speed(i) {
-        let one_wheel_inertia = 2.7;
+        let inertia_factor = 17.36
+        let one_wheel_inertia = inertia_factor * this.car.chassis.wheel_radius;
         //around 2.5 for corsa c, around 4 for agera rs (big but lightweight, rims at 5.5kg while volk 18 inch are at 8kg)
         let drive_wheels_inertia = (2 + 2 * (1 - (this.car.transmission.drive) ** 2)) * one_wheel_inertia;
         let wheel_radius = this.car.chassis.wheel_radius;
         this.torque_at_wheel = this.torque_at_wheel_axis(this.current_rpm, this.gear_index);
-        this.ground_force = this.force_at_ground(this.current_rpm, this.gear_index, this.speed[i - 1]);
+        let ground_force = this.force_at_ground(this.current_rpm, this.gear_index, this.speed[i - 1]);
 
-        const acceleration = (this.torque_at_wheel - this.ground_force * wheel_radius) / drive_wheels_inertia;
+        const acceleration = (this.torque_at_wheel - ground_force * wheel_radius) / drive_wheels_inertia;
         const new_wheel_speed = this.wheel_speed[i - 1] + this.step * acceleration;
 
-        const upper_bound = Math.min(this.get_max_speed_at_gear(this.gear_index), (1 + this.allowed_slip) * Math.max(this.speed[i - 1], 1)) / wheel_radius;
+        let max = this.allowed_slip;
+        if (this.gear_index === 0) max = max * this.slip_penalty_multiplier;
+        const upper_bound = Math.min(this.get_max_speed_at_gear(this.gear_index), (1 + max) * Math.max(this.speed[i - 1], 0.005)) / wheel_radius;
         this.wheel_speed[i] = Math.min(new_wheel_speed, upper_bound);
         this.current_wheel_speed = this.wheel_speed[i] * wheel_radius;
-
         console.log(`old rpm = ${this.current_rpm}`);
         this.current_rpm = this.compute_RPM(this.current_wheel_speed, this.gear_index);
-        console.log(`new rpm = ${this.current_rpm}`);
+        console.log(`new rpm = ${this.current_rpm}, with wheelspeed = ${this.current_wheel_speed}`);
 
     }
 
     get_slip_ratio(car_speed) {
         //const result = (this.current_wheel_speed - this.current_speed) / Math.max(this.current_speed, 0.01);
-        const result = (this.current_wheel_speed - car_speed) / Math.max(car_speed, 0.01);
-        return Math.min(result, this.allowed_slip); // allow some wheelspin
+        const result = (this.current_wheel_speed - car_speed) / Math.max(car_speed, 0.005);
+        let max = this.allowed_slip;
+        if (this.gear_index === 0) max = max * this.slip_penalty_multiplier;
+        let final = Math.max(0, Math.min(result, max));
+        console.log(`raw =${result} slip ratio=${final}, multiplier= ${this.slip_penalty_multiplier}, max was = ${max}, best rpm was ${this.best_rpm}, launch rpm was ${this.launch_RPM}`);
+        return final; // allow some wheelspin
         //return result;
         //optimal for a = 18.01: slip = 0.100052
         //return Math.min(result, 0.100052);
     }
 
     simulate_step() {
-        if (this.iter_index === 0) this.load_launch_rpm(); //if launching
+        if (this.iter_index === 0) {
+            this.load_launch_rpm(); //if launching
+            this.slip_penalty_multiplier = 1 + (Math.abs(this.launch_RPM - this.best_rpm) / 1500) ** 5;
+        }
 
         this.iter_index++;
         let i = this.iter_index;
