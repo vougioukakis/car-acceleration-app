@@ -216,7 +216,7 @@ class Run {
 
             for (let curr_rpm = redline; curr_rpm >= idle; curr_rpm -= 100) {
                 let curr_speed = this.get_current_speed(curr_rpm, gear);
-                let rpm_next_gear = this.compute_RPM_for_shift_points(curr_speed, gear + 1);
+                let rpm_next_gear = Math.max(this.compute_RPM_for_shift_points(curr_speed, gear + 1), 1000);
 
                 let torque_wheels_next = this.torque_at_wheel_axis(rpm_next_gear, gear + 1);
                 let torque_wheels_curr = this.torque_at_wheel_axis(curr_rpm, gear);
@@ -386,9 +386,9 @@ class Run {
         let k = this.get_slip_ratio(car_speed);
         const a = 18.01
         let magic_formula_sin = Math.sin(1.9 * Math.atan(a * (k) - 0.97 * (a * (k) - Math.atan(a * (k)))));
-        console.log('magic formula sin = ', magic_formula_sin);
-        console.log('k =', k);
-        console.log('curr rrpm = ', this.current_rpm);
+        //console.log('magic formula sin = ', magic_formula_sin);
+        //console.log('k =', k);
+        //console.log('curr rrpm = ', this.current_rpm);
         let max_force = tyre_coeff * Fz * magic_formula_sin;
         let result = Math.min(this.torque_at_wheel / wheel_radius, max_force);
 
@@ -403,7 +403,7 @@ class Run {
             console.log("max force was " + max_force);
         }
 
-        console.log(`Force at ground = ${result}, force at wheels = ${this.torque_at_wheel / wheel_radius}, rpm = ${N}`);
+        //console.log(`Force at ground = ${result}, force at wheels = ${this.torque_at_wheel / wheel_radius}, rpm = ${N}`);
         return result;
     }
 
@@ -491,7 +491,7 @@ class Run {
             console.log("speed = " + speed);
         }
 
-        console.log(`raw rpm from wheelspeed = ${wheel_speed * 3.6} is ${rpm}`);
+        //console.log(`raw rpm from wheelspeed = ${wheel_speed * 3.6} is ${rpm}`);
 
         let rpmDelta = Math.abs(this.launch_RPM - this.best_rpm);
         let timeLimit = 5 * Math.exp(-rpmDelta / 2000) + 2;
@@ -545,9 +545,9 @@ class Run {
         const upper_bound = Math.min(this.get_max_speed_at_gear(this.gear_index), (1 + max) * Math.max(this.speed[i - 1], 0.005)) / wheel_radius;
         this.wheel_speed[i] = Math.min(new_wheel_speed, upper_bound);
         this.current_wheel_speed = this.wheel_speed[i] * wheel_radius;
-        console.log(`old rpm = ${this.current_rpm}`);
+        //console.log(`old rpm = ${this.current_rpm}`);
         this.current_rpm = this.compute_RPM(this.current_wheel_speed, this.gear_index);
-        console.log(`new rpm = ${this.current_rpm}, with wheelspeed = ${this.current_wheel_speed}`);
+        //console.log(`new rpm = ${this.current_rpm}, with wheelspeed = ${this.current_wheel_speed}`);
 
     }
 
@@ -555,9 +555,10 @@ class Run {
         //const result = (this.current_wheel_speed - this.current_speed) / Math.max(this.current_speed, 0.01);
         const result = (this.current_wheel_speed - car_speed) / Math.max(car_speed, 0.005);
         let max = this.allowed_slip;
-        if (this.gear_index === 0) max = max * this.slip_penalty_multiplier;
+        //if (this.gear_index === 0) max = max * this.slip_penalty_multiplier;
+        max = max * this.slip_penalty_multiplier;
         let final = Math.max(0, Math.min(result, max));
-        console.log(`raw =${result} slip ratio=${final}, multiplier= ${this.slip_penalty_multiplier}, max was = ${max}, best rpm was ${this.best_rpm}, launch rpm was ${this.launch_RPM}`);
+        //console.log(`raw =${result} slip ratio=${final}, multiplier= ${this.slip_penalty_multiplier}, max was = ${max}, best rpm was ${this.best_rpm}, launch rpm was ${this.launch_RPM}`);
         return final; // allow some wheelspin
         //return result;
         //optimal for a = 18.01: slip = 0.100052
@@ -567,7 +568,7 @@ class Run {
     simulate_step() {
         if (this.iter_index === 0) {
             this.load_launch_rpm(); //if launching
-            this.slip_penalty_multiplier = 1 + (Math.abs(this.launch_RPM - this.best_rpm) / 1500) ** 5;
+            this.slip_penalty_multiplier = Math.max(1 + ((this.launch_RPM - this.best_rpm) / 1500) ** 5, 0.1);
         }
 
         this.iter_index++;
@@ -626,6 +627,14 @@ class Run {
             0,
             this.clutch_extra_revs - 20
         );
+
+        const rate = 0.0025;
+        if (this.slip_penalty_multiplier > 1) {
+            this.slip_penalty_multiplier = Math.max(this.slip_penalty_multiplier - rate, 1);
+        } else if (this.slip_penalty_multiplier < 1) {
+            this.slip_penalty_multiplier = Math.min(this.slip_penalty_multiplier + rate, 1);
+        }
+        console.log(`slip penalty mult. = ${this.slip_penalty_multiplier}`);
 
 
         //INFO: This penalizes very high rpm launches:
