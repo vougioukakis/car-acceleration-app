@@ -120,7 +120,7 @@ function updateEnginePitch(rpm) {
 
         // normalize RPM to a 0-1 range and map it to playback rate
         const normalizedRPM = (rpm) / (maxRPM);
-        const playbackRate = BASE_PLAYBACK_RATE + normalizedRPM * (CAR.sound_pitch_1 - BASE_PLAYBACK_RATE); // Adjust range
+        const playbackRate = BASE_PLAYBACK_RATE + normalizedRPM ** 1.2 * (CAR.sound_pitch_1 - BASE_PLAYBACK_RATE); // Adjust range
 
 
         if (PREVIOUS_RPM > rpm) {
@@ -179,7 +179,7 @@ function updateSyntheticGearSound(rpm, gear) {
     if (Math.abs(rpm - PREVIOUS_RPM_GEARBOX) > 40) {
         const normalizedRPM = rpm / maxRPM; // normalize RPM
         const baseFrequency = 500; // base frequency
-        const gearFactor = 1 + gear ** 1.1; // freq increased based on gear index
+        const gearFactor = 1 + (gear / 3) ** 3; // freq increased based on gear index
         const frequency = baseFrequency + normalizedRPM * baseFrequency * gearFactor;
 
         GEAR_OSCILLATOR.frequency.setValueAtTime(frequency, AUDIO_CONTEXT.currentTime);

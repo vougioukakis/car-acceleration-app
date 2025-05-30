@@ -42,6 +42,8 @@ function startSimulation(carObj) {
     try {
         CAR = new Car(carObj.name);
         RUN = new Run(CAR, true);
+        RUN.setTire(SELECTED_TIRE);
+        RUN.setTC(TC_OPTION);
         resetPlot();
         STARTED = true;
         requestAnimationFrame(gameLoop);

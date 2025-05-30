@@ -23,7 +23,7 @@ let GEAR_GAIN_NODE;
 
 
 // timing
-const TARGET_FPS = 100;
+const TARGET_FPS = 1000;
 let START_TIME = 0;
 let LAST_TIME = 0;
 let TIME_ACCUMULATOR = 0;
@@ -31,9 +31,11 @@ const TIME_PER_TICK = 1000 / TARGET_FPS; // = 25 ms when target FPS is 40
 let DELTA_TIME = 0;
 
 
+
 // data
 let cars;
-
+let SELECTED_TIRE = '1.4';
+let TC_OPTION = 'ON';
 function isMobileDevice() {
     return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }

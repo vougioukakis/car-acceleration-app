@@ -25,10 +25,39 @@ function addEventListenerForThrottle() {
     throttleButton.addEventListener("touchcancel", handleThrottleReleaseButton);
 }
 
+function addEventListenersForSidebar() {
+    document.getElementById("sidebarHandle").addEventListener("click", () => {
+        const sidebar = document.getElementById("tireSidebar");
+        sidebar.classList.toggle("closed");
+    });
+
+    document.querySelectorAll(".tire-option").forEach(option => {
+        option.addEventListener("click", () => {
+            document.querySelectorAll(".tire-option").forEach(opt => opt.classList.remove("selected"));
+            option.classList.add("selected");
+            SELECTED_TIRE = option.dataset.tire;
+            console.log("Tire selected:", SELECTED_TIRE);
+        });
+    });
+
+    document.querySelectorAll(".tc-option").forEach(option => {
+        option.addEventListener("click", () => {
+            document.querySelectorAll(".tc-option").forEach(opt => opt.classList.remove("selected"));
+            option.classList.add("selected");
+            TC_OPTION = option.dataset.tc;
+            console.log("Traction Control:", TC_OPTION);
+        });
+    });
+
+}
+
+
+
 function addEventListeners() {
     addEventListenerForThrottle();
     addEventListenerToBackToCars();
     addEventListenerToBackToManufacturers();
+    addEventListenersForSidebar();
     document.getElementById("shiftButton").addEventListener("click", shiftSimulation);
     document.getElementById("startButton").addEventListener("click", launchSimulation);
     document.getElementById('exportBtn').addEventListener('click', plotAndExportPDF);
