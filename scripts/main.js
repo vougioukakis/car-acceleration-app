@@ -35,7 +35,7 @@ function updateSimulation() {
     document.getElementById("gear").innerText = `${RUN.gear_index + 1}`;
     document.getElementById("rpm").innerText = `RPM: ${RUN.current_rpm.toFixed()}`;
     let MPH_mult = 1;
-    let isMPH = UNIT_OPTION === "OFF";
+    let isMPH = SPEED_IN_KMH === "OFF";
     if (isMPH) {
         MPH_mult = 0.621371;
     }

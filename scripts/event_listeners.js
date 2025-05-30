@@ -53,8 +53,8 @@ function addEventListenersForSidebar() {
         option.addEventListener("click", () => {
             document.querySelectorAll(".unit-option").forEach(opt => opt.classList.remove("selected"));
             option.classList.add("selected");
-            UNIT_OPTION = option.dataset.kmh;
-            console.log("KMH:", UNIT_OPTION);
+            SPEED_IN_KMH = option.dataset.kmh;
+            console.log("KMH:", SPEED_IN_KMH);
         });
     });
 

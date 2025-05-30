@@ -11,8 +11,9 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="styles.css">
-        <link rel="stylesheet" href="sidebar.css">
+        <link rel="stylesheet" href="styles/styles.css">
+        <link rel="stylesheet" href="styles/sidebar.css">
+        <link rel="stylesheet" href="styles/dashboard.css">
     </head>
 
     <body>
@@ -34,36 +35,37 @@
                 <div class="tire-options">
                     <div class="tire-option option" data-tire="0.6">
                         Duratrax Banana<br />
-                        <span class="stars">☆☆☆☆☆☆</span>
+                        <span class="stars">☆☆☆☆☆☆☆</span>
                     </div>
                     <div class="tire-option option" data-tire="1.1">
                         Duratrax Strada<br />
-                        <span class="stars">★☆☆☆☆☆</span>
+                        <span class="stars">★☆☆☆☆☆☆</span>
                     </div>
                     <div class="tire-option option" data-tire="1.25">
                         Velaris Vortex<br />
-                        <span class="stars">★★☆☆☆☆</span>
+                        <span class="stars">★★☆☆☆☆☆</span>
                     </div>
                     <div class="tire-option option selected" data-tire="1.4">
                         Velaris Vortex Corsa<br />
-                        <span class="stars">★★★☆☆☆</span>
+                        <span class="stars">★★★☆☆☆☆</span>
                     </div>
                     <div class="tire-option option" data-tire="1.5">
                         Mecelin Cup 2<br />
-                        <span class="stars">★★★★☆☆</span>
+                        <span class="stars">★★★★☆☆☆</span>
                     </div>
                     <div class="tire-option option" data-tire="1.6">
                         Mecelin Cup 2R<br />
-                        <span class="stars">★★★★★☆</span>
+                        <span class="stars">★★★★★☆☆</span>
                     </div>
-                    <div class="tire-option option" data-tire="2.2">
-                        Nitro SC Drag Slick<br />
-                        <span class="stars">★★★★★★</span>
+                    <div class="tire-option option" data-tire="2.5">
+                        Nitro ET Street Slick<br />
+                        <span class="stars">★★★★★★☆</span>
                     </div>
                     <div class="tire-option option" data-tire="5">
-                        VIKING<br />
-                        <span class="stars" style="font-weight: bold;">VIKING</span>
+                        Nitro ET Drag Slick <br />
+                        <span class="stars" style="font-weight: bold;">★★★★★★★</span>
                     </div>
+
                 </div>
                 <h3>Traction Control</h3>
                 <div class="tire-options">
@@ -174,7 +176,14 @@
                 <button id="shiftButton" data-action="shift">+</button>
                 <button id="throttle" data-action="throttle">THROTTLE</button>
             </div>
-            <button id="exportBtn" style="display: none;"></button>
+            <button id="exportBtn" style="display: none;">Export and download data&nbsp; <svg
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line">
+                    <path d="M12 17V3" />
+                    <path d="m6 11 6 6 6-6" />
+                    <path d="M19 21H5" />
+                </svg></button>
         </div>
 
         <canvas id="torqueChart" width="400" height="300" style="display: none;"></canvas>

@@ -1,7 +1,6 @@
 async function plotAndExportPDF() {
-    const maxTime = 10;
+    const maxTime = 80;
 
-    // Filter indices where time ≤ maxTime
     const indices = RUN.time.map((t, i) => (t <= maxTime ? i : -1)).filter(i => i !== -1);
 
     const x = indices.map(i => RUN.time[i]);
@@ -22,13 +21,13 @@ async function plotAndExportPDF() {
                     label: "Car speed (km/h)",
                     data: y1,
                     borderColor: "blue",
-                    fill: false,
+                    pointRadius: 0,
                 },
                 {
                     label: "Wheel speed (km/h)",
                     data: y2,
                     borderColor: "red",
-                    fill: false,
+                    pointRadius: 0,
                 },
             ],
         },
@@ -38,6 +37,18 @@ async function plotAndExportPDF() {
                 legend: { position: "top" },
                 title: { display: true, text: "Speed vs Wheel Speed" },
             },
+            scales: {
+                x: {
+                    ticks: {
+                        callback: function (value, index, ticks) {
+                            return this.getLabelForValue(value).toFixed(2); // Show 2 decimal places
+                        }
+                    }
+                }
+            }
+
+
+
         },
     });
 
@@ -52,7 +63,7 @@ async function plotAndExportPDF() {
                     label: "Slip Ratio",
                     data: slip,
                     borderColor: "green",
-                    fill: false,
+                    pointRadius: 0,
                 },
             ],
         },
@@ -62,6 +73,29 @@ async function plotAndExportPDF() {
                 legend: { position: "top" },
                 title: { display: true, text: "Slip Ratio Over Time" },
             },
+            scales: {
+                x: {
+                    ticks: {
+                        callback: function (value, index, ticks) {
+                            return this.getLabelForValue(value).toFixed(2);
+                        }
+                    }
+                },
+                y: {
+                    type: 'logarithmic',
+                    min: 0.001, // or something smaller depending on your data
+                    max: 1,     // adjust as needed based on your expected max slip
+                    ticks: {
+                        callback: function (value, index, values) {
+                            return Number(value.toPrecision(1)); // cleaner labels
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Slip Ratio (log scale)'
+                    }
+                }
+            }
         },
     });
 

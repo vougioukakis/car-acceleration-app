@@ -30,13 +30,11 @@ let TIME_ACCUMULATOR = 0;
 const TIME_PER_TICK = 1000 / TARGET_FPS; // = 25 ms when target FPS is 40
 let DELTA_TIME = 0;
 
-
-
 // data
 let cars;
 let SELECTED_TIRE = '1.4';
 let TC_OPTION = 'ON';
-let UNIT_OPTION = 'ON'; //kmh on or off
+let SPEED_IN_KMH = 'ON'; //kmh on or off
 function isMobileDevice() {
     return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }

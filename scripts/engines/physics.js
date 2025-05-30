@@ -1,4 +1,3 @@
-// TODO: Much later, add tire slip (by faking loss if launching at higher rpm than optimal, and calculate loss using magic formula)
 // TODO: Implement setters and getters, make things that should be private private, and change the way
 //		 the run class interacts with the frontend to fit with the new changes
 class Engine {
@@ -80,19 +79,20 @@ class Car {
     constructor(name) {
         this.name = name;
         this.data = cars.find((car) => car.name === name);
+        this.make = this.data["make"];
         this.engine = new Engine(this.data);
         this.chassis = new Chassis(this.data);
         this.transmission = new Transmission(this.data);
 
         //sounds
         this.has_sound = true;
-        this.sound_url = `./assets/engine_sounds/${this.name}.mp3`;
+        this.sound_url = `./assets/engine_sounds/${this.make}/${this.name}.mp3`;
 
         try {
             this.sound_pitch_0 = this.data["sound_pitch_0"];
             this.sound_pitch_1 = this.data["sound_pitch_1"];
         } catch (error) {
-            console.error(`Error fetching sound pitch data for ${this.name}:`, error);
+            console.error(`Error fetching sound pitch data for ${this.name}: `, error);
             this.has_sound = false;
         }
 
@@ -436,11 +436,11 @@ class Run {
             let hi;
         }
 
-        //console.log(`raw rpm from wheelspeed = ${wheel_speed * 3.6} is ${rpm}`);
+        //console.log(`raw rpm from wheelspeed = ${ wheel_speed * 3.6 } is ${ rpm } `);
 
         let rpmDelta = Math.abs(this.launch_RPM - this.best_rpm);
         let timeLimit = 5 * Math.exp(-rpmDelta / 2000) + 2;
-        //console.log(`timelimit = ${timeLimit}, launch = ${this.launch_RPM}, best = ${this.best_rpm}, delta = ${rpmDelta}`);
+        //console.log(`timelimit = ${ timeLimit }, launch = ${ this.launch_RPM }, best = ${ this.best_rpm }, delta = ${ rpmDelta } `);
         if (this.gear_index === 0 && this.current_seconds < timeLimit) {
             // in 1st gear, use launch rpm until wheel speed asks for more rpm
 
@@ -524,7 +524,7 @@ class Run {
         let tyre_coeff = this.tyre_coeff; /// AT 3000 N?
         let Fz0 = nominal_load;
         if (i === 1) {
-            console.log(`load sens coef = ${load_sensitivity_coeff}, nominal load = ${Fz0}`);
+            console.log(`load sens coef = ${load_sensitivity_coeff}, nominal load = ${Fz0} `);
         }
 
         // pacejka
@@ -543,7 +543,7 @@ class Run {
         // for now rwd and fwd only
         let load_on_one_drive_tire;
         load_on_one_drive_tire = weight_transfer * this.vertical_load(this.speed[i - 1]) / 2;
-        //console.log(`load on one tire =  ${load_on_one_drive_tire}`);
+        //console.log(`load on one tire = ${ load_on_one_drive_tire } `);
         //traction control throttle control
 
         /* PACEJKA */
@@ -606,26 +606,26 @@ class Run {
         } else if (this.slip_penalty_multiplier < 1) {
             this.slip_penalty_multiplier = Math.min(this.slip_penalty_multiplier + rate, 1);
         }
-        console.log(`slip penalty mult. = ${this.slip_penalty_multiplier}`);
+        console.log(`slip penalty mult. = ${ this.slip_penalty_multiplier } `);
         */
         /*
          if (i < 10) {
              console.log(`
-             ===== Timestep ${i} =====
-             Torque at wheel:         ${torque_at_wheel.toFixed(2)} Nm
-             Max tyre force:          ${max_force.toFixed(10)} N
-             Force to ground:         ${to_ground.toFixed(10)} N
-             Fdrag:                   ${Fdrag} N
-             Froll:                   ${Froll} N 
-             Car accel:               ${car_accel} m/s^2
-             Car speed:               ${this.speed[i].toFixed(10)} m/s
-             Wheel speed (rad/s):     ${this.wheel_speed[i].toFixed(10)} rad/s
-             Wheel linear speed:      ${(this.wheel_speed[i] * wheel_radius).toFixed(10)} m/s
-             Slip ratio:              ${k.toFixed(10)}
-             Car acceleration:        ${car_accel.toFixed(10)} m/s²
-             RPM:                     ${this.current_rpm.toFixed(10)} rpm
-             =============================
-             `);
+            ===== Timestep ${ i } =====
+                Torque at wheel:         ${ torque_at_wheel.toFixed(2) } Nm
+             Max tyre force:          ${ max_force.toFixed(10) } N
+             Force to ground:         ${ to_ground.toFixed(10) } N
+        Fdrag:                   ${ Fdrag } N
+        Froll:                   ${ Froll } N 
+             Car accel:               ${ car_accel } m / s ^ 2
+             Car speed:               ${ this.speed[i].toFixed(10) } m / s
+             Wheel speed(rad / s):     ${ this.wheel_speed[i].toFixed(10) } rad / s
+             Wheel linear speed:      ${ (this.wheel_speed[i] * wheel_radius).toFixed(10) } m / s
+             Slip ratio:              ${ k.toFixed(10) }
+             Car acceleration:        ${ car_accel.toFixed(10) } m / s²
+        RPM:                     ${ this.current_rpm.toFixed(10) } rpm
+            =============================
+            `);
          }*/
 
 
@@ -720,7 +720,7 @@ class Run {
 
     release_clutch(i) {
         this.shifting = false; // release clutch
-        this.speed[i] += 0.6 / this.gear_index; // jolt when clutch is released
+        //this.speed[i] += 0.6 / this.gear_index; // jolt when clutch is released
         this.current_rpm = this.compute_RPM(this.wheel_speed[i] * this.car.chassis.wheel_radius, this.gear_index);// + this.clutch_extra_revs;
     }
 
