@@ -1,7 +1,7 @@
 .tire-sidebar {
     position: fixed;
     /* <-- makes it sticky */
-    right: 0;
+    right: -10px;
     top: 2%;
     width: 240px;
     background: white;
