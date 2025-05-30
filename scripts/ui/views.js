@@ -1,7 +1,7 @@
 function resetUI() {
     document.getElementById('gear').innerHTML = "N";
     document.getElementById('rpm').innerHTML = `&nbsp;`;
-    document.getElementById('speed').innerHTML = '0 kmh';
+    document.getElementById('speed').innerHTML = '0';
     document.getElementById('time').innerHTML = `&nbsp;`;
     document.getElementById('quarterMile').innerHTML = `&nbsp;`;
     document.getElementById('to_100km').innerHTML = `&nbsp;`;

@@ -34,7 +34,12 @@ function updateSimulation() {
 
     document.getElementById("gear").innerText = `${RUN.gear_index + 1}`;
     document.getElementById("rpm").innerText = `RPM: ${RUN.current_rpm.toFixed()}`;
-    document.getElementById("speed").innerText = `Speed: ${(RUN.current_speed * 3.6).toFixed()} km/h`;
+    let MPH_mult = 1;
+    let isMPH = UNIT_OPTION === "OFF";
+    if (isMPH) {
+        MPH_mult = 0.621371;
+    }
+    document.getElementById("speed").innerText = `Speed: ${(RUN.current_speed * 3.6 * MPH_mult).toFixed()} ${isMPH ? 'mph' : 'kmh'}`;
     document.getElementById("time").innerText = `${RUN.current_seconds.toFixed(1)} s`;
     document.getElementById("quarterMile").innerText = `${RUN.to_400m}s`;
     document.getElementById("to_100km").innerText = `${RUN.to_100km}s`;

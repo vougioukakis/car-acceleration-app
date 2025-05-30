@@ -74,6 +74,15 @@
                         ON<br />
                     </div>
                 </div>
+                <h3>Units</h3>
+                <div class="tire-options">
+                    <div class="unit-option option" data-kmh="OFF">
+                        MPH<br />
+                    </div>
+                    <div class="unit-option option selected" data-kmh="ON">
+                        KMH<br />
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -131,7 +140,7 @@
                     <div class="primary-line">
                         <div id="gear" class="primary-stat">N</div>
                         <div id="speed" class="speed-info primary-stat">
-                            0 km/h
+                            -
                         </div>
                         <div id="rpm" class="primary-stat">&nbsp;</div>
                         <div id="wheelspinIndicator"></div>
@@ -142,7 +151,7 @@
                     <div class="secondary-group">
                         <div><label>Time:</label> <span id="time">&nbsp;</span></div>
                         <div><label>Quarter Mile:</label> <span id="quarterMile">&nbsp;</span></div>
-                        <div><label>0–100 km/h:</label> <span id="to_100km">&nbsp;</span></div>
+                        <div><label>0–100 km/h / 0-62 mph:</label> <span id="to_100km">&nbsp;</span></div>
                         <div><label>State:</label> <span id="state">&nbsp;</span></div>
                     </div>
                 </div>
@@ -165,10 +174,6 @@
                 <button id="shiftButton" data-action="shift">+</button>
                 <button id="throttle" data-action="throttle">THROTTLE</button>
             </div>
-
-
-
-
             <button id="exportBtn" style="display: none;"></button>
         </div>
 
@@ -177,7 +182,6 @@
         <canvas id="slipCanvas" width="600" height="300" style="display: none;"></canvas>
         </div>
 
-        <script src="scripts/cars.js" defer></script>
         <script src="scripts/globals.js" defer></script>
         <script src="scripts/util.js" defer></script>
         <script src="scripts/engines/physics.js" defer></script>

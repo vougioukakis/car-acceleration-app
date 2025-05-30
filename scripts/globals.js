@@ -36,6 +36,7 @@ let DELTA_TIME = 0;
 let cars;
 let SELECTED_TIRE = '1.4';
 let TC_OPTION = 'ON';
+let UNIT_OPTION = 'ON'; //kmh on or off
 function isMobileDevice() {
     return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
