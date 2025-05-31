@@ -367,8 +367,7 @@ class Run {
             B * front_weight +
             C * ((cm_height * this.accel) / wheelbase);
 
-        console.log(`weight transfer % = ${result}, weight = ${this.car.chassis.weight}`);
-        return result;
+        return Math.min(result, this.car.chassis.weight);
     }
 
     torque_at_wheel_axis(N, gear_index) {
@@ -435,11 +434,11 @@ class Run {
             (wheel_speed * 30 * current_gear_ratio * final_drive) /
             (Math.PI * wheel_radius);
 
+        /*
         if (rpm < this.car.engine.idle_RPM || rpm > this.car.engine.redline) {
-            //console.warn("RPM " + rpm + " out of range for car with redline " + this.car.engine.redline);
-            //console.log("speed = " + speed);
-            let hi;
-        }
+            console.warn("RPM " + rpm + " out of range for car with redline " + this.car.engine.redline);
+            console.log("speed = " + speed);
+        }*/
 
         //console.log(`raw rpm from wheelspeed = ${ wheel_speed * 3.6 } is ${ rpm } `);
 
