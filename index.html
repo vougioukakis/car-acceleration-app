@@ -16,8 +16,11 @@
         <link rel="stylesheet" href="styles/dashboard.css">
     </head>
 
-    <body>
+    <html>
+        <div class="mobile-logo-div"> <img class="mobile-logo" src="assets/images/nds.png"></img>
+        </div>
         <div id="vignetteOverlay"></div>
+
         <div id="tireSidebar" class="tire-sidebar closed">
             <div id="sidebarHandle" class="sidebar-handle">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -94,7 +97,10 @@
         </div>
 
         <div id="manufacturersScreen" class="screen active">
-            <h1>Select a Manufacturer</h1>
+            <div class="header">
+                <img class="logo" src="assets/images/nds.png"></img>
+                <h1>Select a Manufacturer</h1>
+            </div>
             <div class="featured-manufacturer">
                 <h2>🔥 Featured</h2>
                 <div class="featured-card" style="background-image: url('./assets/images/BMW/featured.webp');"
@@ -111,34 +117,35 @@
         </div>
 
         <div id="carsScreen" class="screen" style="display: none;">
-            <div class="wrapper">
-                <div class="header">
-                    <button id="backToManufacturers">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"
-                            aria-hidden="true">
-                            <path d="M15 18l-6-6 6-6"></path>
-                        </svg>
+            <div class="header">
+                <img class="logo" src="assets/images/nds.png">
+                <button id="backToManufacturers">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <path d="M15 18l-6-6 6-6"></path>
+                    </svg>
 
-                    </button>
-                    <h1>Select a car</h1>
-                </div>
+                </button>
+
+                <h1>Select a car</h1>
             </div>
             <div class="carSelectionScreen selectionScreen"></div>
         </div>
 
         <div id="simulationScreen" class="screen">
-            <div class="wrapper">
-                <div class="header"><button id="backToCars">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"
-                            aria-hidden="true">
-                            <path d="M15 18l-6-6 6-6"></path>
-                        </svg>
+            <div class="header">
+                <img class="logo" src="assets/images/nds.png">
 
-                    </button>
-                    <h1>Simulation</h1>
-                </div>
+                <button id="backToCars">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <path d="M15 18l-6-6 6-6"></path>
+                    </svg>
+
+                </button>
+                <h1>Simulation</h1>
             </div>
 
             <div id="animated">
@@ -210,6 +217,6 @@
         <script src="scripts/router.js" defer></script>
         <script src="scripts/engines/sound.js" defer></script>
         <script src="scripts/init.js" defer></script>
-    </body>
+        </body>
 
-</html>
+    </html>

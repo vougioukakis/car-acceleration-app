@@ -10,6 +10,10 @@ body {
     font-style: normal;
 }
 
+.mobile-logo-div {
+    display: none;
+}
+
 .screen {
     display: none;
 }
@@ -123,19 +127,6 @@ button:focus {
     box-shadow:
         0 0 0 3px rgba(59, 130, 246, 0.6),
         inset 0 -4px 0 rgba(0, 0, 0, 0.2);
-}
-
-.wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.header {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
 }
 
 .selectionScreen {
@@ -281,13 +272,44 @@ button:focus {
     background: rgba(4, 120, 87, 1);
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 128px;
+    /* match logo height for vertical alignment */
+}
+
+.logo {
+    width: 128px;
+    height: 128px;
+    flex-shrink: 0;
+}
+
+#backToManufacturers {
+    margin-left: 10px;
+    flex-shrink: 0;
+}
+
+
+#backToCars {
+    margin-left: 10px;
+    flex-shrink: 0;
+}
+
+/* Center the heading absolutely in the middle */
+.header h1 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+}
 
 @media (max-width: 768px) {
     .selectionScreen {
         gap: 15px;
         padding: 0 0.5rem;
     }
-
 
 }
 
@@ -313,6 +335,36 @@ button:focus {
         flex-shrink: 0;
         object-fit: cover;
         border-radius: 6px;
+    }
+
+    .mobile-logo-div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mobile-logo {
+        width: 64px;
+        height: 64px;
+    }
+
+    .logo {
+        width: 0px;
+        height: 0px;
+    }
+
+    .header h1 {
+        position: relative;
+        font-size: x-large;
+        transform: none;
+        left: 0;
+        margin: 0 auto;
+        margin-left: 35px;
+    }
+
+    .header {
+        height: 64px;
+        display: flex;
     }
 }
 
