@@ -61,7 +61,7 @@ function updateSimulation() {
 
         }
         ui_update_counter += 1;
-        console.log(`ui counter ${ui_update_counter} with ${RUN.current_seconds}`);
+        //console.log(`ui counter ${ui_update_counter} with ${RUN.current_seconds}`);
     }
 
     // save the current time as last time for next frame
