@@ -43,6 +43,9 @@ function updateSimulation() {
     document.getElementById("time").innerText = `${RUN.current_seconds.toFixed(1)} s`;
     document.getElementById("quarterMile").innerText = `${RUN.to_400m}s`;
     document.getElementById("to_100km").innerText = `${RUN.to_100km}s`;
+    document.getElementById("g_force").innerText = `${RUN.accel.toFixed(1)} / ${RUN.max_accel.toFixed(1)}`;
+
+
     const indic = document.getElementById("wheelspinIndicator");
     RUN.spinning ? indic.style.opacity = 1 : indic.style.opacity = 0;
     if (!IS_MOBILE) {

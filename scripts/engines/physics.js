@@ -149,7 +149,8 @@ class Run {
     iter_index = 0;
     time = linspace(0, this.end, this.max_steps); //s
 
-    accel = 0; //current acceleration in m/s^2
+    accel = 0; //current acceleration in G
+    max_accel = 0;
     current_speed = 0;
     speed = new Array(this.max_steps).fill(0);
     current_wheel_speed = 0;
@@ -175,6 +176,7 @@ class Run {
     L_relax = 0.4;
 
 
+    clutch_torque = 0;
     //data
 
     slip_ratios = new Array(this.max_steps).fill(0);
@@ -205,7 +207,7 @@ class Run {
     }
 
     setTC(tc) {
-        tc === 'OFF' ? this.allowed_slip = 4 : this.allowed_slip = this.optimal_slip;
+        tc === 'OFF' ? this.allowed_slip = 5 : this.allowed_slip = this.optimal_slip;
     }
     get_best_rpm() {
         let max_torque = 0;
@@ -363,6 +365,8 @@ class Run {
             A * rear_weight +
             B * front_weight +
             C * ((cm_height * this.accel) / wheelbase);
+
+        console.log(`weight transfer % = ${result}, weight = ${this.car.chassis.weight}`);
         return result;
     }
 
@@ -546,6 +550,16 @@ class Run {
         //console.log(`load on one tire = ${ load_on_one_drive_tire } `);
         //traction control throttle control
 
+        // clutch slip
+        if (this.clutch_torque > 0) {
+            console.log(`torrrrr ${this.clutch_torque}`);
+        }
+        if (this.clutch_extra_revs > 0) {
+            torque_at_wheel += this.clutch_torque;
+        } else {
+            this.clutch_torque = 0;
+        }
+
         /* PACEJKA */
         // slip  of front or rear wheels
         /*
@@ -702,6 +716,9 @@ class Run {
         let delta_u = this.speed[i] - this.speed[i - 1];
         let delta_t = this.step;
         this.accel = delta_u / (delta_t * 9.81); // in G
+        if (this.accel > this.max_accel) {
+            this.max_accel = this.accel;
+        }
     }
 
     drop_RPM(i) {
@@ -720,8 +737,21 @@ class Run {
 
     release_clutch(i) {
         this.shifting = false; // release clutch
-        //this.speed[i] += 0.6 / this.gear_index; // jolt when clutch is released
+        let inertia_factor = 12
+        let one_wheel_inertia = inertia_factor * this.car.chassis.wheel_radius ** 2;
+        let drive_wheels_inertia = (2 + 2 * (1 - (this.car.transmission.drive) ** 2)) * one_wheel_inertia;
         this.current_rpm = this.compute_RPM(this.wheel_speed[i] * this.car.chassis.wheel_radius, this.gear_index);// + this.clutch_extra_revs;
+
+        /*
+        let drivetrain_inertia = 0.1;
+        let drivetrain_ang_vel = 2 * Math.PI * (this.current_rpm + this.clutch_extra_revs) / 60;
+        let omega_final = (drivetrain_inertia * drivetrain_ang_vel + drive_wheels_inertia * this.wheel_speed[i - 1]) / (drive_wheels_inertia + drivetrain_inertia)
+        let omega_init = this.wheel_speed[i - 1];
+        let delta_omega = omega_final - omega_init;
+
+        let delta_t = ((160 * this.car.transmission.shift_delay_coefficient) / ((this.gear_index ** 1.5 + 2))) / 2000;
+        this.clutch_torque = delta_omega / delta_t;
+        this.current_rpm += this.clutch_extra_revs;*/
     }
 
     distance_calculations() {

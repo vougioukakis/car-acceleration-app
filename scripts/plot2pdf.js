@@ -81,20 +81,7 @@ async function plotAndExportPDF() {
                         }
                     }
                 },
-                y: {
-                    type: 'logarithmic',
-                    min: 0.001, // or something smaller depending on your data
-                    max: 1,     // adjust as needed based on your expected max slip
-                    ticks: {
-                        callback: function (value, index, values) {
-                            return Number(value.toPrecision(1)); // cleaner labels
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: 'Slip Ratio (log scale)'
-                    }
-                }
+
             }
         },
     });

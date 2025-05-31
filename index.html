@@ -35,35 +35,39 @@
                 <div class="tire-options">
                     <div class="tire-option option" data-tire="0.6">
                         Duratrax Banana<br />
-                        <span class="stars">☆☆☆☆☆☆☆</span>
+                        <span class="stars">&nbsp;</span>
                     </div>
                     <div class="tire-option option" data-tire="1.1">
                         Duratrax Strada<br />
-                        <span class="stars">★☆☆☆☆☆☆</span>
+                        <span class="stars">★</span>
                     </div>
                     <div class="tire-option option" data-tire="1.25">
                         Velaris Vortex<br />
-                        <span class="stars">★★☆☆☆☆☆</span>
+                        <span class="stars">★★</span>
                     </div>
                     <div class="tire-option option selected" data-tire="1.4">
                         Velaris Vortex Corsa<br />
-                        <span class="stars">★★★☆☆☆☆</span>
+                        <span class="stars">★★★</span>
                     </div>
                     <div class="tire-option option" data-tire="1.5">
                         Mecelin Cup 2<br />
-                        <span class="stars">★★★★☆☆☆</span>
+                        <span class="stars">★★★★</span>
                     </div>
                     <div class="tire-option option" data-tire="1.6">
                         Mecelin Cup 2R<br />
-                        <span class="stars">★★★★★☆☆</span>
+                        <span class="stars">★★★★★</span>
                     </div>
-                    <div class="tire-option option" data-tire="2.5">
+                    <div class="tire-option option" data-tire="2.0">
                         Nitro ET Street Slick<br />
-                        <span class="stars">★★★★★★☆</span>
+                        <span class="stars">★★★★★★</span>
                     </div>
-                    <div class="tire-option option" data-tire="5">
+                    <div class="tire-option option" data-tire="2.8">
                         Nitro ET Drag Slick <br />
                         <span class="stars" style="font-weight: bold;">★★★★★★★</span>
+                    </div>
+                    <div class="tire-option option" data-tire="4">
+                        Top Fuel Drag Bias <br />
+                        <span class="stars" style="font-weight: bold;">★★★★★★★★</span>
                     </div>
 
                 </div>
@@ -154,6 +158,7 @@
                         <div><label>Time:</label> <span id="time">&nbsp;</span></div>
                         <div><label>Quarter Mile:</label> <span id="quarterMile">&nbsp;</span></div>
                         <div><label>0–100 km/h / 0-62 mph:</label> <span id="to_100km">&nbsp;</span></div>
+                        <div><label>G-Force / Max G-Force:</label> <span id="g_force">&nbsp;</span></div>
                         <div><label>State:</label> <span id="state">&nbsp;</span></div>
                     </div>
                 </div>
@@ -176,9 +181,9 @@
                 <button id="shiftButton" data-action="shift">+</button>
                 <button id="throttle" data-action="throttle">THROTTLE</button>
             </div>
-            <button id="exportBtn" style="display: none;">Export and download data&nbsp; <svg
-                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            <button id="exportBtn">Export and download data&nbsp; <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"
                     class="lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line">
                     <path d="M12 17V3" />
                     <path d="m6 11 6 6 6-6" />
