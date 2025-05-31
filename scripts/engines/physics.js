@@ -182,9 +182,10 @@ class Run {
     slip_ratios = new Array(this.max_steps).fill(0);
 
     //times
-    to_100km = '';
-    to_400m = '';
-    to_800m = '';
+    to_100km = 0;
+    to_304m = 0;
+    to_400m = 0;
+    to_800m = 0;
 
     //state
     done = false;
@@ -762,6 +763,12 @@ class Run {
         if (Math.abs(this.current_distance - 400) < 1) {
             console.log("0-400m in " + this.current_seconds);
             this.to_400m = this.current_seconds;
+
+        }
+        if (Math.abs(this.current_distance - 304) < 1) {
+            console.log("0-304m in " + this.current_seconds);
+            this.to_304m = this.current_seconds;
+
         }
         if (Math.abs(this.current_distance - 800) < 2) {
             console.log("0-800m in " + this.current_seconds);
