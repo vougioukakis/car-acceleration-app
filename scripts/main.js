@@ -44,7 +44,6 @@ function updateSimulation() {
     document.getElementById("quarterMile").innerText = `${RUN.to_400m.toFixed(2)}s`;
     document.getElementById("to_100km").innerText = `${RUN.to_100km.toFixed(2)}s`;
     document.getElementById("thousandFt").innerText = `${RUN.to_304m.toFixed(2)}s`;
-
     document.getElementById("g_force").innerText = `${RUN.accel.toFixed(1)} / ${RUN.max_accel.toFixed(1)}`;
 
 

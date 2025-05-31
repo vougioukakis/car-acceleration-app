@@ -708,8 +708,8 @@ class Run {
     }
 
     update_times() {
-        if (this.to_100km === '' && this.current_speed >= 27.777) {
-            this.to_100km = this.current_seconds.toFixed(1);
+        if (this.to_100km === 0 && this.current_speed >= 27.777) {
+            this.to_100km = this.current_seconds;
         }
     }
     compute_acceleration(i) {
