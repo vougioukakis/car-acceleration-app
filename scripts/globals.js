@@ -23,11 +23,11 @@ let GEAR_GAIN_NODE;
 
 
 // timing
-const TARGET_FPS = 700;
+const TARGET_FPS = 500;//700 // actual computations per second. keep it over 300 for numerical stability
 let START_TIME = 0;
 let LAST_TIME = 0;
 let TIME_ACCUMULATOR = 0;
-const TIME_PER_TICK = 1000 / TARGET_FPS; // = 25 ms when target FPS is 40
+const TIME_PER_TICK = 1000 / TARGET_FPS; //dont touch this // = 25 ms when target FPS is 40
 let DELTA_TIME = 0;
 
 // data
@@ -38,7 +38,8 @@ let SPEED_IN_KMH = 'ON'; //kmh on or off
 function isMobileDevice() {
     return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
-
+let ui_update_counter = 0;
+let lastUIUpdateTime = 0;
 const IS_MOBILE = isMobileDevice();
 // summer tires": 1.1
 // high performance sports tires ": 1.4
