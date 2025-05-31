@@ -288,14 +288,7 @@ button:focus {
         padding: 0 0.5rem;
     }
 
-    .primary-line {
-        display: block;
-    }
 
-    .primary-stat {
-        margin-block: 20px;
-        font-size: 1.5rem;
-    }
 }
 
 

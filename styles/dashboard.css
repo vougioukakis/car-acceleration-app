@@ -149,5 +149,17 @@
         padding-block: 0;
     }
 
+    .primary-line {
+        display: block;
+    }
+
+    .primary-stat {
+        margin-block: 20px;
+        font-size: 1.5rem;
+    }
+
+    #simulationDetails {
+        max-width: 98%;
+    }
 
 }
