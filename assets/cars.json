@@ -1503,8 +1503,8 @@
 		"spool_speed": 0,
 		"blow_off": 0,
 		"lsd": 0,
-		"sound_pitch_0": 0.11,
-		"sound_pitch_1": 0.98,
+		"sound_pitch_0": 0.2,
+		"sound_pitch_1": 1,
 		"straight_cut": 0
 	}
 ]
