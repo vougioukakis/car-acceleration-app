@@ -70,7 +70,7 @@ function updateRevDisplay(currentRPM, currentGear) {
 
     // perfect shift indicator
     if (shift_points[currentGear]) {
-        console.log('drawing perfect shift indicator');
+        //console.log('drawing perfect shift indicator');
         perfect_shift_indicator.style.visibility = 'visible';
         perfect_shift_indicator.style.left = `calc(${(((shift_points[currentGear] - minRPM) / (extendedMaxRPM - minRPM) * 100))}% - 10px)`;
         document.getElementById('revMeter').appendChild(perfect_shift_indicator);

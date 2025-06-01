@@ -172,7 +172,7 @@ function generateStraightCutGearSound() {
  */
 function updateSyntheticGearSound(rpm, gear) {
     if (!GEAR_OSCILLATOR) {
-        console.warn('Straight-cut gear sound has not been generated.');
+        //console.warn('Straight-cut gear sound has not been generated.');
         return;
     }
 
