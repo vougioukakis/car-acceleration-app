@@ -105,6 +105,7 @@ function gameLoop() {
 
     updateSimulation(); // if not started, will exit immediately
     requestAnimationFrame(gameLoop);  // this calls gameLoop recursively and adjusts to the frame rate
+
 }
 
 function finish() {

@@ -60,9 +60,33 @@ function addEventListenersForSidebar() {
 
 }
 
+function addWindowEventListeners() {
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            console.log('Tab hidden: suspending audio and simulation');
+            if (AUDIO_CONTEXT && AUDIO_CONTEXT.state === 'running') {
+                AUDIO_CONTEXT.suspend();
+            }
+            STARTED = false; // pause
+        } else {
+            console.log('Tab visible again');
+            if (AUDIO_CONTEXT && AUDIO_CONTEXT.state === 'suspended') {
+                AUDIO_CONTEXT.resume();
+            }
+            STARTED = true; // restart
+
+            //commenting out this line will make the simulation continue
+            // as if it was never paused when u switch back to the tab
+            LAST_TIME = performance.now(); // resume from the point it stopped?
+            requestAnimationFrame(gameLoop);
+        }
+    });
+
+}
 
 
 function addEventListeners() {
+    addWindowEventListeners();
     addEventListenerForThrottle();
     addEventListenerToBackToCars();
     addEventListenerToBackToManufacturers();

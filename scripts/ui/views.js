@@ -51,7 +51,13 @@ function generateCarCard(car) {
       <h3>${car.model}</h3>
     `;
 
-    card.onclick = () => {
+    card.onclick = async () => {
+        // trying this to fix safari ios sound not starting issue
+        if (AUDIO_CONTEXT.state === 'suspended') {
+            await AUDIO_CONTEXT.resume();
+            console.log('AUDIO_CONTEXT resumed after user interaction');
+        }
+
         window.location.hash = `simulation-${car.make}-${car.name}`;
     };
 
