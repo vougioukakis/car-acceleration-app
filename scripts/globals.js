@@ -55,3 +55,33 @@ const IS_MOBILE = isMobileDevice();
 
 //bmw z4 gt3 all final drives // all options": 3.458, 3.615, 3.917, 3.977, 4.087, 4.273, 4.476
 //bmw m3 gtr // all options": 3.458, 3.615, 3.917, 3.977, 4.087, 4.273, 4.476
+
+// Fix iOS Audio Context by Blake Kus https://gist.github.com/kus/3f01d60569eeadefe3a1
+// MIT license
+
+fixAudioContext = function (e) {
+    if (AUDIO_CONTEXT) {
+        // Create empty buffer
+        var buffer = AUDIO_CONTEXT.createBuffer(1, 1, 22050);
+        var source = AUDIO_CONTEXT.createBufferSource();
+        source.buffer = buffer;
+        // Connect to output (speakers)
+        source.connect(AUDIO_CONTEXT.destination);
+        // Play sound
+        if (source.start) {
+            source.start(0);
+        } else if (source.play) {
+            source.play(0);
+        } else if (source.noteOn) {
+            source.noteOn(0);
+        }
+    }
+    // Remove events
+    document.removeEventListener('touchstart', fixAudioContext);
+    document.removeEventListener('touchend', fixAudioContext);
+};
+// iOS 6-8
+document.addEventListener('touchstart', fixAudioContext);
+// iOS 9
+document.addEventListener('touchend', fixAudioContext);
+document.addEventListener('touchend', () => AUDIO_CONTEXT.resume());
