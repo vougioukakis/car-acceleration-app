@@ -1,3 +1,8 @@
+function updateAudioStatusUI() {
+    const state = AUDIO_CONTEXT.state;
+    document.getElementById('audioState').textContent += state + ' ';
+}
+
 function resetUI() {
     document.getElementById('gear').innerHTML = "N";
     document.getElementById('rpm').innerHTML = `&nbsp;`;
@@ -57,7 +62,7 @@ function generateCarCard(car) {
             await AUDIO_CONTEXT.resume();
             console.log('AUDIO_CONTEXT resumed after user interaction');
         }
-
+        updateAudioStatusUI();
         window.location.hash = `simulation-${car.make}-${car.name}`;
     };
 

@@ -3,6 +3,8 @@ let selectedMake = null;
 let selectedCar = null;
 
 function showManufacturers() {
+    updateAudioStatusUI();
+
     selectedMake = null;
     selectedCar = null;
     document.getElementById('tireSidebar').style.display = 'block';
@@ -35,6 +37,7 @@ function showSimulation(CAR) {
     }
 
     selectedCar = CAR;
+    updateAudioStatusUI();
     startSimulation(CAR);
 
     document.getElementById('tireSidebar').style.display = 'none';
