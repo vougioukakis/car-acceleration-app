@@ -186,12 +186,12 @@ function updateSyntheticGearSound(rpm, gear) {
 
         console.log(`Synthetic gear sound updated: RPM=${rpm}, Gear=${gear}, Frequency=${frequency.toFixed(2)}Hz`);
 
+
         if (PREVIOUS_RPM_GEARBOX > rpm) {
             GEAR_GAIN_NODE.gain.value = 0.01;
         } else {
             GEAR_GAIN_NODE.gain.value = 0.021;
         }
-
         PREVIOUS_RPM_GEARBOX = rpm;
     }
 }
