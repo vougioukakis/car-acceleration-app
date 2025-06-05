@@ -1,0 +1,165 @@
+#simulationDetails {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    border-radius: 12px;
+    margin: 0 auto;
+    color: #1e293b;
+    font-family: "Oxanium", sans-serif;
+    user-select: none;
+}
+
+.primary-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.primary-stat {
+    font-weight: 900;
+    font-size: 2rem;
+    border-radius: 10px;
+    padding: 0.5rem 1.4rem;
+    min-width: 130px;
+    text-align: center;
+    border: 2px solid;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    letter-spacing: 0.03em;
+}
+
+#gear {
+    background: #fff1f2;
+    color: #be123c;
+    border-color: #fecdd3;
+}
+
+#rpm {
+    background: #eef2ff;
+    color: #4338ca;
+    border-color: #c7d2fe;
+}
+
+#speed {
+    background: linear-gradient(90deg, #ecfdf5, #d1fae5);
+    color: #065f46;
+    border-color: #6ee7b7;
+}
+
+
+#wheelspinIndicator {
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 0, 0, 0);
+    border-radius: 200px;
+    animation: fadeInOutBg 0.2s infinite;
+}
+
+#rpmMeterDiv {
+    padding-block: 2rem;
+}
+
+.secondary-group {
+    background: #e0f2fe;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1px solid #7dd3fc;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.secondary-group label {
+    color: #3b82f6;
+    margin-right: 0.3rem;
+    font-weight: 600;
+}
+
+.secondary-group span {
+    color: #1a58bb;
+}
+
+.redline {
+    position: absolute;
+    content: '';
+    width: 2px;
+    background-color: red;
+    height: 40px;
+}
+
+.perfect-shift-indicator {
+    position: absolute;
+    content: '';
+    width: 5px;
+    background-color: green;
+    height: 40px;
+}
+
+.rev-meter {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    background-color: #e5e7eb;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.rev-fill {
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #facc15, #f59e0b);
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    transition: width 0.01s ease-in-out;
+    box-shadow: 0 0 8px rgba(250, 204, 21, 0.7);
+}
+
+.rpm-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    padding-inline: 10px;
+    font-size: 0.85rem;
+    color: #6b7280;
+    font-weight: 600;
+    user-select: none;
+    letter-spacing: 0.05em;
+}
+
+.rpm-label {
+    text-align: center;
+}
+
+#animated {
+    padding: 1rem 2rem;
+    background: #f9fafb;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s ease-out;
+}
+
+@media (max-width: 768px) {
+
+    #animated {
+        padding-block: 0;
+    }
+
+    .primary-line {
+        display: block;
+    }
+
+    .primary-stat {
+        margin-block: 5px;
+        font-size: 1.5rem;
+    }
+
+    #simulationDetails {
+        max-width: 98%;
+    }
+
+}

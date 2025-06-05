@@ -3,8 +3,12 @@ let selectedMake = null;
 let selectedCar = null;
 
 function showManufacturers() {
+    updateAudioStatusUI();
+
     selectedMake = null;
     selectedCar = null;
+    document.getElementById('tireSidebar').style.display = 'block';
+
     document.getElementById('manufacturersScreen').style.display = 'block';
     document.getElementById('carsScreen').style.display = 'none';
     document.getElementById('simulationScreen').style.display = 'none';
@@ -20,7 +24,7 @@ function showCars(make) {
 
     // call your existing function to generate car cards for this make
     showCarsScreen(make);
-
+    document.getElementById('tireSidebar').style.display = 'block';
     document.getElementById('manufacturersScreen').style.display = 'none';
     document.getElementById('carsScreen').style.display = 'block';
     document.getElementById('simulationScreen').style.display = 'none';
@@ -33,8 +37,10 @@ function showSimulation(CAR) {
     }
 
     selectedCar = CAR;
+    updateAudioStatusUI();
     startSimulation(CAR);
 
+    document.getElementById('tireSidebar').style.display = 'none';
     document.getElementById('manufacturersScreen').style.display = 'none';
     document.getElementById('carsScreen').style.display = 'none';
     document.getElementById('simulationScreen').style.display = 'block';

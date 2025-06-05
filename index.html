@@ -6,59 +6,209 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Simulation</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <link rel="stylesheet" href="styles.css">
+        <!-- jsPDF CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles/styles.css">
+        <link rel="stylesheet" href="styles/sidebar.css">
+        <link rel="stylesheet" href="styles/dashboard.css">
     </head>
 
-    <body>
+    <html>
+        <div class="mobile-logo-div"> <img class="mobile-logo" src="assets/images/nds.png"></img>
+        </div>
         <div id="vignetteOverlay"></div>
+        <div id="audioStatus"
+            style="display:none;position:fixed;top:10px;right:10px;background:#222;color:#fff;padding:10px;border-radius:8px;z-index:9999;font-size:14px;">
+            Audio: <span id="audioState"> &nbsp;</span>
+        </div>
+
+
+        <div id="tireSidebar" class="tire-sidebar closed">
+            <div id="sidebarHandle" class="sidebar-handle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-menu-icon lucide-menu">
+                    <path d="M4 12h16" />
+                    <path d="M4 18h16" />
+                    <path d="M4 6h16" />
+                </svg>
+            </div>
+            <div id="sidebarHandleMask"></div>
+            <div id="sidebarWrap">
+
+                <h3>Select Tires</h3>
+                <div class="tire-options">
+                    <div class="tire-option option" data-tire="0.6">
+                        Duratrax Banana<br />
+                        <span class="stars">&nbsp;</span>
+                    </div>
+                    <div class="tire-option option" data-tire="1.1">
+                        Duratrax Strada<br />
+                        <span class="stars">★</span>
+                    </div>
+                    <div class="tire-option option" data-tire="1.25">
+                        Velaris Vortex<br />
+                        <span class="stars">★★</span>
+                    </div>
+                    <div class="tire-option option selected" data-tire="1.4">
+                        Velaris Vortex Corsa<br />
+                        <span class="stars">★★★</span>
+                    </div>
+                    <div class="tire-option option" data-tire="1.5">
+                        Mecelin Cup 2<br />
+                        <span class="stars">★★★★</span>
+                    </div>
+                    <div class="tire-option option" data-tire="1.6">
+                        Mecelin Cup 2R<br />
+                        <span class="stars">★★★★★</span>
+                    </div>
+                    <div class="tire-option option" data-tire="2.0">
+                        Nitro ET Street Slick<br />
+                        <span class="stars">★★★★★★</span>
+                    </div>
+                    <div class="tire-option option" data-tire="2.8">
+                        Nitro ET Drag Slick <br />
+                        <span class="stars" style="font-weight: bold;">★★★★★★★</span>
+                    </div>
+                    <div class="tire-option option" data-tire="4">
+                        Top Fuel Drag Bias <br />
+                        <span class="stars" style="font-weight: bold;">★★★★★★★★</span>
+                    </div>
+
+                </div>
+                <h3>Traction Control</h3>
+                <div class="tire-options">
+                    <div class="tc-option option" data-tc="OFF">
+                        OFF<br />
+                    </div>
+                    <div class="tc-option option selected" data-tc="ON">
+                        ON<br />
+                    </div>
+                </div>
+                <h3>Units</h3>
+                <div class="tire-options">
+                    <div class="unit-option option" data-kmh="OFF">
+                        MPH<br />
+                    </div>
+                    <div class="unit-option option selected" data-kmh="ON">
+                        KMH<br />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <div id="manufacturersScreen" class="screen active">
-            <h1>Select a Manufacturer</h1>
+            <div class="header">
+                <img class="logo" src="assets/images/nds.png"></img>
+                <h1>Select a Manufacturer</h1>
+            </div>
+            <div class="featured-manufacturer">
+                <h2>🔥 Featured</h2>
+                <div class="featured-card" style="background-image: url('./assets/images/BMW/featured.webp');"
+                    onclick="window.location.hash = 'cars-BMW';">
+                    <div class="featured-overlay">
+                        <h3>BMW</h3>
+                        <p>Experience raw racecar dynamics and straight-cut gear symphonies.</p>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="selectionScreen"></div>
         </div>
 
         <div id="carsScreen" class="screen" style="display: none;">
-            <button id="backToManufacturers">Back to Manufacturers</button>
-            <h1>Select a Car</h1>
+            <div class="header">
+                <img class="logo" src="assets/images/nds.png">
+                <button id="backToManufacturers">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <path d="M15 18l-6-6 6-6"></path>
+                    </svg>
+
+                </button>
+
+                <h1>Select a car</h1>
+            </div>
             <div class="carSelectionScreen selectionScreen"></div>
         </div>
 
         <div id="simulationScreen" class="screen">
-            <button id="backToCars">Back to Cars</button>
-            <h1>Simulation</h1>
+            <div class="header">
+                <img class="logo" src="assets/images/nds.png">
+
+                <button id="backToCars">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <path d="M15 18l-6-6 6-6"></path>
+                    </svg>
+
+                </button>
+                <h1>Simulation</h1>
+            </div>
+
             <div id="animated">
                 <div id="simulationDetails">
-                    <div id="gear">N</div>
-                    <div id="rpm">&nbsp; </div>
-                    <div id="speed">Use the throttle to rev the car and click launch when ready!</div>
-                    <div id="time">&nbsp; </div>
-                    <div id="quarterMile"> &nbsp;</div>
-                    <div id="to_100km"> &nbsp; </div>
-                    <!--<div id="halfMile">Half Mile:</div>-->
-                    <!--<div id="realTime">Real Time:</div>-->
-                    <div id="state"> &nbsp; </div>
+                    <div class="primary-line">
+                        <div id="gear" class="primary-stat">N</div>
+                        <div id="speed" class="speed-info primary-stat">
+                            -
+                        </div>
+                        <div id="rpm" class="primary-stat">&nbsp;</div>
+                        <div id="wheelspinIndicator"></div>
+
+                    </div>
+
+
+                    <div class="secondary-group">
+                        <div><label>Time:</label> <span id="time">&nbsp;</span></div>
+                        <div><label>1000ft (304m):</label> <span id="thousandFt">&nbsp;</span></div>
+                        <div><label>Quarter Mile (400m):</label> <span id="quarterMile">&nbsp;</span></div>
+                        <div><label>0–100 km/h / 0-62 mph:</label> <span id="to_100km">&nbsp;</span></div>
+                        <div><label>G-Force / Max G-Force:</label> <span id="g_force">&nbsp;</span></div>
+                        <div><label>State:</label> <span id="state">&nbsp;</span></div>
+                    </div>
                 </div>
 
                 <div id="rpmMeterDiv">
                     <div class="rev-meter" id="revMeter">
                         <div id="revFill" class="rev-fill"></div>
-
                     </div>
                     <div class="rpm-labels">
                         <!-- RPM labels (generated dynamically) -->
                     </div>
-
-
                 </div>
+
             </div>
 
-            <button id="startButton">LAUNCH</button>
-            <button id="shiftButton">+</button>
-            <button id="throttle" style="user-select: none;">POWER</button>
 
-            <canvas id="torqueChart" width="400" height="300" style="visibility: hidden;"></canvas>
+
+            <div id="carControls">
+                <button id="startButton" data-action="launch">START</button>
+                <button id="shiftButton" data-action="shift">+</button>
+                <button id="throttle" data-action="throttle">THROTTLE</button>
+            </div>
+            <button id="exportBtn" style="display: none;">Export and download data&nbsp; <svg
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line">
+                    <path d="M12 17V3" />
+                    <path d="m6 11 6 6 6-6" />
+                    <path d="M19 21H5" />
+                </svg></button>
         </div>
 
-        <script src="scripts/cars.js" defer></script>
+        <canvas id="torqueChart" width="400" height="300" style="display: none;"></canvas>
+        <canvas id="chartCanvas" width="400" height="300" style="display: none;"></canvas>
+        <canvas id="slipCanvas" width="600" height="300" style="display: none;"></canvas>
+        </div>
+
         <script src="scripts/globals.js" defer></script>
         <script src="scripts/util.js" defer></script>
         <script src="scripts/engines/physics.js" defer></script>
@@ -66,11 +216,12 @@
         <script src="scripts/ui/views.js" defer></script>
         <script src="scripts/ui/rpm_meter.js" defer></script>
         <script src="scripts/controls.js" defer></script>
+        <script src="scripts/plot2pdf.js" defer></script>
         <script src="scripts/main.js" defer></script>
         <script src="scripts/event_listeners.js" defer></script>
         <script src="scripts/router.js" defer></script>
         <script src="scripts/engines/sound.js" defer></script>
         <script src="scripts/init.js" defer></script>
-    </body>
+        </body>
 
-</html>
+    </html>

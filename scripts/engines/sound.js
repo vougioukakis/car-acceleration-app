@@ -47,20 +47,27 @@ async function loadEngineSound(audioUrl) {
 async function loadStututu(audioUrl) {
     console.log('Fetching blow off sound for ' + CAR.name);
 
-    try {
-        const response = await fetch(audioUrl);
-        const data = await response.arrayBuffer();
-        const buffer = await AUDIO_CONTEXT.decodeAudioData(data);
+    if (CAR.engine.blow_off) {
+        try {
+            const response = await fetch(audioUrl);
+            const data = await response.arrayBuffer();
+            const buffer = await AUDIO_CONTEXT.decodeAudioData(data);
 
-        BLOW_OFF_BUFFER = buffer;
+            BLOW_OFF_BUFFER = buffer;
 
-        console.log('Blow off sound loaded successfully for ' + CAR.name);
-        return true;
-    } catch (error) {
-        console.error('Error fetching or decoding blow-off audio data for ' + CAR.name + ':', error);
-        BLOW_OFF_BUFFER = null;
-        return false;
+            console.log('Blow off sound loaded successfully for ' + CAR.name);
+            return true;
+        } catch (error) {
+            console.error('Error fetching or decoding blow-off audio data for ' + CAR.name + ':', error);
+            BLOW_OFF_BUFFER = null;
+            return false;
+        }
     }
+    BLOW_OFF_SOURCE_NODE = null;
+    BLOW_OFF_BUFFER = null;
+    BLOW_OFF_GAIN_NODE = null;
+    return false;
+
 }
 
 /**
@@ -87,9 +94,11 @@ function playBlowOffValve() {
     console.log('Playing blow-off valve sound for ' + CAR.name);
 
     BLOW_OFF_SOURCE_NODE.onended = () => {
-        BLOW_OFF_SOURCE_NODE.disconnect();
-        BLOW_OFF_GAIN_NODE.disconnect();
+
     };
+
+    BLOW_OFF_SOURCE_NODE = null;
+    BLOW_OFF_GAIN_NODE = null;
 
 }
 
@@ -111,7 +120,7 @@ function updateEnginePitch(rpm) {
 
         // normalize RPM to a 0-1 range and map it to playback rate
         const normalizedRPM = (rpm) / (maxRPM);
-        const playbackRate = BASE_PLAYBACK_RATE + normalizedRPM * (CAR.sound_pitch_1 - BASE_PLAYBACK_RATE); // Adjust range
+        const playbackRate = BASE_PLAYBACK_RATE + normalizedRPM ** 1.2 * (CAR.sound_pitch_1 - BASE_PLAYBACK_RATE); // Adjust range
 
 
         if (PREVIOUS_RPM > rpm) {
@@ -163,26 +172,26 @@ function generateStraightCutGearSound() {
  */
 function updateSyntheticGearSound(rpm, gear) {
     if (!GEAR_OSCILLATOR) {
-        console.warn('Straight-cut gear sound has not been generated.');
+        //console.warn('Straight-cut gear sound has not been generated.');
         return;
     }
 
     if (Math.abs(rpm - PREVIOUS_RPM_GEARBOX) > 40) {
         const normalizedRPM = rpm / maxRPM; // normalize RPM
         const baseFrequency = 500; // base frequency
-        const gearFactor = 1 + gear ** 1.1; // freq increased based on gear index
+        const gearFactor = 1 + (gear / 3) ** 3; // freq increased based on gear index
         const frequency = baseFrequency + normalizedRPM * baseFrequency * gearFactor;
 
         GEAR_OSCILLATOR.frequency.setValueAtTime(frequency, AUDIO_CONTEXT.currentTime);
 
         console.log(`Synthetic gear sound updated: RPM=${rpm}, Gear=${gear}, Frequency=${frequency.toFixed(2)}Hz`);
 
+
         if (PREVIOUS_RPM_GEARBOX > rpm) {
             GEAR_GAIN_NODE.gain.value = 0.01;
         } else {
             GEAR_GAIN_NODE.gain.value = 0.021;
         }
-
         PREVIOUS_RPM_GEARBOX = rpm;
     }
 }
@@ -211,6 +220,9 @@ function resetSound() {
     }
     if (BLOW_OFF_SOURCE_NODE) {
         BLOW_OFF_SOURCE_NODE.stop();
+        BLOW_OFF_GAIN_NODE.stop();
+        BLOW_OFF_SOURCE_NODE.disconnect();
+        BLOW_OFF_GAIN_NODE.disconnect();
         BLOW_OFF_SOURCE_NODE = null;
         BLOW_OFF_BUFFER = null;
         BLOW_OFF_GAIN_NODE = null;

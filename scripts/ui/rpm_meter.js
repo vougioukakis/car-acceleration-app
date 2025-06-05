@@ -6,6 +6,7 @@ const revFill = document.getElementById('revFill');
 const rpmLabelsContainer = document.querySelector('.rpm-labels');
 let shift_points;
 let perfect_shift_indicator = document.createElement('div');
+let perfect_launch_indicator = document.createElement('div');
 
 
 
@@ -15,6 +16,7 @@ let perfect_shift_indicator = document.createElement('div');
 
 function initializeRevMeter() {
     shift_points = RUN.get_shift_points();
+    launch_rpm = RUN.get_best_rpm();
     console.log('got shift points: ' + shift_points);
     maxRPM = RUN.car.engine.redline;
     extendedMaxRPM = maxRPM + (1000 - maxRPM % 1000);
@@ -36,6 +38,8 @@ function initializeRevMeter() {
 
     perfect_shift_indicator.classList.add('perfect-shift-indicator');
     perfect_shift_indicator.style.visibility = 'hidden';
+
+    perfect_launch_indicator.classList.add('perfect-shift-indicator');
 }
 
 function resetRevMeter() {
@@ -66,7 +70,7 @@ function updateRevDisplay(currentRPM, currentGear) {
 
     // perfect shift indicator
     if (shift_points[currentGear]) {
-        console.log('drawing perfect shift indicator');
+        //console.log('drawing perfect shift indicator');
         perfect_shift_indicator.style.visibility = 'visible';
         perfect_shift_indicator.style.left = `calc(${(((shift_points[currentGear] - minRPM) / (extendedMaxRPM - minRPM) * 100))}% - 10px)`;
         document.getElementById('revMeter').appendChild(perfect_shift_indicator);
@@ -74,6 +78,14 @@ function updateRevDisplay(currentRPM, currentGear) {
         if (!(perfect_shift_indicator.style.visibility === 'hidden')) {
             perfect_shift_indicator.style.visibility = 'hidden';
         }
+    }
+
+    if (!LAUNCHED) {
+        perfect_launch_indicator.style.visibility = 'visible';
+        perfect_launch_indicator.style.left = `calc(${(((RUN.best_rpm - minRPM) / (extendedMaxRPM - minRPM) * 100))}% - 10px)`;
+        document.getElementById('revMeter').appendChild(perfect_launch_indicator);
+    } else {
+        perfect_launch_indicator.style.visibility = 'hidden';
     }
 
 }

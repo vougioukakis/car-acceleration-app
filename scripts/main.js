@@ -25,19 +25,43 @@ function updateSimulation() {
             finish();
         }
         TIME_ACCUMULATOR -= TIME_PER_TICK;
-        updateRevDisplay(RUN.current_rpm, RUN.gear_index);
-        updateEnginePitch(RUN.current_rpm);
-        updateSyntheticGearSound(RUN.current_rpm, RUN.gear_index);
+
+    }
+    updateRevDisplay(RUN.current_rpm, RUN.gear_index);
+    updateEnginePitch(RUN.current_rpm);
+    updateSyntheticGearSound(RUN.current_rpm, RUN.gear_index);
+
+    // for the various info we try to update less frequently
+    let UI_UPDATE_INTERVAL = 25;
+    const now = performance.now();
+    if (now - lastUIUpdateTime > UI_UPDATE_INTERVAL) {
+        lastUIUpdateTime = now;
 
 
         document.getElementById("gear").innerText = `${RUN.gear_index + 1}`;
         document.getElementById("rpm").innerText = `RPM: ${RUN.current_rpm.toFixed()}`;
-        document.getElementById("speed").innerText = `Speed: ${(RUN.current_speed * 3.6).toFixed()} km/h`;
-        document.getElementById("time").innerText = `Time: ${RUN.current_seconds.toFixed(1)} s`;
-        document.getElementById("quarterMile").innerText = `Quarter Mile: ${RUN.to_400m}s`;
-        document.getElementById("to_100km").innerText = `0-100 kmh: ${RUN.to_100km}s`;
+        let MPH_mult = 1;
+        let isMPH = SPEED_IN_KMH === "OFF";
+        if (isMPH) {
+            MPH_mult = 0.621371;
+        }
+        document.getElementById("speed").innerText = `Speed: ${(RUN.current_speed * 3.6 * MPH_mult).toFixed()} ${isMPH ? 'mph' : 'kmh'}`;
+        document.getElementById("time").innerText = `${RUN.current_seconds.toFixed(1)} s`;
+        document.getElementById("quarterMile").innerText = `${RUN.to_400m.toFixed(2)}s`;
+        document.getElementById("to_100km").innerText = `${RUN.to_100km.toFixed(2)}s`;
+        document.getElementById("thousandFt").innerText = `${RUN.to_304m.toFixed(2)}s`;
+        document.getElementById("g_force").innerText = `${RUN.accel.toFixed(1)} / ${RUN.max_accel.toFixed(1)}`;
 
-        animate();
+
+        const indic = document.getElementById("wheelspinIndicator");
+        RUN.spinning ? indic.style.opacity = 1 : indic.style.opacity = 0;
+        if (!IS_MOBILE) {
+
+            animate();
+
+        }
+        ui_update_counter += 1;
+        //console.log(`ui counter ${ui_update_counter} with ${RUN.current_seconds}`);
     }
 
     // save the current time as last time for next frame
@@ -50,7 +74,7 @@ function gameLoop() {
         let isWorking = loadEngineSound(CAR.sound_url);
         if (isWorking) {
             SOUND_STARTED = true;
-            if (CAR.engine.blow_off) loadStututu('./assets/turbo_sounds/blowoff_' + CAR.engine.blow_off + '.mp3');
+            loadStututu('./assets/turbo_sounds/blowoff_' + CAR.engine.blow_off + '.mp3');
             if (CAR.transmission.straight_cut) generateStraightCutGearSound();
         }
     }
@@ -67,6 +91,13 @@ function gameLoop() {
 
     }
 
+    if (LAUNCHED) {
+        document.getElementById("startButton").style.display = 'none';
+        document.getElementById("throttle").style.display = 'none';
+        document.getElementById("shiftButton").style.display = 'block';
+    }
+
+
     if (RUN.stututu) {
         playBlowOffValve();
         RUN.stututu_done();
@@ -74,6 +105,7 @@ function gameLoop() {
 
     updateSimulation(); // if not started, will exit immediately
     requestAnimationFrame(gameLoop);  // this calls gameLoop recursively and adjusts to the frame rate
+
 }
 
 function finish() {

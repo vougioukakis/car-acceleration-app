@@ -1,0 +1,89 @@
+.tire-sidebar {
+    position: fixed;
+    /* <-- makes it sticky */
+    right: -10px;
+    top: 2%;
+    width: 240px;
+    background: white;
+    color: #222;
+    border-radius: 12px 0 0 12px;
+    border: 1px solid #e0e0e0;
+    transition: transform 0.3s ease;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.18);
+
+    z-index: 1000;
+    font-family: sans-serif;
+}
+
+#sidebarWrap {
+    padding-top: 0.75rem;
+    padding-bottom: 2rem;
+    padding-inline: 2rem;
+    height: max-content;
+    max-height: 90vh;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.tire-sidebar.closed {
+    transform: translateX(200px);
+}
+
+.sidebar-handle {
+    position: absolute;
+    left: -36px;
+    top: 5px;
+    background: white;
+    padding: 0.4rem;
+    border-radius: 6px 0 0 6px;
+    border: 1px solid #e0e0e0;
+    border-right: none;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.18);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tire-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.option {
+    padding: 0.5rem;
+    background: #fff;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    transition: all 0.2s ease;
+}
+
+.option:hover {
+    background: #f0f0f0;
+    border-color: #aaa;
+}
+
+.option.selected {
+    border-color: #4a90e2;
+    background: #e3f2fd;
+}
+
+.stars {
+    color: #f5b301;
+    font-size: 0.9rem;
+}
+
+#sidebarHandleMask {
+    position: absolute;
+    left: 0px;
+    top: 4px;
+    background: white;
+    padding: 0.4rem;
+    border-radius: 6px 0 0 6px;
+    font-weight: bold;
+    width: 10px;
+    height: 48px;
+}
