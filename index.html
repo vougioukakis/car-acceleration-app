@@ -101,6 +101,7 @@
 
         </div>
 
+        <div id="tireOverlay" class="tire-overlay hidden"></div>
         <div id="manufacturersScreen" class="screen active">
             <div class="header">
                 <img class="logo" src="assets/images/nds.png"></img>
@@ -154,7 +155,16 @@
             </div>
 
             <div id="animated">
+                <div id="rpmMeterDiv">
+                    <div class="rev-meter" id="revMeter">
+                        <div id="revFill" class="rev-fill"></div>
+                    </div>
+                    <div class="rpm-labels">
+                        <!-- RPM labels (generated dynamically) -->
+                    </div>
+                </div>
                 <div id="simulationDetails">
+
                     <div class="primary-line">
                         <div id="gear" class="primary-stat">N</div>
                         <div id="speed" class="speed-info primary-stat">
@@ -173,15 +183,6 @@
                         <div><label>0–100 km/h / 0-62 mph:</label> <span id="to_100km">&nbsp;</span></div>
                         <div><label>G-Force / Max G-Force:</label> <span id="g_force">&nbsp;</span></div>
                         <div><label>State:</label> <span id="state">&nbsp;</span></div>
-                    </div>
-                </div>
-
-                <div id="rpmMeterDiv">
-                    <div class="rev-meter" id="revMeter">
-                        <div id="revFill" class="rev-fill"></div>
-                    </div>
-                    <div class="rpm-labels">
-                        <!-- RPM labels (generated dynamically) -->
                     </div>
                 </div>
 

@@ -26,9 +26,14 @@ function addEventListenerForThrottle() {
 }
 
 function addEventListenersForSidebar() {
+    const overlay = document.getElementById('tireOverlay');
+    const sidebar = document.getElementById("tireSidebar");
+
     document.getElementById("sidebarHandle").addEventListener("click", () => {
-        const sidebar = document.getElementById("tireSidebar");
+
         sidebar.classList.toggle("closed");
+        overlay.classList.toggle('active');
+
     });
 
     document.querySelectorAll(".tire-option").forEach(option => {
@@ -57,6 +62,13 @@ function addEventListenersForSidebar() {
             console.log("KMH:", SPEED_IN_KMH);
         });
     });
+
+    // clicking overlay closes sidebar
+    overlay.addEventListener('click', () => {
+        sidebar.classList.add('closed');
+        overlay.classList.remove('active');
+    });
+
 
 }
 
