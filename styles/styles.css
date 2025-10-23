@@ -10,6 +10,22 @@ body {
     font-style: normal;
 }
 
+.tire-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(68, 127, 222, 0.2);
+    backdrop-filter: blur(20px);
+    z-index: 998;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.tire-overlay.active {
+    pointer-events: auto;
+    opacity: 1;
+}
+
 .mobile-logo-div {
     display: none;
 }
@@ -141,7 +157,7 @@ button:focus {
 
 .featured-manufacturer {
     margin-bottom: 2rem;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
     font-family: "Oxanium", sans-serif;
 }
 
@@ -159,11 +175,13 @@ button:focus {
     overflow: hidden;
     background-size: cover;
     background-position: center;
+    max-width: 1200px;
     height: 180px;
     display: flex;
     align-items: flex-end;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
+    cursor: pointer;
 }
 
 .featured-card:hover {
@@ -277,6 +295,8 @@ button:focus {
     align-items: center;
     position: relative;
     height: 128px;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e0e0e0;
     /* match logo height for vertical alignment */
 }
 
@@ -359,7 +379,6 @@ button:focus {
         transform: none;
         left: 0;
         margin: 0 auto;
-        margin-left: 35px;
     }
 
     .header {

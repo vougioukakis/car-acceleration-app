@@ -51,10 +51,18 @@ function generateCarCard(car) {
     const card = document.createElement('div');
     card.className = 'car-card';
 
+    const jpgSrc = `./assets/images/${car.make}/${car.name}.jpg`;
+    const webpSrc = `./assets/images/${car.make}/${car.name}.webp`;
+
     card.innerHTML = `
-      <img src="./assets/images/${car.make}/${car.name}.jpg" alt="${car.make} ${car.model}" />
-      <h3>${car.model}</h3>
+    <img src="${jpgSrc}" alt="${car.make} ${car.model}" />
+    <h3>${car.model}</h3>
     `;
+
+    const img = card.querySelector('img');
+    img.onerror = () => {
+        img.src = webpSrc; // fallback to webp if jpg fails
+    };
 
     card.onclick = async () => {
         // trying this to fix safari ios sound not starting issue
