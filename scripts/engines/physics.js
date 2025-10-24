@@ -547,6 +547,11 @@ class Run {
         // for now rwd and fwd only
         let load_on_one_drive_tire;
         load_on_one_drive_tire = weight_transfer * this.vertical_load(this.speed[i - 1]) / 2;
+
+        // fake AWD for now by doing:
+        if (this.car.transmission.drive === 0) {
+            load_on_one_drive_tire = weight_transfer * this.vertical_load(this.speed[i - 1]) / 4;
+        }
         //console.log(`load on one tire = ${ load_on_one_drive_tire } `);
         //traction control throttle control
 
@@ -581,6 +586,11 @@ class Run {
         let max_force_one_tire = load_on_one_drive_tire * pacejka_one_tire;
         // total
         let max_force = 2 * max_force_one_tire; // assuming 2 drive wheels
+
+        //fake this for now
+        if (this.car.transmission.drive === 0) {
+            max_force = 4 * max_force_one_tire;
+        }
 
         //let to_ground = Math.min(max_force, torque_at_wheel / wheel_radius);
         //tire relaxation
